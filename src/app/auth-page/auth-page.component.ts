@@ -18,25 +18,41 @@ export class AuthPageComponent {
   email: string = '';
   password: string = '';
 
-  userObj = { email: this.email, password: this.password }
+  Username: string = '';
+  confirmPassword: string = '';
+
+  loggingIn: boolean = false;
+  registering: boolean = true;
 
   /////////////// password visibility
 
-  passwordType = 'password';
+  passwordType1 = 'password';
+  passwordType2 = 'password';
 
-  makeVisible() {
-    if (this.passwordType === 'password') {
-      this.passwordType = 'text';
-    } else {
-      this.passwordType === 'text';
-      this.passwordType = 'password';
+  makeVisible(x: number) {
+    if (x === 1) {
+      if (this.passwordType1 === 'password') {
+        this.passwordType1 = 'text';
+      } else {
+        this.passwordType1 = 'password';
+      }
+    } else if (x === 2) {
+      if (this.passwordType2 === 'password') {
+        this.passwordType2 = 'text';
+      } else {
+        this.passwordType2 = 'password';
+      }
     }
   }
 
   /////////////// log in function
 
   login() {
-    this.apiService.Login(this.userObj).subscribe(
+  let loginObj = { email: this.email, password: this.password };
+
+    console.log(loginObj);
+
+    this.apiService.login(loginObj).subscribe(
       (res: any) => {
         console.log(res);
         localStorage.setItem('token', res.token);
@@ -47,5 +63,16 @@ export class AuthPageComponent {
         alert('Login failed. Please check your credentials and try again.');
       }
     );
+  }
+  register() {
+     let registerObj = {
+    username: this.Username,
+    email: this.email,
+    password: this.password,
+    password_confirmation: this.confirmPassword,
+  };
+    console.log(registerObj);
+    // console.log(loginObj);
+    // this.apiService.register(this.registerObj).subscribe((res: any) => {});
   }
 }
