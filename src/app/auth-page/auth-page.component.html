@@ -140,7 +140,7 @@
 
             <div class="register">
               <span class="registerText"
-                >Not a member? <a href="">Register</a></span
+                >Not a member? <a (click)="loginTabChange()">Register</a></span
               >
             </div>
           </div>
@@ -149,6 +149,13 @@
       <div *ngIf="registering == true" class="registerForm">
         <div class="text">
           <h1>Registration</h1>
+        </div>
+        <div class="avatar">
+          <div class="image"></div>
+          <div class="upload">
+            <span class="uploadText">Upload new</span>
+            <span class="removeText">Remove</span>
+          </div>
         </div>
         <div class="inputs">
           <div class="fields">
@@ -309,7 +316,7 @@
 
             <div class="register">
               <span class="registerText"
-                >Already a member? <a href="">Log in</a></span
+                >Already a member? <a (click)="loginTabChange()">Log in</a></span
               >
             </div>
           </div>

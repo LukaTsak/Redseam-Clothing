@@ -45,6 +45,18 @@ export class AuthPageComponent {
     }
   }
 
+  /////////////// tab change functions
+
+  loginTabChange() {
+    if (this.loggingIn === false) {
+      this.loggingIn = true;
+      this.registering = false;
+    } else if (this.loggingIn === true) {
+      this.loggingIn = false;
+      this.registering = true;
+    }
+  }
+
   /////////////// log in function
 
   login() {
@@ -73,6 +85,10 @@ export class AuthPageComponent {
   };
     console.log(registerObj);
     // console.log(loginObj);
-    // this.apiService.register(this.registerObj).subscribe((res: any) => {});
+    this.apiService.register(registerObj).subscribe((res: any) => {
+      console.log(res);
+      alert('Registration successful! Please log in.');
+      this.loginTabChange();
+    });
   }
 }

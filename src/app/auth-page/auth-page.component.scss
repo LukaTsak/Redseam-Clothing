@@ -107,7 +107,7 @@ main {
       justify-content: center;
       width: 100%;
       .loginForm {
-        border: 1px solid black;
+        // border: 1px solid black;
 
         .text {
           width: 124px;
@@ -123,7 +123,6 @@ main {
           }
         }
         .inputs {
-          
           display: flex;
           flex-direction: column;
           gap: 46px;
@@ -208,6 +207,7 @@ main {
               a {
                 text-decoration: none;
                 color: #ff4000;
+                cursor: pointer;
               }
             }
           }
@@ -215,11 +215,20 @@ main {
       }
       .registerForm {
         // border: 1px solid black;
+        display: flex;
+        flex-direction: column;
+        width: 554px;
+        height: 518px;
+        gap: 46px;
 
         .text {
-          width: 124px;
+          // border: 1px solid black;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 261px;
           height: 63px;
-          margin-bottom: 50px;
+          // margin-bottom: 50px;
           h1 {
             font-family: "Poppins", sans-serif;
             font-weight: 600;
@@ -229,8 +238,50 @@ main {
             letter-spacing: 0%;
           }
         }
+        .avatar {
+          // border: 1px solid black;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 13px;
+          width: 272px;
+          height: 100px;
+          .image {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: lightgray;
+            // border: 1px solid black;
+          }
+          .upload {
+            width: 157px;
+            height: 21px;
+            // border: 1px solid black;
+            display: flex;
+            flex-direction: row;
+            gap: 14px;
+            align-items: center;
+            justify-content: center;
+            span {
+              font-family: "Poppins", sans-serif;
+              font-weight: 400;
+              font-style: normal;
+              font-size: 14px;
+              line-height: 100%;
+              letter-spacing: 0%;
+              cursor: pointer;
+            }
+            .uploadText{
+              width: 84px;
+              height: 21px;
+            }
+            .removeText{
+              width: 58px;
+              height: 21px;
+            }
+          }
+        }
         .inputs {
-          
           display: flex;
           flex-direction: column;
           gap: 46px;
@@ -275,14 +326,14 @@ main {
                 }
               }
             }
-            .usernameLabel{
+            .usernameLabel {
               .requiredIcon {
                 position: absolute;
                 top: 15px;
                 left: 83px;
               }
             }
-            .confPassLabel{
+            .confPassLabel {
               .requiredIcon {
                 position: absolute;
                 top: 15px;
@@ -330,6 +381,7 @@ main {
               a {
                 text-decoration: none;
                 color: #ff4000;
+                cursor: pointer;
               }
             }
           }
