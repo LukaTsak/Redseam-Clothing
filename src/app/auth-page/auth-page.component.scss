@@ -84,11 +84,12 @@ main {
     // border: 1px solid black;
     display: flex;
     width: 100%;
-    height: 1000px;
+    height: 831px;
+    overflow: hidden;
     .leftSide {
       //   border: 1px solid black;
       width: 837px;
-      height: 100%;
+      height: 1000px;
 
       .loginImage {
         // border: 1px solid black;
@@ -100,15 +101,18 @@ main {
       }
     }
     .rightSide {
-      border: 1px solid black;
+      // border: 1px solid black;
       display: flex;
       align-items: center;
       justify-content: center;
       width: 100%;
       .loginForm {
+        // border: 1px solid black;
+
         .text {
           width: 124px;
           height: 63px;
+          margin-bottom: 50px;
           h1 {
             font-family: "Poppins", sans-serif;
             font-weight: 600;
@@ -121,19 +125,89 @@ main {
         .inputs {
           display: flex;
           flex-direction: column;
-          width: 554px;
-          height: 108px;
-          gap: 24px;
-          .input {
-            width: 100%;
-            height: 42px;
-            border-radius: 8px;
-            border: 1px solid #e1dfe1;
-            padding-left: 10px;
-            outline: none;
+          gap: 46px;
+          .fields {
+            // border: 1px solid black;
+            display: flex;
+            flex-direction: column;
+            width: 554px;
+            height: 108px;
+            gap: 24px;
+            .emailLabel {
+              position: relative;
+              .requiredIcon {
+                position: absolute;
+                top: 15px;
+                left: 50px;
+              }
+            }
+            .passwordlabel {
+              position: relative;
+              .requiredIcon {
+                position: absolute;
+                top: 15px;
+                left: 78px;
+              }
+              .passVisibilityIcon {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: absolute;
+                right: 10px;
+                top: 7px;
+                // border: 1px solid black;
+                width: 20px;
+                height: 20px;
+                cursor: pointer;
+                .eyeIcon {
+                  position: absolute;
+                  top: 3.75px;
+                  left: 1.65px;
+                  // border: 1.5px solid #0F172A;
+                }
+              }
+            }
+            .input {
+              width: 100%;
+              height: 42px;
+              border-radius: 8px;
+              border: 1px solid #e1dfe1;
+              padding-left: 10px;
+              outline: none;
 
-            &::placeholder {
-              color: #3e424a;
+              &::placeholder {
+                color: #3e424a;
+              }
+              &:focus::placeholder {
+                color: transparent;
+              }
+              &:focus ~ .requiredIcon,
+              &:not(:placeholder-shown) ~ .requiredIcon {
+                display: none;
+              }
+            }
+          }
+          .buttons {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 24px;
+            .button {
+              width: 100%;
+              height: 41px;
+              border-radius: 10px;
+              padding: 10px 20px;
+              background-color: #ff4000;
+              color: white;
+              border: none;
+              cursor: pointer;
+            }
+            .register {
+              a {
+                text-decoration: none;
+                color: #ff4000;
+              }
             }
           }
         }

@@ -45,7 +45,11 @@
   </div>
   <div class="main">
     <div class="leftSide">
-      <img class="loginImage" src="assets/images/loginn.png" alt="Image Not Found">
+      <img
+        class="loginImage"
+        src="assets/images/loginn.png"
+        alt="Image Not Found"
+      />
     </div>
     <div class="rightSide">
       <div class="loginForm">
@@ -53,11 +57,95 @@
           <h1>Log in</h1>
         </div>
         <div class="inputs">
-          <input class="loginInput input" type="text" name="userEmail" id="" placeholder="Email *" required>
-          <input class="loginInput input" type="password" name="Password" id="" placeholder="Password *" required>
+          <div class="fields">
+            <label class="emailLabel" for="userEmail">
+              <input
+                [(ngModel)]="email"
+                class="loginInput input"
+                type="text"
+                name="userEmail"
+                id="userEmail"
+                placeholder="Email"
+                required
+              />
+              <svg
+                class="requiredIcon"
+                width="6"
+                height="6"
+                viewBox="0 0 6 6"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M5.418 1.12L5.922 2.03L3.976 2.842L5.936 3.64L5.404 4.578L3.71 3.346L3.934 5.46H2.884L3.094 3.346L1.4 4.592L0.854 3.64L2.8 2.828L0.854 2.044L1.372 1.106L3.108 2.352L2.884 0.224H3.948L3.71 2.352L5.418 1.12Z"
+                  fill="#FF4000"
+                />
+              </svg>
+            </label>
+            <label class="passwordlabel" for="Password">
+              <div (click)="makeVisible()" class="passVisibilityIcon">
+                <svg
+                  class="eyeIcon"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M1.69556 10.2687C1.63799 10.0959 1.63794 9.90895 1.6954 9.73619C2.85237 6.2581 6.13326 3.75 9.99994 3.75C13.8648 3.75 17.1445 6.25577 18.3029 9.73134C18.3604 9.90406 18.3605 10.0911 18.303 10.2638C17.1461 13.7419 13.8652 16.25 9.99848 16.25C6.1336 16.25 2.85397 13.7442 1.69556 10.2687Z"
+                    stroke="#0F172A"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M12.4993 10C12.4993 11.3807 11.38 12.5 9.99927 12.5C8.61856 12.5 7.49927 11.3807 7.49927 10C7.49927 8.61929 8.61856 7.5 9.99927 7.5C11.38 7.5 12.4993 8.61929 12.4993 10Z"
+                    stroke="#0F172A"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </div>
+
+              <input
+                [(ngModel)]="password"
+                class="loginInput input"
+                type="{{ passwordType }}"
+                (keydown.enter)="login()"
+                name="Password"
+                id="Password"
+                placeholder="Password"
+                required
+              />
+              <svg
+                class="requiredIcon"
+                width="6"
+                height="6"
+                viewBox="0 0 6 6"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M5.418 1.12L5.922 2.03L3.976 2.842L5.936 3.64L5.404 4.578L3.71 3.346L3.934 5.46H2.884L3.094 3.346L1.4 4.592L0.854 3.64L2.8 2.828L0.854 2.044L1.372 1.106L3.108 2.352L2.884 0.224H3.948L3.71 2.352L5.418 1.12Z"
+                  fill="#FF4000"
+                />
+              </svg>
+            </label>
+          </div>
+
+          <div class="buttons">
+            <button (click)="login()" class="loginBtn button">Log in</button>
+
+            <div class="register">
+              <span class="registerText"
+                >Not a member? <a href="">Register</a></span
+              >
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
-
 </main>
