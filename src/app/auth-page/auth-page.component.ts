@@ -21,6 +21,8 @@ export class AuthPageComponent {
   Username: string = '';
   confirmPassword: string = '';
 
+  inputedImage: string | null = '../../assets/images/defaultProfilePic.jpg';
+
   loggingIn: boolean = false;
   registering: boolean = true;
 
@@ -31,36 +33,25 @@ export class AuthPageComponent {
 
   makeVisible(x: number) {
     if (x === 1) {
-      if (this.passwordType1 === 'password') {
-        this.passwordType1 = 'text';
-      } else {
-        this.passwordType1 = 'password';
-      }
+      this.passwordType1 =
+        this.passwordType1 === 'password' ? 'text' : 'password';
     } else if (x === 2) {
-      if (this.passwordType2 === 'password') {
-        this.passwordType2 = 'text';
-      } else {
-        this.passwordType2 = 'password';
-      }
+      this.passwordType2 =
+        this.passwordType2 === 'password' ? 'text' : 'password';
     }
   }
 
   /////////////// tab change functions
 
   loginTabChange() {
-    if (this.loggingIn === false) {
-      this.loggingIn = true;
-      this.registering = false;
-    } else if (this.loggingIn === true) {
-      this.loggingIn = false;
-      this.registering = true;
-    }
+    this.loggingIn = !this.loggingIn;
+    this.registering = !this.registering;
   }
 
-  /////////////// log in function
+  /////////////// log in and register functions
 
   login() {
-  let loginObj = { email: this.email, password: this.password };
+    let loginObj = { email: this.email, password: this.password };
 
     console.log(loginObj);
 
@@ -76,19 +67,71 @@ export class AuthPageComponent {
       }
     );
   }
+
   register() {
-     let registerObj = {
-    username: this.Username,
-    email: this.email,
-    password: this.password,
-    password_confirmation: this.confirmPassword,
-  };
-    console.log(registerObj);
-    // console.log(loginObj);
-    this.apiService.register(registerObj).subscribe((res: any) => {
-      console.log(res);
-      alert('Registration successful! Please log in.');
-      this.loginTabChange();
-    });
+    if (!this.userLogo) {
+      alert('Please select an avatar image.');
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('username', this.Username);
+    formData.append('email', this.email);
+    formData.append('password', this.password);
+    formData.append('password_confirmation', this.confirmPassword);
+    formData.append('avatar', this.userLogo);
+
+    this.apiService.register(formData).subscribe(
+      (res: any) => {
+        console.log(res);
+        alert('Registration successful! Please log in.');
+        this.loginTabChange();
+      },
+      (err) => {
+        console.error(err);
+        alert('Registration failed. Please check your data and try again.');
+      }
+    );
+  }
+
+  /////////////// profile picture functions
+
+  userLogo: any;
+  selectedLogoFileName: string = '';
+  logoPreviewUrl: string | ArrayBuffer | null =
+    '../../assets/images/defaultProfilePic.jpg';
+
+  onLogoSelected(event: any): void {
+    const file = event.target.files[0];
+    this.logoPreviewUrl = null;
+    this.selectedLogoFileName = '';
+    this.userLogo = null;
+
+    if (file) {
+      const reader = new FileReader();
+      const image = new Image();
+
+      reader.onload = (e: any) => {
+        image.onload = () => {
+          this.logoPreviewUrl = e.target.result;
+          this.userLogo = file;
+          this.selectedLogoFileName = file.name;
+
+          console.log('selectedLogoFileName: ', this.selectedLogoFileName);
+          console.log('file: ', this.userLogo);
+        };
+
+        image.src = e.target.result;
+        console.log('Image src: ', image.src);
+      };
+
+      reader.readAsDataURL(file);
+    }
+  }
+
+  removeImage(): void {
+    this.logoPreviewUrl = '../../assets/images/defaultProfilePic.jpg';
+    this.selectedLogoFileName = '';
+    this.userLogo = null;
   }
 }

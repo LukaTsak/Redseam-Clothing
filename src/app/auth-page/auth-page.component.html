@@ -151,12 +151,24 @@
           <h1>Registration</h1>
         </div>
         <div class="avatar">
-          <div class="image"></div>
+          <img class="image" [src]="logoPreviewUrl" />
+
           <div class="upload">
-            <span class="uploadText">Upload new</span>
-            <span class="removeText">Remove</span>
+            <label class="span" for="imageFile">
+              <input
+                [(ngModel)]="userLogo"
+                id="imageFile"
+                type="file"
+                accept="image/*"
+                (change)="onLogoSelected($event)"
+                hidden
+              />
+              Upload new
+            </label>
+            <span class="removeText span" (click)="removeImage()">Remove</span>
           </div>
         </div>
+
         <div class="inputs">
           <div class="fields">
             <label class="emailLabel usernameLabel" for="userName">
@@ -312,11 +324,14 @@
           </div>
 
           <div class="buttons">
-            <button (click)="register()" class="loginBtn button">Register</button>
+            <button (click)="register()" class="loginBtn button">
+              Register
+            </button>
 
             <div class="register">
               <span class="registerText"
-                >Already a member? <a (click)="loginTabChange()">Log in</a></span
+                >Already a member?
+                <a (click)="loginTabChange()">Log in</a></span
               >
             </div>
           </div>
