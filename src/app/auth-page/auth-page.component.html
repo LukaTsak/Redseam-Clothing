@@ -1,4 +1,10 @@
 <main>
+  <div *ngIf="userMessageArray.length > 0" class="user-message">
+    <div *ngFor="let error of userMessageArray" class="littleMessage">
+      {{ error }}
+    </div>
+  </div>
+
   <div class="headder">
     <div class="logo">
       <div class="logoSvgParrent">
