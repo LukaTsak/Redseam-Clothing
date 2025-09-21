@@ -15,16 +15,18 @@ export class AuthPageComponent {
 
   /////////////// user data
 
-  email: string = '';
-  password: string = '';
+  loginEmail: string = '';
+  loginPassword: string = '';
 
   Username: string = '';
+  email: string = '';
+  password: string = '';
   confirmPassword: string = '';
 
   inputedImage: string | null = '../../assets/images/defaultProfilePic.jpg';
 
-  loggingIn: boolean = false;
-  registering: boolean = true;
+  loggingIn: boolean = true;
+  registering: boolean = false;
 
   /////////////// password visibility
 
@@ -59,11 +61,14 @@ export class AuthPageComponent {
       (res: any) => {
         console.log(res);
         localStorage.setItem('token', res.token);
+        localStorage.setItem('user', JSON.stringify(res));
         window.location.href = '/products';
+        this.loggingIn = true;
+        this.registering = false;
       },
       (err) => {
         console.log(err);
-        alert('Login failed. Please check your credentials and try again.');
+        this.showMessage('Login failed. Please check your credentials and try again.');
       }
     );
   }
@@ -80,8 +85,8 @@ register() {
     return;
   }
 
-  if (this.password.length < 6) {
-    this.showMessage('Password must be at least 6 characters long.');
+  if (this.password.length < 3) {
+    this.showMessage('Password must be at least 3 characters long.');
     return;
   }
 
@@ -97,6 +102,9 @@ register() {
   formData.append('password_confirmation', this.confirmPassword);
   formData.append('avatar', this.userLogo);
 
+  console.log('Form Data:', formData);
+  
+
   this.apiService.register(formData).subscribe(
     (res: any) => {
       console.log(res);
@@ -105,7 +113,9 @@ register() {
     },
     (err) => {
       console.error(err);
-      this.showMessage('Registration failed. Please check your data and try again.');
+      for(let el of Object.values(err.error.errors)){
+        this.showMessage(el as string);
+      }
     }
   );
 }

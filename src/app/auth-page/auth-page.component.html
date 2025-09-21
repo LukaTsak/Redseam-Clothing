@@ -66,7 +66,7 @@
           <div class="fields">
             <label class="emailLabel" for="userEmail">
               <input
-                [(ngModel)]="email"
+                [(ngModel)]="loginEmail"
                 class="loginInput input"
                 type="text"
                 name="userEmail"
@@ -116,7 +116,7 @@
               </div>
 
               <input
-                [(ngModel)]="password"
+                [(ngModel)]="loginPassword"
                 class="loginInput input"
                 type="{{ passwordType1 }}"
                 (keydown.enter)="login()"
@@ -177,13 +177,13 @@
 
         <div class="inputs">
           <div class="fields">
-            <label class="emailLabel usernameLabel" for="userName">
+            <label class="emailLabel usernameLabel" for="userRegName">
               <input
                 [(ngModel)]="Username"
                 class="loginInput input"
                 type="text"
-                name="userName"
-                id="userName"
+                name="userRegName"
+                id="userRegName"
                 placeholder="Username"
                 required
               />
@@ -201,13 +201,13 @@
                 />
               </svg>
             </label>
-            <label class="emailLabel" for="userEmail">
+            <label class="emailLabel" for="userRegEmail">
               <input
                 [(ngModel)]="email"
                 class="loginInput input"
                 type="text"
-                name="userEmail"
-                id="userEmail"
+                name="userRegEmail"
+                id="userRegEmail"
                 placeholder="Email"
                 required
               />
@@ -225,7 +225,7 @@
                 />
               </svg>
             </label>
-            <label class="passwordlabel" for="Password">
+            <label class="passwordlabel" for="RegPassword">
               <div (click)="makeVisible(1)" class="passVisibilityIcon">
                 <svg
                   class="eyeIcon"
@@ -257,8 +257,8 @@
                 class="loginInput input"
                 type="{{ passwordType1 }}"
                 (keydown.enter)="login()"
-                name="Password"
-                id="Password"
+                name="RegPassword"
+                id="RegPassword"
                 placeholder="Password"
                 required
               />
