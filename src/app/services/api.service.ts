@@ -16,4 +16,7 @@ export class ApiService {
   register(obj: any) {
     return this.http.post(`${BASE_URL}/register`, obj);
   }
+  getProducts(page? : number) {
+    return this.http.get(`${BASE_URL}/products?page=${page}`);
+  }
 }

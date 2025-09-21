@@ -53,7 +53,7 @@ export class AuthPageComponent {
   /////////////// log in and register functions
 
   login() {
-    let loginObj = { email: this.email, password: this.password };
+    let loginObj = { email: this.loginEmail, password: this.loginPassword };
 
     console.log(loginObj);
 
@@ -62,7 +62,7 @@ export class AuthPageComponent {
         console.log(res);
         localStorage.setItem('token', res.token);
         localStorage.setItem('user', JSON.stringify(res));
-        window.location.href = '/products';
+        window.location.href = '/products?page=1';
         this.loggingIn = true;
         this.registering = false;
       },

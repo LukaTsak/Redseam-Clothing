@@ -89,4 +89,137 @@
       </div>
     </div>
   </div>
+  <div class="main">
+    <div class="sortDiv">
+      <span class="prodSpan">Products</span>
+      <div class="sortOptions">
+        <div class="showing">
+          <span class="showingSpan">Showing 1-10 of 100 results</span>
+        </div>
+        <div class="line"></div>
+        <div class="filter">
+          <div class="svgHome">
+            <svg
+              class="filter-svg"
+              width="18"
+              height="17"
+              viewBox="0 0 18 17"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M7.5 2.5L17.25 2.5M7.5 2.5C7.5 3.32843 6.82843 4 6 4C5.17157 4 4.5 3.32843 4.5 2.5M7.5 2.5C7.5 1.67157 6.82843 1 6 1C5.17157 1 4.5 1.67157 4.5 2.5M0.750001 2.5H4.5M7.5 14.5H17.25M7.5 14.5C7.5 15.3284 6.82843 16 6 16C5.17157 16 4.5 15.3284 4.5 14.5M7.5 14.5C7.5 13.6716 6.82843 13 6 13C5.17157 13 4.5 13.6716 4.5 14.5M0.75 14.5L4.5 14.5M13.5 8.5L17.25 8.5M13.5 8.5C13.5 9.32843 12.8284 10 12 10C11.1716 10 10.5 9.32843 10.5 8.5M13.5 8.5C13.5 7.67157 12.8284 7 12 7C11.1716 7 10.5 7.67157 10.5 8.5M0.75 8.5H10.5"
+                stroke="#0F172A"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </div>
+
+          <span class="filterSpan">Filer</span>
+        </div>
+        <div class="sortBy">
+          <span class="sortSpan">Sort by</span>
+          <div class="svgHome">
+            <svg
+              class="sortBy-svg"
+              width="10"
+              height="7"
+              viewBox="0 0 10 7"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M0.21967 0.71967C0.512563 0.426777 0.987437 0.426777 1.28033 0.71967L5 4.43934L8.71967 0.719671C9.01256 0.426777 9.48744 0.426777 9.78033 0.719671C10.0732 1.01256 10.0732 1.48744 9.78033 1.78033L5.53033 6.03033C5.38968 6.17098 5.19891 6.25 5 6.25C4.80109 6.25 4.61032 6.17098 4.46967 6.03033L0.21967 1.78033C-0.0732233 1.48744 -0.0732233 1.01256 0.21967 0.71967Z"
+                fill="#10151F"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="products">
+      <div *ngFor="let el of this.products" class="card">
+        <img class="productPhoto" [src]="el.cover_image" alt="" />
+        <div class="info">
+          <p class="productName">{{ el.name }}</p>
+          <p class="productPrice">$ {{ el.price }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="pagination">
+      <div class="pages">
+        <div class="leftSvgDiv">
+          <svg
+            class="left-svg"
+            width="6"
+            height="10"
+            viewBox="0 0 6 10"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M5.78033 0.21967C6.07322 0.512563 6.07322 0.987437 5.78033 1.28033L2.06066 5L5.78033 8.71967C6.07322 9.01256 6.07322 9.48744 5.78033 9.78033C5.48744 10.0732 5.01256 10.0732 4.71967 9.78033L0.46967 5.53033C0.176777 5.23744 0.176777 4.76256 0.46967 4.46967L4.71967 0.21967C5.01256 -0.0732233 5.48744 -0.0732233 5.78033 0.21967Z"
+              fill="#10151F"
+            />
+          </svg>
+        </div>
+        <div
+         [ngClass]="{ 'selectedPage': currentPage === 1 }"
+          [routerLink]="['/products']"
+          [queryParams]="{ page: 1 }"
+          class="first"
+        >
+          1
+        </div>
+        <div
+         [ngClass]="{ 'selectedPage': currentPage === dinamicPageNumber  }"
+          [routerLink]="['/products']"
+          [queryParams]="{ page: dinamicPageNumber }"
+          class="second"
+        >
+          {{dinamicPageNumber}}
+        </div>
+        <div class="others">...</div>
+        <div
+         [ngClass]="{ 'selectedPage': currentPage === 9 }"
+          [routerLink]="['/products']"
+          [queryParams]="{ page: 9 }"
+          class="nineth"
+        >
+          9
+        </div>
+        <div
+         [ngClass]="{ 'selectedPage': currentPage === 10 }"
+          [routerLink]="['/products']"
+          [queryParams]="{ page: 10 }"
+          class="last"
+        >
+          10
+        </div>
+        <div class="rightSvgDiv">
+          <svg
+            class="right-svg"
+            width="6"
+            height="10"
+            viewBox="0 0 6 10"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M0.21967 0.21967C0.512564 -0.0732233 0.987437 -0.0732233 1.28033 0.21967L5.53033 4.46967C5.82322 4.76256 5.82322 5.23744 5.53033 5.53033L1.28033 9.78033C0.987437 10.0732 0.512563 10.0732 0.21967 9.78033C-0.0732233 9.48744 -0.0732233 9.01256 0.21967 8.71967L3.93934 5L0.21967 1.28033C-0.073223 0.987437 -0.073223 0.512563 0.21967 0.21967Z"
+              fill="#10151F"
+            />
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
 </main>
