@@ -94,7 +94,7 @@
       <span class="prodSpan">Products</span>
       <div class="sortOptions">
         <div class="showing">
-          <span class="showingSpan">Showing 1-10 of 100 results</span>
+          <span class="showingSpan">Showing {{resultsRange}} of 100 results</span>
         </div>
         <div class="line"></div>
         <div class="filter">
@@ -152,7 +152,7 @@
     </div>
     <div class="pagination">
       <div class="pages">
-        <div class="leftSvgDiv">
+        <div (click)="prevPage()" [routerLink]="['/products']"  [queryParams]="{ page: currentPage - 1 }" class="leftSvgDiv">
           <svg
             class="left-svg"
             width="6"
@@ -178,12 +178,12 @@
           1
         </div>
         <div
-         [ngClass]="{ 'selectedPage': currentPage === dinamicPageNumber  }"
+         [ngClass]="{ 'selectedPage': currentPage === 2  }"
           [routerLink]="['/products']"
-          [queryParams]="{ page: dinamicPageNumber }"
+          [queryParams]="{ page: 2 }"
           class="second"
         >
-          {{dinamicPageNumber}}
+          2
         </div>
         <div class="others">...</div>
         <div
@@ -202,7 +202,7 @@
         >
           10
         </div>
-        <div class="rightSvgDiv">
+        <div (click)="nextPage()" [routerLink]="['/products']"  [queryParams]="{ page: currentPage + 1 }" class="rightSvgDiv">
           <svg
             class="right-svg"
             width="6"

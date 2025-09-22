@@ -133,7 +133,7 @@ main {
     }
   }
   .main {
-    border: 1px solid purple;
+    // border: 1px solid purple;
     display: flex;
     flex-direction: column;
     gap: 32px;
@@ -142,6 +142,7 @@ main {
     flex-direction: column;
     .sortDiv {
       //   border: 1px solid black;
+      margin-top: 72px;
       width: 1720px;
       height: 63px;
       display: flex;
@@ -162,11 +163,13 @@ main {
         align-items: center;
         flex-direction: row;
         gap: 32px;
-        width: 412px;
+        min-width: 412px;
+        max-width: fit-content;
         height: 24px;
         .showing {
           .showingSpan {
-            width: 158px;
+            min-width: 158px;
+            max-width: fit-content;
             height: 18px;
             font-family: "Poppins", sans-serif;
             font-weight: 400;
@@ -249,12 +252,15 @@ main {
       }
     }
     .products {
+      // border: 1px solid green;
+      margin-top: 32px;
       display: flex;
       flex-wrap: wrap;
       gap: 24px;
       width: 1720px;
       height: 1938px;
       .card {
+        border-radius: 8px;
         // border: 1px solid black;
         display: flex;
         flex-direction: column;
@@ -266,6 +272,7 @@ main {
           width: 412px;
           height: 549px;
           border-radius: 10px;
+          box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
         }
         .info {
           display: flex;
@@ -300,6 +307,8 @@ main {
     }
     .pagination {
       // border: 1px solid blue;
+      margin-top: 90px;
+      padding-bottom: 216px;
       display: flex;
       flex-direction: row;
       align-items: center;
@@ -314,6 +323,7 @@ main {
         height: 32px;
         .first,
         .second,
+        .others,
         .nineth,
         .last {
           width: 32px;
@@ -324,6 +334,22 @@ main {
           border: 1px solid #f8f6f7;
           border-radius: 4px;
           cursor: pointer;
+          font-family: "Poppins", sans-serif;
+          font-weight: 500;
+          font-style: normal;
+          font-size: 14px;
+          line-height: 20px;
+          letter-spacing: 0%;
+          color: #212b36;
+          font-family: Poppins;
+          font-weight: 500;
+          font-style: Medium;
+          font-size: 14px;
+          // leading-trim: NONE;
+          line-height: 20px;
+          letter-spacing: 0%;
+          text-align: center;
+          opacity: 0.6;
         }
 
         .first:hover,
@@ -336,11 +362,20 @@ main {
         .leftSvgDiv,
         .rightSvgDiv {
           cursor: pointer;
+          position: relative;
+          width: 20px;
+          height: 20px;
+          svg {
+            position: absolute;
+            top: 5px;
+            left: 8px;
+            color: #10151f;
+          }
         }
       }
       .selectedPage {
         border: 1px solid #ff4000 !important;
-        color: #ff4000;
+        color: #ff4000 !important;
         font-weight: 600;
       }
     }
