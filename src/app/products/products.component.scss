@@ -339,7 +339,8 @@ main {
       flex-wrap: wrap;
       gap: 24px;
       width: 1720px;
-      height: 1938px;
+      max-height: 1938px;
+      height: fit-content; 
       .card {
         border-radius: 8px;
         // border: 1px solid black;

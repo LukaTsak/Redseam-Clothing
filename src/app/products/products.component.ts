@@ -3,7 +3,6 @@ import { ApiService } from '../services/api.service';
 import { CommonModule, NgForOf } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { from } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 
 @Component({
@@ -19,20 +18,35 @@ export class ProductsComponent {
     private router: Router
   ) {}
 
+  // ==========================
+  // 🔹 User & product data
+  // ==========================
   user = JSON.parse(localStorage.getItem('user') || '{}');
-  products: any = [];
+  products: any[] = [];
+
+  // ==========================
+  // 🔹 Pagination state
+  // ==========================
   currentPage: number = 1;
-  dinamicPageNumber: number = 2;
+  dinamicPageNumber: number = 2; // looks like UI-related pagination number
+  pageSize: number = 10;
+  totalItems: number = 100;
+  lastPage: number = 1;
 
-  filtering: boolean = false;
-
-  from: number | null = null;
-  to: number | null = null;
+  // ==========================
+  // 🔹 Filter state
+  // ==========================
+  filtering: boolean = false;   // show/hide filter UI
+  filterActive: boolean = false; // true if user applied filter
+  filterOptions: string = '';   // query string used in API calls
+  from: number | null = null;   // filter lower bound
+  to: number | null = null;     // filter upper bound
 
   ngOnInit() {
     this.route.queryParams.subscribe((params) => {
       this.currentPage = params['page'] ? +params['page'] : 1;
 
+      // update UI helper number
       this.dinamicPageNumber =
         this.currentPage === 1
           ? 2
@@ -42,38 +56,23 @@ export class ProductsComponent {
 
       console.log('Current page:', this.currentPage);
 
-      this.apiService.getProducts(this.currentPage).subscribe((res) => {
-        console.log('API response:', res);
-        this.products = (res as any).data;
-      });
+      // initial load (either filtered or normal)
+      this.loadProducts(this.currentPage);
     });
-  }
 
-  nextPage() {
-    this.router.navigate([], {
-      queryParams: { page: this.currentPage + 1 },
-      queryParamsHandling: 'merge',
-    });
-  }
-
-  prevPage() {
-    if (this.currentPage > 1) {
-      this.router.navigate([], {
-        queryParams: { page: this.currentPage - 1 },
-        queryParamsHandling: 'merge',
-      });
+    // mark filters as active if bounds already set
+    if (this.from != null || this.to != null) {
+      this.filterActive = true;
     }
   }
 
-  toggleFilter() {
-    this.filtering = !this.filtering;
-    console.log(this.filtering);
-  }
+  /////////////// reusable API loader
 
-  filter() {
-    let params = new HttpParams()
-      .set('page', this.currentPage)
-      .set('sort', 'price');
+  loadProducts(page: number = 1) {
+    this.currentPage = page;
+
+    // build params
+    let params = new HttpParams().set('page', this.currentPage);
 
     if (this.from != null) {
       params = params.set('filter[price_from]', this.from);
@@ -82,9 +81,12 @@ export class ProductsComponent {
       params = params.set('filter[price_to]', this.to);
     }
 
-    console.log('Filter params:', params.toString());
-
     const queryString = params.toString() ? `?${params.toString()}` : '';
+    this.filterOptions = queryString;
+
+    console.log('Final query:', queryString);
+
+    // API call
     this.apiService.filter(queryString).subscribe((res) => {
       console.log('API response:', res);
       this.products = (res as any).data;
@@ -92,11 +94,40 @@ export class ProductsComponent {
       this.totalItems = (res as any).meta.total;
       this.lastPage = (res as any).meta.last_page;
     });
+
+    this.router.navigate([], {
+      queryParams: { page: this.currentPage },
+      queryParamsHandling: 'merge',
+    });
   }
 
-  pageSize: number = 10;
-  totalItems: number = 100;
-  lastPage?: number;
+  /////////////// Pagination actions
+
+  nextPage() {
+    if (this.currentPage < this.lastPage) {
+      this.loadProducts(this.currentPage + 1);
+    }
+  }
+
+  prevPage() {
+    if (this.currentPage > 1) {
+      this.loadProducts(this.currentPage - 1);
+    }
+  }
+
+  /////////////// Filtering actions
+
+  toggleFilter() {
+    this.filtering = !this.filtering;
+    console.log('Filtering UI:', this.filtering);
+  }
+
+  filter() {
+    this.filterActive = true;
+    this.loadProducts(1);
+  }
+
+  /////////////// Helpers
 
   get resultsRange(): string {
     const start = (this.currentPage - 1) * this.pageSize + 1;
