@@ -8,7 +8,7 @@ import { HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'app-products',
-  imports: [NgForOf, CommonModule, RouterModule,FormsModule],
+  imports: [NgForOf, CommonModule, RouterModule, FormsModule],
   templateUrl: './products.component.html',
   styleUrl: './products.component.scss',
 })
@@ -65,39 +65,42 @@ export class ProductsComponent {
     }
   }
 
-  pageSize = 10;
-  totalItems = 100;
-
-  get resultsRange(): string {
-    const start = (this.currentPage - 1) * this.pageSize + 1;
-    const end = Math.min(this.currentPage * this.pageSize, this.totalItems);
-    return `${start}-${end}`;
-  }
-
   toggleFilter() {
     this.filtering = !this.filtering;
     console.log(this.filtering);
   }
 
   filter() {
-  let params = new HttpParams()
-    .set('page', this.currentPage)
-    .set('sort', 'price');
+    let params = new HttpParams()
+      .set('page', this.currentPage)
+      .set('sort', 'price');
 
-  if (this.from != null) {
-    params = params.set('filter[price_from]', this.from);
+    if (this.from != null) {
+      params = params.set('filter[price_from]', this.from);
+    }
+    if (this.to != null) {
+      params = params.set('filter[price_to]', this.to);
+    }
+
+    console.log('Filter params:', params.toString());
+
+    const queryString = params.toString() ? `?${params.toString()}` : '';
+    this.apiService.filter(queryString).subscribe((res) => {
+      console.log('API response:', res);
+      this.products = (res as any).data;
+      this.pageSize = (res as any).meta.per_page;
+      this.totalItems = (res as any).meta.total;
+      this.lastPage = (res as any).meta.last_page;
+    });
   }
-  if (this.to != null) {
-    params = params.set('filter[price_to]', this.to);
+
+  pageSize: number = 10;
+  totalItems: number = 100;
+  lastPage?: number;
+
+  get resultsRange(): string {
+    const start = (this.currentPage - 1) * this.pageSize + 1;
+    const end = Math.min(this.currentPage * this.pageSize, this.totalItems);
+    return `${start}-${end}`;
   }
-
-  console.log('Filter params:', params.toString());
-
-  const queryString = params.toString() ? `?${params.toString()}` : '';
-  this.apiService.filter(queryString).subscribe((res) => {
-    console.log('API response:', res);
-    this.products = (res as any).data;
-  });
-}
-
 }
