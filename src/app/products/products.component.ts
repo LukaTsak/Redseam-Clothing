@@ -37,6 +37,7 @@ export class ProductsComponent {
   // 🔹 Filter state
   // ==========================
   filtering: boolean = false;   // show/hide filter UI
+  sorting: boolean = false; // current sorting option
   filterActive: boolean = false; // true if user applied filter
   filterOptions: string = '';   // query string used in API calls
   from: number | null = null;   // filter lower bound
@@ -117,9 +118,16 @@ export class ProductsComponent {
 
   /////////////// Filtering actions
 
-  toggleFilter() {
+  toggleFilter(x : number) {
+    if (x === 1) {
     this.filtering = !this.filtering;
+    this.sorting = false;
     console.log('Filtering UI:', this.filtering);
+    } else if (x === 2) {
+      this.sorting = !this.sorting;
+      this.filtering = false;
+      console.log('Sorting UI:', this.sorting);
+    }
   }
 
   filter() {
