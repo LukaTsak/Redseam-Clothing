@@ -198,6 +198,7 @@ main {
             width: 24px;
             height: 24px;
             .filter-svg {
+              cursor: pointer;
               position: absolute;
               top: 4.5px;
               left: 3.75px;
@@ -215,6 +216,86 @@ main {
             letter-spacing: 0%;
             color: #10151f;
             cursor: pointer;
+          }
+          .filterOptions {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 20px;
+            top: 205px;
+            right: 186px;
+            width: 392px;
+            height: 169px;
+            border-radius: 8px;
+            border: 1px solid #e1dfe1;
+            background-color: white;
+            .selectPrice {
+              width: 360px;
+              display: flex;
+              align-items: start;
+              font-family: Poppins;
+              font-weight: 600;
+              font-style: SemiBold;
+              font-size: 16px;
+              line-height: 100%;
+              letter-spacing: 0%;
+            }
+            .fromToApply {
+              display: flex;
+              flex-direction: column;
+              width: 360px;
+              height: 93px;
+              gap: 10px;
+
+              .fromTo {
+                width: 360px;
+                height: 43px;
+                display: flex;
+                gap: 10px;
+                .from,
+                .to {
+                  display: flex;
+                  gap: 8px;
+                  padding-right: 12px;
+                  padding-left: 12px;
+                  width: 175px;
+                  height: 42px;
+                  gap: 4px;
+                  opacity: 1;
+                  border-radius: 8px;
+                  font-family: Poppins;
+                  font-weight: 400;
+                  font-style: Regular;
+                  font-size: 14px;
+                  line-height: 100%;
+                  letter-spacing: 0%;
+                  outline: none;
+                  border: 1px solid #E1DFE1;
+                }
+              }
+            }
+            .button{
+              width: 360px;
+              display: flex;
+              align-items: center;
+              justify-content: end;
+              
+              button{
+                width: 124px;
+                height: 41px;
+                border-radius: 10px;
+                padding: 10px 20px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: white;
+                gap: 10px;
+                border: none;
+                background-color: #FF4000;
+              }
+            }
           }
         }
         .sortBy {
@@ -380,4 +461,10 @@ main {
       }
     }
   }
+}
+
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }

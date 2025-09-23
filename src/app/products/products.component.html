@@ -98,7 +98,23 @@
         </div>
         <div class="line"></div>
         <div class="filter">
-          <div class="svgHome">
+
+          <div *ngIf="filtering == true" class="filterOptions">
+            <div class="selectPrice">
+              <span>Select price</span>
+            </div>
+            <div class="fromToApply">
+              <div class="fromTo">
+                <input [(ngModel)]="from" class="from" type="number" placeholder="From">
+                <input [(ngModel)]="to" class="to" type="number" placeholder="To">
+              </div>
+              <div class="button">
+                <button (click)="filter()">Apply</button>
+              </div>
+            </div>
+          </div>
+
+          <div (click)="toggleFilter()" class="svgHome">
             <svg
               class="filter-svg"
               width="18"
@@ -117,7 +133,7 @@
             </svg>
           </div>
 
-          <span class="filterSpan">Filer</span>
+          <span (click)="toggleFilter()" class="filterSpan">Filter</span>
         </div>
         <div class="sortBy">
           <span class="sortSpan">Sort by</span>

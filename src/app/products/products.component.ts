@@ -2,10 +2,13 @@ import { Component } from '@angular/core';
 import { ApiService } from '../services/api.service';
 import { CommonModule, NgForOf } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { from } from 'rxjs';
+import { HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'app-products',
-  imports: [NgForOf, CommonModule, RouterModule],
+  imports: [NgForOf, CommonModule, RouterModule,FormsModule],
   templateUrl: './products.component.html',
   styleUrl: './products.component.scss',
 })
@@ -20,6 +23,11 @@ export class ProductsComponent {
   products: any = [];
   currentPage: number = 1;
   dinamicPageNumber: number = 2;
+
+  filtering: boolean = false;
+
+  from: number | null = null;
+  to: number | null = null;
 
   ngOnInit() {
     this.route.queryParams.subscribe((params) => {
@@ -65,4 +73,31 @@ export class ProductsComponent {
     const end = Math.min(this.currentPage * this.pageSize, this.totalItems);
     return `${start}-${end}`;
   }
+
+  toggleFilter() {
+    this.filtering = !this.filtering;
+    console.log(this.filtering);
+  }
+
+  filter() {
+  let params = new HttpParams()
+    .set('page', this.currentPage)
+    .set('sort', 'price');
+
+  if (this.from != null) {
+    params = params.set('filter[price_from]', this.from);
+  }
+  if (this.to != null) {
+    params = params.set('filter[price_to]', this.to);
+  }
+
+  console.log('Filter params:', params.toString());
+
+  const queryString = params.toString() ? `?${params.toString()}` : '';
+  this.apiService.filter(queryString).subscribe((res) => {
+    console.log('API response:', res);
+    this.products = (res as any).data;
+  });
+}
+
 }

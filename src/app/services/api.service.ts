@@ -19,4 +19,8 @@ export class ApiService {
   getProducts(page? : number) {
     return this.http.get(`${BASE_URL}/products?page=${page}`);
   }
+  filter(params: string) {
+    return this.http.get(`${BASE_URL}/products${params}`);
+
+  }
 }
