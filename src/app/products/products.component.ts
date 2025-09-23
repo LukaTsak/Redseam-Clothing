@@ -38,6 +38,7 @@ export class ProductsComponent {
   // ==========================
   filtering: boolean = false;   // show/hide filter UI
   sorting: boolean = false; // current sorting option
+  sortiOpt: string = '';        // current sorting option
   filterActive: boolean = false; // true if user applied filter
   filterOptions: string = '';   // query string used in API calls
   from: number | null = null;   // filter lower bound
@@ -80,6 +81,9 @@ export class ProductsComponent {
     }
     if (this.to != null) {
       params = params.set('filter[price_to]', this.to);
+    }
+    if (this.sortiOpt) {
+      params = params.set('sort', this.sortiOpt);
     }
 
     const queryString = params.toString() ? `?${params.toString()}` : '';
@@ -132,6 +136,11 @@ export class ProductsComponent {
 
   filter() {
     this.filterActive = true;
+    this.loadProducts(1);
+  }
+
+  sort(param: string) {
+    this.sortiOpt = param;
     this.loadProducts(1);
   }
 

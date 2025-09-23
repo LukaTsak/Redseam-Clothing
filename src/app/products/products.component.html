@@ -153,9 +153,9 @@
               <span>Sort by</span>
             </div>
             <div class="bottom">
-              <div class="frame"><span  class="f1">New products first</span></div>
-              <div class="frame"><span class="f2">Price, low to high</span></div>
-              <div class="frame"><span class="f3">Price, high to low</span></div>
+              <div class="frame"><span (click)="sort('created_at')" class="f1">New products first</span></div>
+              <div class="frame"><span (click)="sort('price ')" class="f2">Price, low to high</span></div>
+              <div class="frame"><span (click)="sort('-price ')" class="f3">Price, high to low</span></div>
             </div>
           </div>
 
