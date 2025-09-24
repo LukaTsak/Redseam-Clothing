@@ -32,6 +32,7 @@ export class ProductsComponent {
   pageSize: number = 10;
   totalItems: number = 100;
   lastPage: number = 1;
+  
 
   // ==========================
   // 🔹 Filter state

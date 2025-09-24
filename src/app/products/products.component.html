@@ -147,22 +147,33 @@
           <span (click)="toggleFilter(1)" class="filterSpan">Filter</span>
         </div>
         <div class="sortBy">
-
           <div *ngIf="sorting == true" class="detailedSort">
             <div class="top">
               <span>Sort by</span>
             </div>
             <div class="bottom">
-              <div class="frame"><span (click)="sort('created_at')" class="f1">New products first</span></div>
-              <div class="frame"><span (click)="sort('price ')" class="f2">Price, low to high</span></div>
-              <div class="frame"><span (click)="sort('-price ')" class="f3">Price, high to low</span></div>
+              <div class="frame">
+                <span (click)="sort('created_at')" class="f1"
+                  >New products first</span
+                >
+              </div>
+              <div class="frame">
+                <span (click)="sort('price ')" class="f2"
+                  >Price, low to high</span
+                >
+              </div>
+              <div class="frame">
+                <span (click)="sort('-price ')" class="f3"
+                  >Price, high to low</span
+                >
+              </div>
             </div>
           </div>
 
           <span (click)="toggleFilter(2)" class="sortSpan">Sort by</span>
           <div class="svgHome">
             <svg
-            (click)="toggleFilter(2)"
+              (click)="toggleFilter(2)"
               class="sortBy-svg"
               width="10"
               height="7"
@@ -223,6 +234,7 @@
           1
         </div>
         <div
+          *ngIf="this.lastPage - 1 !== 0 && this.lastPage - 1 !== 2"
           [ngClass]="{ selectedPage: currentPage === 2 }"
           [routerLink]="['/products']"
           [queryParams]="{ page: 2 }"
@@ -230,22 +242,67 @@
         >
           2
         </div>
-        <div class="others">...</div>
         <div
-          [ngClass]="{ selectedPage: currentPage === 9 }"
+          class="others"
+          [ngClass]="{ selectedPage: currentPage === 3 }"
           [routerLink]="['/products']"
-          [queryParams]="{ page: 9 }"
+          [queryParams]="{ page: this.currentPage }"
+        >
+          {{ lastPage <= 7 ? '3' : (currentPage === 3 ? currentPage : '...') }}
+
+        </div>
+
+        <div
+          *ngIf="this.lastPage >= 7 && this.currentPage > 3 && this.currentPage < this.lastPage"
+          class="others"
+          [ngClass]="{ selectedPage: currentPage === this.currentPage - 1 }"
+          [routerLink]="['/products']"
+          [queryParams]="{ page: this.currentPage - 1 }"
+        >
+          {{ this.currentPage - 1 }}
+        </div>
+
+        <div
+          *ngIf="this.lastPage >= 7 && this.currentPage > 3 && this.currentPage < this.lastPage - 1"
+          class="others"
+          [ngClass]="{ selectedPage: currentPage === currentPage }"
+          [routerLink]="['/products']"
+          [queryParams]="{ page: this.currentPage }"
+        >
+          {{ this.currentPage }}
+        </div>
+
+        <div
+          *ngIf="this.lastPage >= 7 && this.currentPage >= 3 && this.currentPage < this.lastPage - 2"
+          class="others"
+          [ngClass]="{ selectedPage: currentPage === this.currentPage + 1 }"
+          [routerLink]="['/products']"
+          [queryParams]="{ page: this.currentPage + 1 }"
+        >
+          {{ this.currentPage + 1 }}
+        </div>
+
+        <div *ngIf="this.lastPage >= 7 && this.currentPage >= 3 && this.currentPage < this.lastPage - 2" class="others">
+          ...
+        </div>
+
+        <div
+          *ngIf="this.lastPage - 1 !== 0"
+          [ngClass]="{ selectedPage: currentPage === this.lastPage - 1 }"
+          [routerLink]="['/products']"
+          [queryParams]="{ page: this.lastPage - 1 }"
           class="nineth"
         >
-          9
+          {{ this.lastPage - 1 }}
         </div>
         <div
-          [ngClass]="{ selectedPage: currentPage === 10 }"
+          *ngIf="this.lastPage !== 1"
+          [ngClass]="{ selectedPage: currentPage === this.lastPage }"
           [routerLink]="['/products']"
-          [queryParams]="{ page: 10 }"
+          [queryParams]="{ page: this.lastPage }"
           class="last"
         >
-          10
+          {{ this.lastPage }}
         </div>
         <div
           (click)="nextPage()"

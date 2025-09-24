@@ -468,10 +468,11 @@ main {
       width: 1720px;
       height: 32px;
       .pages {
+      // border: 1px solid blue;
         display: flex;
         align-items: center;
         gap: 8px;
-        width: 248px;
+        width: fit-content;
         height: 32px;
         .first,
         .second,
