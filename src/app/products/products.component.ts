@@ -28,11 +28,12 @@ export class ProductsComponent {
   // 🔹 Pagination state
   // ==========================
   currentPage: number = 1;
+  pagesArray: any = []
   dinamicPageNumber: number = 2; // looks like UI-related pagination number
   pageSize: number = 10;
   totalItems: number = 100;
   lastPage: number = 1;
-  
+
 
   // ==========================
   // 🔹 Filter state

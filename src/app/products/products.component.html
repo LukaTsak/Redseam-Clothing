@@ -234,7 +234,7 @@
           1
         </div>
         <div
-          *ngIf="this.lastPage - 1 !== 0 && this.lastPage - 1 !== 2"
+          *ngIf="this.lastPage - 1 !== 0"
           [ngClass]="{ selectedPage: currentPage === 2 }"
           [routerLink]="['/products']"
           [queryParams]="{ page: 2 }"
@@ -243,17 +243,21 @@
           2
         </div>
         <div
+          *ngIf="lastPage > 2"
           class="others"
           [ngClass]="{ selectedPage: currentPage === 3 }"
           [routerLink]="['/products']"
-          [queryParams]="{ page: this.currentPage }"
+          [queryParams]="{ page: 3 }"
         >
-          {{ lastPage <= 7 ? '3' : (currentPage === 3 ? currentPage : '...') }}
-
+          {{ lastPage < 7 ? "3" : currentPage === 3 ? currentPage : "..." }}
         </div>
 
         <div
-          *ngIf="this.lastPage >= 7 && this.currentPage > 3 && this.currentPage < this.lastPage"
+          *ngIf="
+            this.lastPage >= 7 &&
+            this.currentPage > 3 &&
+            this.currentPage < this.lastPage
+          "
           class="others"
           [ngClass]="{ selectedPage: currentPage === this.currentPage - 1 }"
           [routerLink]="['/products']"
@@ -263,7 +267,11 @@
         </div>
 
         <div
-          *ngIf="this.lastPage >= 7 && this.currentPage > 3 && this.currentPage < this.lastPage - 1"
+          *ngIf="
+            this.lastPage >= 7 &&
+            this.currentPage > 3 &&
+            this.currentPage < this.lastPage - 1
+          "
           class="others"
           [ngClass]="{ selectedPage: currentPage === currentPage }"
           [routerLink]="['/products']"
@@ -273,7 +281,11 @@
         </div>
 
         <div
-          *ngIf="this.lastPage >= 7 && this.currentPage >= 3 && this.currentPage < this.lastPage - 2"
+          *ngIf="
+            this.lastPage >= 7 &&
+            this.currentPage >= 3 &&
+            this.currentPage < this.lastPage - 2
+          "
           class="others"
           [ngClass]="{ selectedPage: currentPage === this.currentPage + 1 }"
           [routerLink]="['/products']"
@@ -282,12 +294,19 @@
           {{ this.currentPage + 1 }}
         </div>
 
-        <div *ngIf="this.lastPage >= 7 && this.currentPage >= 3 && this.currentPage < this.lastPage - 2" class="others">
+        <div
+          *ngIf="
+            this.lastPage >= 7 &&
+            this.currentPage >= 3 &&
+            this.currentPage < this.lastPage - 2
+          "
+          class="others"
+        >
           ...
         </div>
 
         <div
-          *ngIf="this.lastPage - 1 !== 0"
+          *ngIf="this.lastPage - 1 !== 0 && lastPage > 4"
           [ngClass]="{ selectedPage: currentPage === this.lastPage - 1 }"
           [routerLink]="['/products']"
           [queryParams]="{ page: this.lastPage - 1 }"
@@ -296,7 +315,7 @@
           {{ this.lastPage - 1 }}
         </div>
         <div
-          *ngIf="this.lastPage !== 1"
+          *ngIf="this.lastPage !== 1 && lastPage > 3"
           [ngClass]="{ selectedPage: currentPage === this.lastPage }"
           [routerLink]="['/products']"
           [queryParams]="{ page: this.lastPage }"
