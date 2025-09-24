@@ -153,4 +153,8 @@ export class ProductsComponent {
     const end = Math.min(this.currentPage * this.pageSize, this.totalItems);
     return `${start}-${end}`;
   }
+  get avatarUrl(): string {
+  return this.user?.user?.avatar || '../../assets/images/defaultProfilePic.jpg';
+}
+
 }
