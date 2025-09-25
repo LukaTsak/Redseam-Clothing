@@ -113,7 +113,7 @@ main {
   }
   .main {
     display: flex;
-    border: 1px solid black;
+    // border: 1px solid black;
     margin-top: 49px;
     .sidePhotos {
       margin-left: 100px;
@@ -125,6 +125,7 @@ main {
       gap: 9px;
       img {
         box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+        cursor: pointer;
       }
     }
     .mainPhoto {
@@ -142,7 +143,7 @@ main {
     }
     .details {
       margin-left: 168px;
-      border: 1px solid red;
+      //   border: 1px solid red;
       width: 704px;
       height: 907px;
       display: flex;
@@ -222,6 +223,114 @@ main {
               border: 1px solid #e1dfe1;
             }
           }
+        }
+      }
+      .sizes {
+        width: 382px;
+        height: 82px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        .text {
+          width: 382px;
+          height: 24px;
+          span {
+            font-family: Poppins;
+            font-weight: 400;
+            font-style: Regular;
+            font-size: 16px;
+            leading-trim: NONE;
+            line-height: 100%;
+            letter-spacing: 0%;
+          }
+        }
+        .sizesDiv {
+          // border: 1px solid black;
+          width: 382px;
+          height: 42px;
+          display: flex;
+          gap: 8px;
+          .sizeInfo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 70px;
+            height: 42px;
+            border-radius: 10px;
+            border: 1px solid #e1dfe1;
+            padding: 9px 16px;
+            cursor: pointer;
+          }
+        }
+      }
+      .quantity {
+        // border: 1px solid black;
+        width: 70px;
+        height: auto;
+        // min-height: 82px;
+        display: flex;
+        gap: 16px;
+        flex-direction: column;
+        .text {
+          width: 70px;
+          height: 24px;
+          font-family: Poppins;
+          font-weight: 400;
+          font-style: Regular;
+          font-size: 16px;
+          leading-trim: NONE;
+          line-height: 100%;
+          letter-spacing: 0%;
+        }
+        .quantityDrpdown {
+          position: relative;
+          z-index: 2;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 10px;
+          justify-content: start;
+          width: 70px;
+          height: 42px;
+          border-radius: 10px;
+          border: 1px solid #e1dfe1;
+          padding: 9px 16px;
+          overflow: hidden;
+
+          .opt {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+
+            .number {
+              span {
+                width: 10px;
+                height: 24px;
+                opacity: 0.8;
+                font-family: Poppins;
+                font-weight: 400;
+                font-style: Regular;
+                font-size: 16px;
+                line-height: 100%;
+                letter-spacing: 0%;
+                cursor: pointer;
+              }
+            }
+            .svgDiv {
+              width: 20px;
+              height: 20px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              .dropdown-svg {
+                cursor: pointer;
+              }
+            }
+          }
+        }
+        .openDropdown {
+          height: fit-content !important;
         }
       }
     }

@@ -19,10 +19,13 @@ export class ProductDetailsComponent {
 
   prductId: number = 0;
   ProdutsData: any = {};
-  images = []
-  
-  selectedColor:string = ''
+  images = [];
+
+  selectedColor: string = '';
   selectedColorId: number = 0;
+  selectedQuantity: number = 1;
+
+  quantDropdownActive: boolean = false;
 
   ngOnInit() {
     this.route.queryParams.subscribe((params) => {
@@ -30,14 +33,27 @@ export class ProductDetailsComponent {
 
       this.apiService.getItem(this.prductId).subscribe((data: any) => {
         this.ProdutsData = data;
-        this.images = data.images
+        this.images = data.images;
+        this.selectedColor = data.available_colors[0];
         console.log('adasda', this.ProdutsData);
+        // console.log('ava', this.ProdutsData.available_colors[0]);
       });
     });
   }
 
-  setColor(color: string, index:number) {
-    this.selectedColor = color
-    this.selectedColorId = index
+  setColor(color: string, index: number) {
+    this.selectedColor = color;
+    this.selectedColorId = index;
+  }
+
+  quanityUpdate(quant: number) {
+    this.selectedQuantity = quant;
+    this.quantDropdownActive = false;
+  }
+
+  dropdown(){
+      this.quantDropdownActive = !this.quantDropdownActive;
+      console.log('worked ' + this.quantDropdownActive)
+
   }
 }

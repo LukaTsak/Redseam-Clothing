@@ -70,11 +70,16 @@
   </div>
   <div class="main">
     <div class="sidePhotos">
-      <img *ngFor="let el of this.images" src="{{ el }}" alt="" />
+      <img
+        (click)="setColor(this.ProdutsData.available_colors[i], i)"
+        *ngFor="let el of this.images; let i = index"
+        src="{{ el }}"
+        alt=""
+      />
     </div>
 
     <div class="mainPhoto">
-      <img [src]="this.ProdutsData.images[this.selectedColorId] " alt="" />
+      <img [src]="this.ProdutsData.images[this.selectedColorId]" alt="" />
     </div>
     <div class="details">
       <div class="namePrice">
@@ -85,16 +90,90 @@
         <div class="color">
           <div class="colorName">
             <span>
-            color: {{ this.selectedColor || this.ProdutsData.available_colors[0] }}
+              color:
+              {{ this.selectedColor || this.ProdutsData.available_colors[0] }}
             </span>
           </div>
           <div class="colorCircles">
             <div
-              *ngFor="let el of this.ProdutsData.available_colors; let i = index"
+              *ngFor="
+                let el of this.ProdutsData.available_colors;
+                let i = index
+              "
               class="selectedColor"
               [ngClass]="{ selectedColorBorder: selectedColor === el }"
             >
-              <div [ngStyle]="{'background-color': el}" (click)="setColor(el, i)" class="circle"></div>
+              <div
+                [ngStyle]="{ 'background-color': el }"
+                (click)="setColor(el, i)"
+                class="circle"
+              ></div>
+            </div>
+          </div>
+          <div class="sizes">
+            <div class="text">
+              <span>Size: {{ this.ProdutsData.available_sizes[0] }}</span>
+            </div>
+            <div class="sizesDiv">
+              <div
+                *ngFor="
+                  let el of this.ProdutsData.available_sizes;
+                  let i = index
+                "
+                class="sizeInfo"
+              >
+                <span>{{ this.ProdutsData.available_sizes[i] }}</span>
+              </div>
+            </div>
+          </div>
+          <div class="quantity">
+            <div class="text">Quanity</div>
+            <div
+              [ngClass]="{ openDropdown: quantDropdownActive }"
+              class="quantityDrpdown"
+            >
+              <div class="opt">
+                <div class="number">
+                  <span>{{ this.selectedQuantity }}</span>
+                </div>
+                <div (click)="dropdown()" class="svgDiv">
+                  <svg
+                    class="dropdown-svg"
+                    width="10"
+                    height="6"
+                    viewBox="0 0 10 6"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M0.21967 0.21967C0.512563 -0.0732233 0.987437 -0.0732233 1.28033 0.21967L5 3.93934L8.71967 0.219671C9.01256 -0.0732226 9.48744 -0.0732225 9.78033 0.219671C10.0732 0.512564 10.0732 0.987438 9.78033 1.28033L5.53033 5.53033C5.38968 5.67098 5.19891 5.75 5 5.75C4.80109 5.75 4.61032 5.67098 4.46967 5.53033L0.21967 1.28033C-0.0732233 0.987437 -0.0732233 0.512563 0.21967 0.21967Z"
+                      fill="#10151F"
+                    />
+                  </svg>
+                </div>
+              </div>
+
+              <div
+                (click)="quanityUpdate(1)"
+                *ngIf="this.selectedQuantity != 1"
+                class="opt duffNum"
+              >
+                <div class="number">
+                  <span>1</span>
+                </div>
+              </div>
+
+              <div
+                *ngFor="let num of [].constructor(8); let i = index"
+                class="opt duffNum"
+                (click)="quanityUpdate(i + 2)"
+              >
+                <div class="number">
+                  <span>{{ i + 2 }}</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
