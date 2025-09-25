@@ -28,23 +28,22 @@ export class ProductsComponent {
   // 🔹 Pagination state
   // ==========================
   currentPage: number = 1;
-  pagesArray: any = []
+  pagesArray: any = [];
   dinamicPageNumber: number = 2; // looks like UI-related pagination number
   pageSize: number = 10;
   totalItems: number = 100;
   lastPage: number = 1;
 
-
   // ==========================
   // 🔹 Filter state
   // ==========================
-  filtering: boolean = false;   // show/hide filter UI
+  filtering: boolean = false; // show/hide filter UI
   sorting: boolean = false; // current sorting option
-  sortiOpt: string = '';        // current sorting option
+  sortiOpt: string = ''; // current sorting option
   filterActive: boolean = false; // true if user applied filter
-  filterOptions: string = '';   // query string used in API calls
-  from: number | null = null;   // filter lower bound
-  to: number | null = null;     // filter upper bound
+  filterOptions: string = ''; // query string used in API calls
+  from: number | null = null; // filter lower bound
+  to: number | null = null; // filter upper bound
 
   ngOnInit() {
     this.route.queryParams.subscribe((params) => {
@@ -124,11 +123,11 @@ export class ProductsComponent {
 
   /////////////// Filtering actions
 
-  toggleFilter(x : number) {
+  toggleFilter(x: number) {
     if (x === 1) {
-    this.filtering = !this.filtering;
-    this.sorting = false;
-    console.log('Filtering UI:', this.filtering);
+      this.filtering = !this.filtering;
+      this.sorting = false;
+      console.log('Filtering UI:', this.filtering);
     } else if (x === 2) {
       this.sorting = !this.sorting;
       this.filtering = false;
@@ -141,9 +140,21 @@ export class ProductsComponent {
     this.loadProducts(1);
   }
 
-  sort(param: string) {
-    this.sortiOpt = param;
+  resetFilters() {
+    this.filterActive = false;
+    this.from = null;
+    this.to = null;
     this.loadProducts(1);
+  }
+
+  sort(param: string) {
+    if (this.sortiOpt === param) {
+      this.sortiOpt = '';
+      this.loadProducts(1);
+    } else {
+      this.sortiOpt = param;
+      this.loadProducts(1);
+    }
   }
 
   /////////////// Helpers
@@ -154,7 +165,8 @@ export class ProductsComponent {
     return `${start}-${end}`;
   }
   get avatarUrl(): string {
-  return this.user?.user?.avatar || '../../assets/images/defaultProfilePic.jpg';
-}
-
+    return (
+      this.user?.user?.avatar || '../../assets/images/defaultProfilePic.jpg'
+    );
+  }
 }

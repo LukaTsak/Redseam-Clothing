@@ -129,17 +129,22 @@
             </div>
             <div class="bottom">
               <div class="frame">
-                <span (click)="sort('created_at')" class="f1"
+                <span
+                  [ngStyle]="{
+                    color: sortiOpt === 'created_at' ? '#ff4000' : 'grey'
+                  }"
+                  (click)="sort('created_at')"
+                  class="f1"
                   >New products first</span
                 >
               </div>
               <div class="frame">
-                <span (click)="sort('price ')" class="f2"
+                <span [ngStyle]="{ color: sortiOpt === 'price' ? '#ff4000' : 'grey' }" (click)="sort('price')" class="f2"
                   >Price, low to high</span
                 >
               </div>
               <div class="frame">
-                <span (click)="sort('-price ')" class="f3"
+                <span [ngStyle]="{ color: sortiOpt === '-price' ? '#ff4000' : 'grey' }" (click)="sort('-price')" class="f3"
                   >Price, high to low</span
                 >
               </div>
@@ -168,8 +173,34 @@
         </div>
       </div>
     </div>
+    <div *ngIf="filterActive" class="filterOptDiv">
+      <div class="filterDivFromTo">
+        price: {{ this.from }} - {{ this.to }}
+        <div (click)="resetFilters()" class="svgDiv">
+          <svg
+            class="svg-x"
+            width="12"
+            height="13"
+            viewBox="0 0 12 13"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M2.73483 3.23483C2.88128 3.08839 3.11872 3.08839 3.26517 3.23483L6 5.96967L8.73483 3.23484C8.88128 3.08839 9.11872 3.08839 9.26517 3.23484C9.41161 3.38128 9.41161 3.61872 9.26517 3.76517L6.53033 6.5L9.26517 9.23483C9.41161 9.38128 9.41161 9.61872 9.26517 9.76517C9.11872 9.91161 8.88128 9.91161 8.73483 9.76517L6 7.03033L3.26517 9.76517C3.11872 9.91161 2.88128 9.91161 2.73484 9.76517C2.58839 9.61872 2.58839 9.38128 2.73484 9.23483L5.46967 6.5L2.73483 3.76517C2.58839 3.61872 2.58839 3.38128 2.73483 3.23483Z"
+              fill="#3E424A"
+            />
+          </svg>
+        </div>
+      </div>
+    </div>
     <div class="products">
-      <div *ngFor="let el of this.products" class="card">
+      <div
+        routerLink="/details"
+        [queryParams]="{ id: el.id }"
+        *ngFor="let el of this.products"
+        class="card"
+      >
         <img class="productPhoto" [src]="el.cover_image" alt="" />
         <div class="info">
           <p class="productName">{{ el.name }}</p>
