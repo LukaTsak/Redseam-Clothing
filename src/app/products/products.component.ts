@@ -18,32 +18,28 @@ export class ProductsComponent {
     private router: Router
   ) {}
 
-  // ==========================
-  // 🔹 User & product data
-  // ==========================
+  /////////////// User & product data
+  
   user = JSON.parse(localStorage.getItem('user') || '{}');
   products: any[] = [];
 
-  // ==========================
-  // 🔹 Pagination state
-  // ==========================
+  /////////////// Pagination state
   currentPage: number = 1;
   pagesArray: any = [];
-  dinamicPageNumber: number = 2; // looks like UI-related pagination number
+  dinamicPageNumber: number = 2;
   pageSize: number = 10;
   totalItems: number = 100;
   lastPage: number = 1;
 
-  // ==========================
-  // 🔹 Filter state
-  // ==========================
-  filtering: boolean = false; // show/hide filter UI
-  sorting: boolean = false; // current sorting option
-  sortiOpt: string = ''; // current sorting option
-  filterActive: boolean = false; // true if user applied filter
-  filterOptions: string = ''; // query string used in API calls
-  from: number | null = null; // filter lower bound
-  to: number | null = null; // filter upper bound
+  /////////////// Filter state
+
+  filtering: boolean = false;
+  sorting: boolean = false;
+  sortiOpt: string = '';
+  filterActive: boolean = false;
+  filterOptions: string = '';
+  from: number | null = null;
+  to: number | null = null;
 
   ngOnInit() {
     this.route.queryParams.subscribe((params) => {

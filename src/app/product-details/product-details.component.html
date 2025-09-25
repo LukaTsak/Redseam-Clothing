@@ -65,4 +65,40 @@
       </div>
     </div>
   </div>
+  <div class="listinText">
+    <span>Listing / Product</span>
+  </div>
+  <div class="main">
+    <div class="sidePhotos">
+      <img *ngFor="let el of this.images" src="{{ el }}" alt="" />
+    </div>
+
+    <div class="mainPhoto">
+      <img [src]="this.ProdutsData.images[this.selectedColorId] " alt="" />
+    </div>
+    <div class="details">
+      <div class="namePrice">
+        <div class="name">{{ this.ProdutsData.name }}</div>
+        <div class="price">$ {{ this.ProdutsData.price }}</div>
+      </div>
+      <div class="colorSizeQuantity">
+        <div class="color">
+          <div class="colorName">
+            <span>
+            color: {{ this.selectedColor || this.ProdutsData.available_colors[0] }}
+            </span>
+          </div>
+          <div class="colorCircles">
+            <div
+              *ngFor="let el of this.ProdutsData.available_colors; let i = index"
+              class="selectedColor"
+              [ngClass]="{ selectedColorBorder: selectedColor === el }"
+            >
+              <div [ngStyle]="{'background-color': el}" (click)="setColor(el, i)" class="circle"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </main>

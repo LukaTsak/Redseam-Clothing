@@ -21,6 +21,8 @@ export class ApiService {
   }
   filter(params: string) {
     return this.http.get(`${BASE_URL}/products${params}`);
-
+  }
+  getItem(id: number){
+    return this.http.get(`${BASE_URL}/products/${id}`);
   }
 }
