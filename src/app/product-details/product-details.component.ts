@@ -102,7 +102,7 @@ export class ProductDetailsComponent {
     console.log(goingToCart);
     this.apiService
       .addToCart(goingToCart, this.prductId)
-      .subscribe((params:any) => {
+      .subscribe((params: any) => {
         console.log(params);
         this.loadCart();
         if (params && params.total_price) {
@@ -141,10 +141,21 @@ export class ProductDetailsComponent {
       }
     );
   }
-  deleteProductFromCart(id: number, i: number) {
-    this.apiService.deleteProductFromCart(id).subscribe(() => {
-      this.loadCart(i);
+  deleteProductFromCart(
+    index: number,
+    id: number,
+    color: string,
+    size: string
+  ) {
+    let toBeDeleted = {
+      color: color,
+      size: size,
+    };
+    this.apiService.deleteProductFromCart(id, toBeDeleted).subscribe((res) => {
+      console.log("after delete "+ res)
+      this.loadCart(index);
     });
+    console.log(toBeDeleted)
   }
 
   findIndex(id: any) {

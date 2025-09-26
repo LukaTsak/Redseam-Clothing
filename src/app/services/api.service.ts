@@ -39,7 +39,7 @@ export class ApiService {
   updateProductInCart(obj: any, id:number){
     return this.http.patch(`${BASE_URL}/cart/products/${id}`, obj, {headers});
   }
-  deleteProductFromCart(id:number){
-    return this.http.delete(`${BASE_URL}/cart/products/${id}`, {headers});
+  deleteProductFromCart(id:number, obj:any){
+    return this.http.delete(`${BASE_URL}/cart/products/${id}`, { body: obj, headers });
   }
 }
