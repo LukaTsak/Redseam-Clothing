@@ -493,13 +493,13 @@
                 </div>
               </div>
               <div class="right">
-                <span (click)="deleteProductFromCart(el.id)">Remove</span>
+                <span (click)="deleteProductFromCart(el.id, i)">Remove</span>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="prices">
+      <div *ngIf="cartData.length >= 1" class="prices">
         <div class="subtotal">
           <span class="subT">Items subtotal</span>
           <span class="Price">$ {{subtotalPrice}}</span>
@@ -514,7 +514,7 @@
         </div>
 
       </div>
-        <div class="button">Go to checkout</div>
+        <div *ngIf="cartData.length >= 1" class="button">Go to checkout</div>
 
     </div>
   </div>
@@ -661,7 +661,7 @@
         </div>
       </div>
 
-      <div (click)="addToCart()" class="button">
+      <div (click)="addToCart(this.ProdutsData.id)" class="button">
         <div class="svgDiv">
           <svg
             class="cart-svg"

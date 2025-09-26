@@ -92,7 +92,7 @@ export class ProductDetailsComponent {
     return parts.length === 1 ? parts[0] : parts[parts.length - 1];
   }
 
-  addToCart() {
+  addToCart(id: number) {
     let goingToCart = {
       quantity: this.selectedQuantity,
       color: this.selectedColor,
@@ -102,8 +102,12 @@ export class ProductDetailsComponent {
     console.log(goingToCart);
     this.apiService
       .addToCart(goingToCart, this.prductId)
-      .subscribe((params) => {
+      .subscribe((params:any) => {
         console.log(params);
+        this.loadCart();
+        if (params && params.total_price) {
+          this.subtotalPrice += params.total_price;
+        }
       });
   }
 
@@ -118,11 +122,11 @@ export class ProductDetailsComponent {
     if (operation === 0 && currentQuantity > 1) {
       newQuantity = currentQuantity - 1;
       this.subtotalPrice =
-            this.subtotalPrice - this.cartData[index].total_price;
+        this.subtotalPrice - this.cartData[index].total_price;
     } else if (operation === 1) {
       newQuantity = currentQuantity + 1;
       this.subtotalPrice =
-            this.subtotalPrice + this.cartData[index].total_price;
+        this.subtotalPrice + this.cartData[index].total_price;
     }
 
     const updateGoingToCart = {
@@ -134,16 +138,30 @@ export class ProductDetailsComponent {
     this.updateProductInCart(updateGoingToCart, productId).subscribe(
       (response) => {
         this.cartData[index].quantity = newQuantity;
-        // for (let i = index; i < this.cartData.length; i++) {
-        //   this.subtotalPrice =
-        //     this.subtotalPrice + this.cartData[i].total_price;
-        // }
       }
     );
   }
-  deleteProductFromCart(id:number){
-    this.apiService.deleteProductFromCart(id).subscribe((res) => {
-      console.log('new cart: '+ res)
-    })
+  deleteProductFromCart(id: number, i: number) {
+    this.apiService.deleteProductFromCart(id).subscribe(() => {
+      this.loadCart(i);
+    });
+  }
+
+  findIndex(id: any) {
+    const index = this.cartData.findIndex(
+      (item: { product_id: any }) => item.product_id === id
+    );
+    console.log('index ' + index);
+    return index;
+  }
+
+  loadCart(i?: number) {
+    console.log('refreshed');
+    this.apiService.getCart().subscribe((res: any) => {
+      this.cartData = res.data || res;
+    });
+    if (i) {
+      this.subtotalPrice = this.subtotalPrice - this.cartData[i].total_price;
+    }
   }
 }
