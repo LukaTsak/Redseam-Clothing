@@ -97,6 +97,112 @@ main {
         }
       }
     }
+    .shoppingCart {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: start;
+      // gap: 150px;
+      position: fixed;
+      right: 0;
+      top: 0;
+      width: 540px;
+      height: 1080px;
+      background-color: #f8f6f7;
+      border-left: 1px solid #e1dfe1;
+      padding: 40px;
+      .top {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        .cartText {
+          width: 181px;
+          height: 30px;
+          span {
+            font-family: Poppins;
+            font-weight: 500;
+            font-style: Medium;
+            font-size: 20px;
+            leading-trim: NONE;
+            line-height: 100%;
+            letter-spacing: 0%;
+          }
+        }
+        .close {
+          width: 32px;
+          height: 32px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          svg {
+            fill: #10151f;
+          }
+        }
+      }
+      .emtyCart {
+          margin-top: 150px;
+        width: 170px;
+        height: 135px;
+        display: flex;
+        // gap: 50px;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        .svgDiv {
+        }
+        .oops {
+          margin-top: 24px;
+          width: 88px;
+          height: 36px;
+          font-family: Poppins;
+          font-weight: 600;
+          font-style: SemiBold;
+          font-size: 24px;
+          leading-trim: NONE;
+          line-height: 100%;
+          letter-spacing: 0%;
+        }
+        .youGotNothing {
+          margin-top: 10px;
+          width: 277px;
+          height: 21px;
+          font-family: Poppins;
+          font-weight: 400;
+          font-style: Regular;
+          font-size: 14px;
+          leading-trim: NONE;
+          line-height: 100%;
+          letter-spacing: 0%;
+          text-align: center;
+        }
+        .button {
+          margin-top: 58px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 214px;
+          height: 41px;
+          border-radius: 10px;
+          padding: 10px 20px;
+          background-color: #ff4000;
+          span {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 103px;
+            height: 21px;
+            color: white;
+            font-family: Poppins;
+            font-weight: 400;
+            font-style: Regular;
+            font-size: 14px;
+            leading-trim: NONE;
+            line-height: 100%;
+            letter-spacing: 0%;
+          }
+        }
+      }
+    }
   }
   .listinText {
     span {
@@ -281,7 +387,6 @@ main {
               padding: 9px 16px;
               cursor: pointer;
             }
-
           }
         }
         .quantity {
@@ -317,6 +422,7 @@ main {
             border: 1px solid #e1dfe1;
             padding: 9px 16px;
             overflow: hidden;
+            background-color: white;
 
             .opt {
               display: flex;
@@ -458,15 +564,15 @@ main {
     }
   }
 }
-            .noSizesAvailable {
-              min-width: 200px;
-              width: fit-content;
-              min-height: 42px;
-              height: fit-content;
-              border-radius: 10px;
-              border: 1px solid #e1dfe1;
-              padding: 9px 16px;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-            }
+.noSizesAvailable {
+  min-width: 200px;
+  width: fit-content;
+  min-height: 42px;
+  height: fit-content;
+  border-radius: 10px;
+  border: 1px solid #e1dfe1;
+  padding: 9px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
