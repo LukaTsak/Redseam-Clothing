@@ -1,4 +1,9 @@
 <main>
+  <div *ngIf="userMessageArray.length > 0" class="user-message">
+    <div *ngFor="let error of userMessageArray" class="littleMessage">
+      {{ error }}
+    </div>
+  </div>
   <div class="headder">
     <div class="logo">
       <div class="logoSvgParrent">
@@ -44,7 +49,7 @@
         </svg>
       </div>
       <div class="profile">
-        <img class="photo" [src]="" alt="" />
+        <img class="photo" [src]="avatarUrl" alt="" />
         <div class="dropdown">
           <svg
             class="dropdown-svg"
@@ -493,7 +498,10 @@
                 </div>
               </div>
               <div class="right">
-                <span (click)="deleteProductFromCart(i,el.id,el.color,el.size)">Remove</span>
+                <span
+                  (click)="deleteProductFromCart(i, el.id, el.color, el.size)"
+                  >Remove</span
+                >
               </div>
             </div>
           </div>
@@ -502,7 +510,7 @@
       <div *ngIf="cartData.length >= 1" class="prices">
         <div class="subtotal">
           <span class="subT">Items subtotal</span>
-          <span class="Price">$ {{subtotalPrice}}</span>
+          <span class="Price">$ {{ subtotalPrice }}</span>
         </div>
         <div class="subtotal delivery">
           <span class="subT">Delivery</span>
@@ -510,12 +518,10 @@
         </div>
         <div class="total">
           <span class="subT">Total</span>
-          <span class="Price">$ {{subtotalPrice + 5}}</span>
+          <span class="Price">$ {{ subtotalPrice + 5 }}</span>
         </div>
-
       </div>
-        <div *ngIf="cartData.length >= 1" class="button">Go to checkout</div>
-
+      <div *ngIf="cartData.length >= 1" class="button">Go to checkout</div>
     </div>
   </div>
   <div class="listinText">
@@ -531,7 +537,7 @@
       />
     </div>
     <div class="mainPhoto">
-      <img [src]="this.ProdutsData.images[this.selectedColorId]" alt="" />
+      <img [src]="this.ProdutsData?.images[this.selectedColorId]" alt="" />
     </div>
     <div class="details">
       <div class="namePrice">

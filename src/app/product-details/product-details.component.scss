@@ -1,4 +1,25 @@
 main {
+  .user-message {
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: fixed;
+    top: 85px;
+    right: 20px;
+    z-index: 1000;
+    transition: all 1s;
+
+    .littleMessage {
+      background-color: white;
+      color: #ff4000;
+      padding: 12px 20px;
+      border-radius: 5px;
+      box-shadow: 0 2px 6px #ff4000;
+      animation: slideInFromRight 0.6s ease-out forwards;
+      transition: all 1s;
+    }
+  }
   .headder {
     display: flex;
     justify-content: space-between;
@@ -841,4 +862,15 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+@keyframes slideInFromRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }

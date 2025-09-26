@@ -17,9 +17,10 @@ export class ProductDetailsComponent {
     private router: Router
   ) {}
 
+  /////////////// STATE VARIABLES
+
   ProdutsData: any = {};
   cartData: any = {};
-
   images = [CommonModule, RouterModule, FormsModule, NgForm];
 
   prductId: number = 0;
@@ -27,11 +28,16 @@ export class ProductDetailsComponent {
   selectedColorId: number = 0;
   selectedQuantity: number = 1;
   selectedSize: string = '';
-
   subtotalPrice: number = 0;
 
   quantDropdownActive: boolean = false;
-  shoppingCartActive: boolean = true;
+  shoppingCartActive: boolean = false;
+
+  user = JSON.parse(localStorage.getItem('user') || '{}');
+  userMessage: string | null = null;
+  userMessageArray: string[] = [];
+
+  /////////////// LIFECYCLE
 
   ngOnInit() {
     this.route.queryParams.subscribe((params) => {
@@ -44,22 +50,33 @@ export class ProductDetailsComponent {
         this.selectedSize = data.available_sizes[0];
         console.log('data: ', this.ProdutsData);
         console.log('product_id: ', this.prductId);
-
-        // console.log('ava', this.ProdutsData.available_colors[0]);
       });
     });
 
-    this.apiService.getCart().subscribe((cartData) => {
-      this.cartData = cartData;
-      console.log('cart:', this.cartData);
-      console.log(this.cartData[0].price);
+    if (localStorage.getItem('token')) {
+      this.apiService.getCart().subscribe((cartData) => {
+        this.cartData = cartData;
+        console.log('cart:', this.cartData);
+        console.log(this.cartData[0].price);
 
-      for (let i = 0; i < this.cartData.length; i++) {
-        this.subtotalPrice = this.subtotalPrice + this.cartData[i].total_price;
-      }
-      console.log(this.subtotalPrice);
-    });
+        for (let i = 0; i < this.cartData.length; i++) {
+          this.subtotalPrice =
+            this.subtotalPrice + this.cartData[i].total_price;
+        }
+        console.log(this.subtotalPrice);
+      });
+    }
   }
+
+  /////////////// GETTERS
+
+  get avatarUrl(): string {
+    return (
+      this.user?.user?.avatar || '../../assets/images/defaultProfilePic.jpg'
+    );
+  }
+
+  /////////////// PRODUCT SELECTION
 
   setColor(color: string, index: number) {
     this.selectedColor = color;
@@ -68,7 +85,6 @@ export class ProductDetailsComponent {
 
   setSize(size: string) {
     this.selectedSize = size;
-    // console.log(this.selectedSize)
   }
 
   quanityUpdate(quant: number) {
@@ -81,34 +97,42 @@ export class ProductDetailsComponent {
     console.log('worked ' + this.quantDropdownActive);
   }
 
-  cartOpen() {
-    this.shoppingCartActive = !this.shoppingCartActive;
-    console.log('huh?: ' + this.shoppingCartActive);
-  }
-
   normalizeColor(color: string): string {
     if (!color) return '';
     const parts = color.trim().split(' ');
     return parts.length === 1 ? parts[0] : parts[parts.length - 1];
   }
 
-  addToCart(id: number) {
-    let goingToCart = {
-      quantity: this.selectedQuantity,
-      color: this.selectedColor,
-      size: this.selectedSize,
-    };
+  /////////////// CART ACTIONS
 
-    console.log(goingToCart);
-    this.apiService
-      .addToCart(goingToCart, this.prductId)
-      .subscribe((params: any) => {
-        console.log(params);
-        this.loadCart();
-        if (params && params.total_price) {
-          this.subtotalPrice += params.total_price;
-        }
-      });
+  cartOpen() {
+    this.shoppingCartActive = !this.shoppingCartActive;
+    console.log('huh?: ' + this.shoppingCartActive);
+  }
+
+  addToCart(id: number) {
+    if (localStorage.getItem('token')) {
+      let goingToCart = {
+        quantity: this.selectedQuantity,
+        color: this.selectedColor,
+        size: this.selectedSize,
+      };
+
+      this.shoppingCartActive = true;
+
+      console.log(goingToCart);
+      this.apiService
+        .addToCart(goingToCart, this.prductId)
+        .subscribe((params: any) => {
+          console.log(params);
+          this.loadCart();
+          if (params && params.total_price) {
+            this.subtotalPrice += params.total_price;
+          }
+        });
+    } else {
+      this.showMessage('Please register first');
+    }
   }
 
   updateProductInCart(obj: any, id: number) {
@@ -141,6 +165,7 @@ export class ProductDetailsComponent {
       }
     );
   }
+
   deleteProductFromCart(
     index: number,
     id: number,
@@ -152,10 +177,14 @@ export class ProductDetailsComponent {
       size: size,
     };
     this.apiService.deleteProductFromCart(id, toBeDeleted).subscribe((res) => {
-      console.log("after delete "+ res)
+      console.log('after delete ' + res);
       this.loadCart(index);
+      if (this.cartData.length === 1) {
+        this.subtotalPrice = 0;
+        console.log(this.subtotalPrice);
+      }
     });
-    console.log(toBeDeleted)
+    console.log(toBeDeleted);
   }
 
   findIndex(id: any) {
@@ -174,5 +203,17 @@ export class ProductDetailsComponent {
     if (i) {
       this.subtotalPrice = this.subtotalPrice - this.cartData[i].total_price;
     }
+  }
+
+  ///////////////
+
+  showMessage(msg: string) {
+    if (this.userMessageArray.includes(msg)) return;
+
+    this.userMessageArray.push(msg);
+
+    setTimeout(() => {
+      this.userMessageArray = this.userMessageArray.filter((m) => m !== msg);
+    }, 3000);
   }
 }
