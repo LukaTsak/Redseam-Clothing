@@ -77,7 +77,6 @@
         alt=""
       />
     </div>
-
     <div class="mainPhoto">
       <img [src]="this.ProdutsData.images[this.selectedColorId]" alt="" />
     </div>
@@ -95,86 +94,154 @@
             </span>
           </div>
           <div class="colorCircles">
-            <div
-              *ngFor="
-                let el of this.ProdutsData.available_colors;
-                let i = index
-              "
-              class="selectedColor"
-              [ngClass]="{ selectedColorBorder: selectedColor === el }"
+            <div class="visibleColorDiv"
+              *ngIf="ProdutsData?.available_colors?.length > 0; else noColors"
             >
-              <div
-                [ngStyle]="{ 'background-color': el }"
-                (click)="setColor(el, i)"
-                class="circle"
-              ></div>
-            </div>
-          </div>
-          <div class="sizes">
-            <div class="text">
-              <span>Size: {{ this.ProdutsData.available_sizes[0] }}</span>
-            </div>
-            <div class="sizesDiv">
               <div
                 *ngFor="
-                  let el of this.ProdutsData.available_sizes;
+                  let el of this.ProdutsData.available_colors;
                   let i = index
                 "
+                class="selectedColor"
+                [ngClass]="{
+                  selectedColorBorder: selectedColor === normalizeColor(el)
+                }"
+              >
+                <div
+                  [ngStyle]="{ 'background-color': normalizeColor(el) }"
+                  (click)="setColor(normalizeColor(el), i)"
+                  class="circle"
+                ></div>
+              </div>
+            </div>
+
+            <ng-template #noColors>
+              <div class="noSizesAvailable">No colors available</div>
+            </ng-template>
+          </div>
+        </div>
+        <div class="sizes">
+          <div class="text">
+            <span *ngIf="ProdutsData?.available_sizes?.[0]; else noSizesText">
+              Size: {{ ProdutsData.available_sizes[0] }}
+            </span>
+          </div>
+          <ng-template #noSizesText>
+            <span>Size: None</span>
+          </ng-template>
+
+          <div class="sizesDiv">
+            <div class="visibleSizes" *ngIf="ProdutsData?.available_sizes?.length > 0; else noSizes">
+              <div
+                *ngFor="let el of ProdutsData.available_sizes; let i = index"
                 class="sizeInfo"
               >
-                <span>{{ this.ProdutsData.available_sizes[i] }}</span>
+                <span>{{ el }}</span>
+              </div>
+            </div>
+
+            <ng-template #noSizes>
+              <div class="noSizesAvailable">No sizes available</div>
+            </ng-template>
+          </div>
+        </div>
+        <div class="quantity">
+          <div class="text">Quantity</div>
+          <div
+            [ngClass]="{ openDropdown: quantDropdownActive }"
+            class="quantityDrpdown"
+          >
+            <div class="opt">
+              <div class="number">
+                <span>{{ this.selectedQuantity }}</span>
+              </div>
+              <div (click)="dropdown()" class="svgDiv">
+                <svg
+                  class="dropdown-svg"
+                  width="10"
+                  height="6"
+                  viewBox="0 0 10 6"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M0.21967 0.21967C0.512563 -0.0732233 0.987437 -0.0732233 1.28033 0.21967L5 3.93934L8.71967 0.219671C9.01256 -0.0732226 9.48744 -0.0732225 9.78033 0.219671C10.0732 0.512564 10.0732 0.987438 9.78033 1.28033L5.53033 5.53033C5.38968 5.67098 5.19891 5.75 5 5.75C4.80109 5.75 4.61032 5.67098 4.46967 5.53033L0.21967 1.28033C-0.0732233 0.987437 -0.0732233 0.512563 0.21967 0.21967Z"
+                    fill="#10151F"
+                  />
+                </svg>
+              </div>
+            </div>
+
+            <div
+              (click)="quanityUpdate(1)"
+              *ngIf="this.selectedQuantity != 1"
+              class="opt duffNum"
+            >
+              <div class="number">
+                <span>1</span>
+              </div>
+            </div>
+
+            <div
+              *ngFor="let num of [].constructor(8); let i = index"
+              class="opt duffNum"
+              (click)="quanityUpdate(i + 2)"
+            >
+              <div class="number">
+                <span>{{ i + 2 }}</span>
               </div>
             </div>
           </div>
-          <div class="quantity">
-            <div class="text">Quanity</div>
-            <div
-              [ngClass]="{ openDropdown: quantDropdownActive }"
-              class="quantityDrpdown"
-            >
-              <div class="opt">
-                <div class="number">
-                  <span>{{ this.selectedQuantity }}</span>
-                </div>
-                <div (click)="dropdown()" class="svgDiv">
-                  <svg
-                    class="dropdown-svg"
-                    width="10"
-                    height="6"
-                    viewBox="0 0 10 6"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      clip-rule="evenodd"
-                      d="M0.21967 0.21967C0.512563 -0.0732233 0.987437 -0.0732233 1.28033 0.21967L5 3.93934L8.71967 0.219671C9.01256 -0.0732226 9.48744 -0.0732225 9.78033 0.219671C10.0732 0.512564 10.0732 0.987438 9.78033 1.28033L5.53033 5.53033C5.38968 5.67098 5.19891 5.75 5 5.75C4.80109 5.75 4.61032 5.67098 4.46967 5.53033L0.21967 1.28033C-0.0732233 0.987437 -0.0732233 0.512563 0.21967 0.21967Z"
-                      fill="#10151F"
-                    />
-                  </svg>
-                </div>
-              </div>
+        </div>
+      </div>
 
-              <div
-                (click)="quanityUpdate(1)"
-                *ngIf="this.selectedQuantity != 1"
-                class="opt duffNum"
-              >
-                <div class="number">
-                  <span>1</span>
-                </div>
-              </div>
+      <div class="button">
+        <div class="svgDiv">
+          <svg
+            class="cart-svg"
+            width="22"
+            height="21"
+            viewBox="0 0 22 21"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M1.25 1.5H2.63568C3.14537 1.5 3.59138 1.84265 3.7227 2.33513L4.1059 3.77209M6.5 12.75C4.84315 12.75 3.5 14.0931 3.5 15.75H19.25M6.5 12.75H17.7183C18.8394 10.4494 19.8177 8.06635 20.6417 5.6125C15.88 4.39646 10.8905 3.75 5.75 3.75C5.20021 3.75 4.65214 3.7574 4.1059 3.77209M6.5 12.75L4.1059 3.77209M5 18.75C5 19.1642 4.66421 19.5 4.25 19.5C3.83579 19.5 3.5 19.1642 3.5 18.75C3.5 18.3358 3.83579 18 4.25 18C4.66421 18 5 18.3358 5 18.75ZM17.75 18.75C17.75 19.1642 17.4142 19.5 17 19.5C16.5858 19.5 16.25 19.1642 16.25 18.75C16.25 18.3358 16.5858 18 17 18C17.4142 18 17.75 18.3358 17.75 18.75Z"
+              stroke="white"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </div>
+        <div class="text">
+          <span>Add to cart</span>
+        </div>
+      </div>
 
-              <div
-                *ngFor="let num of [].constructor(8); let i = index"
-                class="opt duffNum"
-                (click)="quanityUpdate(i + 2)"
-              >
-                <div class="number">
-                  <span>{{ i + 2 }}</span>
-                </div>
-              </div>
-            </div>
+      <div class="line"></div>
+
+      <div class="moreDetails">
+        <div class="text">
+          <span class="detailsText">Details</span>
+          <img [src]="this.ProdutsData.brand.image" alt="" />
+        </div>
+
+        <div class="brandAndinfo">
+          <div class="brand">
+            <span>Brand: {{ this.ProdutsData.brand.name }}</span>
+          </div>
+
+          <div class="info">
+            <span *ngIf="ProdutsData?.description; else noDescription">
+              {{ this.ProdutsData.description }}
+            </span>
+
+            <ng-template #noDescription>
+              <span>No description available</span>
+            </ng-template>
           </div>
         </div>
       </div>

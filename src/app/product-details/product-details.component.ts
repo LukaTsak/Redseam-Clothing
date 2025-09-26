@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { ApiService } from '../services/api.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-product-details',
@@ -19,7 +19,7 @@ export class ProductDetailsComponent {
 
   prductId: number = 0;
   ProdutsData: any = {};
-  images = [];
+  images = [CommonModule, RouterModule, FormsModule,NgForm];
 
   selectedColor: string = '';
   selectedColorId: number = 0;
@@ -56,4 +56,11 @@ export class ProductDetailsComponent {
       console.log('worked ' + this.quantDropdownActive)
 
   }
+
+  normalizeColor(color: string): string {
+  if (!color) return '';
+  const parts = color.trim().split(' ');
+  return parts.length === 1 ? parts[0] : parts[parts.length - 1];
+}
+
 }
