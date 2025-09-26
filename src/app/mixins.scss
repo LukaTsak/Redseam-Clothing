@@ -1,0 +1,15 @@
+@mixin font-style($size, $weight: semi-bold, $line-height: tight) {
+  font-family: $font-poppins;
+  font-weight: map-get($font-weights, $weight);
+  font-style: normal;
+  font-size: map-get($font-sizes, $size);
+  line-height: map-get($line-heights, $line-height);
+  letter-spacing: $letter-spacing-default;
+  leading-trim: none;
+}
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

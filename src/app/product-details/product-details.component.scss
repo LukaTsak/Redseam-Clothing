@@ -1,83 +1,21 @@
+@import "variables";
+@import "commonstyles";
+@import "mixins";
+
 main {
-  .user-message {
-    height: fit-content;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    position: fixed;
-    top: 85px;
-    right: 20px;
-    z-index: 1000;
-    transition: all 1s;
-
-    .littleMessage {
-      background-color: white;
-      color: #ff4000;
-      padding: 12px 20px;
-      border-radius: 5px;
-      box-shadow: 0 2px 6px #ff4000;
-      animation: slideInFromRight 0.6s ease-out forwards;
-      transition: all 1s;
-    }
-  }
   .headder {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-direction: row;
-    width: 100%;
-    height: 80px;
-    padding: 10px 100px;
-    .logo {
-      display: flex;
-      align-items: center;
-      flex-direction: row;
-      width: 180px;
-      height: 24px;
-      gap: 4px;
-      cursor: pointer;
-      .logoSvgParrent {
-        position: relative;
-        width: 24px;
-        height: 24px;
-        .logo-svg {
-          position: absolute;
-          top: 1.5px;
-          left: 3.75px;
-          width: 16.5px;
-          height: 21px;
-          color: #ff4000;
-        }
-      }
-
-      .Name {
-        display: flex;
-        align-items: center;
-        width: 152px;
-        height: 24px;
-        font-weight: 600;
-        font-size: 16px;
-        line-height: 100%;
-        letter-spacing: 0%;
-        font-family: "Poppins", sans-serif;
-        font-weight: 600;
-        font-style: normal;
-        color: #10151f;
-      }
-    }
     .cartAndProfile {
-      //   border: 1px solid black;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      @include flex-center;
       width: 108px;
       height: 40px;
-      gap: 20px;
+      gap: map-get($space, lg);
+
       .cart {
         position: relative;
         width: 24px;
         height: 24px;
         cursor: pointer;
+
         .cart-svg {
           pointer-events: all;
           position: absolute;
@@ -87,27 +25,28 @@ main {
           height: 19.5px;
         }
       }
+
       .profile {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        display: flex;
+        @include flex-center;
         flex-direction: row;
         gap: 4px;
         width: 64px;
         height: 40px;
+
         .photo {
           width: 40px;
           height: 40px;
-          border-radius: 50%;
-          background-color: grey;
+          border-radius: map-get($border-radius, pill);
+          background-color: $avatar-bg;
           object-fit: cover;
           cursor: pointer;
         }
+
         .dropdown {
           position: relative;
           width: 20px;
           height: 20px;
+
           .dropdown-svg {
             width: 10px;
             height: 5.75px;
@@ -119,758 +58,212 @@ main {
         }
       }
     }
+
     .shoppingCart {
       position: fixed;
       z-index: 2;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: start;
-      // gap: 150px;
+      justify-content: flex-start;
       right: 0;
       top: 0;
       width: 540px;
       height: 1080px;
-      background-color: #f8f6f7;
-      border-left: 1px solid #e1dfe1;
-      padding: 40px;
+      background-color: $color-bg;
+      border-left: 1px solid $color-border;
+      padding: map-get($space, xl);
+
       .top {
         width: 100%;
         display: flex;
         justify-content: space-between;
+
         .cartText {
           width: 181px;
           height: 30px;
+
           span {
-            font-family: Poppins;
-            font-weight: 500;
-            font-style: Medium;
-            font-size: 20px;
-            leading-trim: NONE;
-            line-height: 100%;
-            letter-spacing: 0%;
+            @include font-style(mid, regular, normal);
+            font-size: 20px; // overrides default mid
           }
         }
+
         .close {
+          @include flex-center;
           cursor: pointer;
           width: 32px;
           height: 32px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
+
           svg {
-            fill: #10151f;
+            fill: $color-text;
           }
         }
       }
+
       .emtyCart {
         margin-top: 150px;
         width: 170px;
         height: 135px;
-        display: flex;
-        // gap: 50px;
+        @include flex-center;
         flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        .svgDiv {
-        }
+
         .oops {
-          margin-top: 24px;
-          width: 88px;
-          height: 36px;
-          font-family: Poppins;
-          font-weight: 600;
-          font-style: SemiBold;
-          font-size: 24px;
-          leading-trim: NONE;
-          line-height: 100%;
-          letter-spacing: 0%;
+          margin-top: map-get($space, md);
+          @include font-style(large, semi-bold, tight);
         }
+
         .youGotNothing {
-          margin-top: 10px;
-          width: 277px;
-          height: 21px;
-          font-family: Poppins;
-          font-weight: 400;
-          font-style: Regular;
-          font-size: 14px;
-          leading-trim: NONE;
-          line-height: 100%;
-          letter-spacing: 0%;
+          margin-top: map-get($space, sm);
+          @include font-style(mid, light, tight);
           text-align: center;
         }
+
         .button {
-          margin-top: 58px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
+          margin-top: map-get($space, xl);
+          @include flex-center;
           width: 214px;
           height: 41px;
-          border-radius: 10px;
-          padding: 10px 20px;
-          background-color: #ff4000;
+          border-radius: map-get($border-radius, md);
+          background-color: $color-primary;
+
           span {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 103px;
-            height: 21px;
-            color: white;
-            font-family: Poppins;
-            font-weight: 400;
-            font-style: Regular;
-            font-size: 14px;
-            leading-trim: NONE;
-            line-height: 100%;
-            letter-spacing: 0%;
+            @include font-style(mid, regular, tight);
+            color: $white;
           }
         }
       }
+
       .prodictsInCart {
         height: 365px;
-        // width: 480px;
-        border-bottom: 1px solid #e1dfe1;
-        margin-top: 63px;
+        border-bottom: 1px solid $color-border;
+        margin-top: map-get($space, xl);
         display: flex;
         flex-direction: column;
-        gap: 36px;
+        gap: map-get($space, lg);
         overflow-y: auto;
-        scrollbar-width: none; /* Firefox */
-        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none;
+
         .cart {
           width: 460px;
           height: 134px;
           display: flex;
-          gap: 17px;
+          gap: map-get($space, md);
+
           img {
             width: 100px;
             height: 134px;
-            border-radius: 10px;
-            border: 1px solid #e1dfe1;
+            border-radius: map-get($border-radius, md);
+            border: 1px solid $color-border;
           }
+
           .infoIncart {
             width: 343px;
             height: 117px;
             display: flex;
-            gap: 13px;
+            gap: map-get($space, sm);
             flex-direction: column;
+
             .topInCart {
               width: 343px;
               height: 78px;
               display: flex;
-              align-items: start;
+              align-items: flex-start;
               justify-content: space-between;
+
               .leftintop {
                 width: 285px;
-                height: 78px;
                 display: flex;
                 flex-direction: column;
-                gap: 8px;
+                gap: map-get($space, xs);
+
                 .name {
-                  width: 252px;
-                  height: 26px;
-                  font-family: Poppins;
-                  font-weight: 500;
-                  font-style: Medium;
+                  @include font-style(mid, regular, tight);
                   font-size: 14px;
-                  leading-trim: NONE;
-                  line-height: 100%;
-                  letter-spacing: 0%;
                 }
-                .color {
-                  width: 285px;
-                  height: 18px;
-                  font-family: Poppins;
-                  font-weight: 400;
-                  font-style: Regular;
-                  font-size: 12px;
-                  leading-trim: NONE;
-                  line-height: 100%;
-                  letter-spacing: 0%;
-                }
+
+                .color,
                 .size {
-                  width: 285px;
-                  height: 18px;
-                  font-family: Poppins;
-                  font-weight: 400;
-                  font-style: Regular;
-                  font-size: 12px;
-                  leading-trim: NONE;
-                  line-height: 100%;
-                  letter-spacing: 0%;
-                }
-              }
-              .rightInTop {
-                min-width: 39px;
-                width: fit-content;
-                height: 26px;
-                span {
-                  width: 39;
-                  height: 26;
-                  gap: 10px;
-                  angle: 0 deg;
-                  opacity: 1;
-                }
-              }
-            }
-            .bottomInCart {
-              width: 343px;
-              height: 26px;
-              display: flex;
-              justify-content: space-between;
-              .left {
-                width: 70px;
-                height: 26px;
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                gap: 2px;
-                padding: 4px 8px;
-                border-radius: 22px;
-                border: 1px solid #e1dfe1;
-                span {
-                  width: 18px;
-                  height: 18px;
-                  display: flex;
-                  align-items: center;
-                  justify-content: center;
-                  font-family: Poppins;
-                  font-weight: 400;
-                  font-style: Regular;
-                  font-size: 12px;
-                  leading-trim: NONE;
-                  line-height: 100%;
-                  letter-spacing: 0%;
-                }
-                .minusSvgDivv,
-                .plusSvgDiv {
-                  position: relative;
-                  width: 16px;
-                  height: 16px;
-                  display: flex;
-                  align-items: center;
-                  justify-content: center;
-                  cursor: pointer;
-                  .minus-svg {
-                    width: 10px;
-                    height: 2px;
-                    top: 7.25px;
-                    left: 3px;
-                    fill: #e1dfe1;
-                  }
-                  .plus-svg {
-                    width: 10px;
-                    height: 10px;
-                    opacity: 1;
-                    top: 3px;
-                    left: 3px;
-                    fill: #e1dfe1;
-                  }
-                }
-              }
-              .right {
-                width: 49px;
-                height: 26px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                gap: 10px;
-                span {
-                  display: flex;
-                  align-items: center;
-                  justify-content: center;
-                  cursor: pointer;
-                  width: 100%;
-                  height: 18px;
-                  opacity: 0.8;
-                  font-family: Poppins;
-                  font-weight: 400;
-                  font-style: Regular;
-                  font-size: 12px;
-                  leading-trim: NONE;
-                  line-height: 100%;
-                  letter-spacing: 0%;
+                  @include font-style(small, light, tight);
                 }
               }
             }
           }
         }
       }
+
       .prices {
-        margin-top: 100px;
+        margin-top: map-get($space, xl);
         width: 460px;
         height: 110px;
         display: flex;
         flex-direction: column;
-        gap: 10px;
+        gap: map-get($space, sm);
+
         .subtotal {
-          width: 460px;
-          height: 24px;
+          width: 100%;
           display: flex;
           justify-content: space-between;
-          .subT {
-            width: fit-content;
-            height: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: Poppins;
-            font-weight: 400;
-            font-style: Regular;
-            font-size: 16px;
-            leading-trim: NONE;
-            line-height: 100%;
-            letter-spacing: 0%;
-            color: #3e424a;
-          }
+
+          .subT,
           .price {
-            width: 35px;
-            height: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: Poppins;
-            font-weight: 400;
-            font-style: Regular;
-            font-size: 16px;
-            leading-trim: NONE;
-            line-height: 100%;
-            letter-spacing: 0%;
-            text-align: right;
-            color: #3e424a;
+            @include font-style(base, regular, tight);
+            color: $color-muted;
           }
         }
+
         .total {
-          width: 460px;
-          height: 30px;
+          width: 100%;
           display: flex;
           justify-content: space-between;
-          .text {
-            width: 51px;
-            height: 30px;
-            font-family: Poppins;
-            font-weight: 500;
-            font-style: Medium;
-            font-size: 20px;
-            leading-trim: NONE;
-            line-height: 100%;
-            letter-spacing: 0%;
-            color: #10151f;
-          }
+
+          .text,
           .price {
-            width: 39px;
-            height: 30px;
-            font-family: Poppins;
-            font-weight: 500;
-            font-style: Medium;
+            @include font-style(mid, medium, tight);
             font-size: 20px;
-            leading-trim: NONE;
-            line-height: 100%;
-            letter-spacing: 0%;
-            color: #10151f;
+            color: $color-text;
           }
         }
-      }
-      .button {
-        cursor: pointer;
-        width: 460px;
-        height: 59px;
-        border-radius: 10px;
-        background-color: #ff4000;
-        padding: 16px 60px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        margin-bottom: 40px;
-        margin-top: 102px;
       }
     }
   }
+
   .listinText {
     span {
       margin-left: 100px;
-      width: 111px;
-      height: 21px;
-      font-family: "Poppins";
-      font-weight: 300;
-      font-style: Light;
-      font-size: 14px;
-      line-height: 100%;
-      letter-spacing: 0%;
+      @include font-style(mid, light, tight);
     }
   }
+
   .main {
     display: flex;
-    // border: 1px solid black;
-    margin-top: 49px;
+    margin-top: map-get($space, lg);
+
     .sidePhotos {
       margin-left: 100px;
-      //   border: 1px solid red;
       width: 121px;
       height: 842.67px;
       display: flex;
       flex-direction: column;
-      gap: 9px;
+      gap: map-get($space, xs);
+
       img {
-        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+        box-shadow: $box-shadow-lg;
         cursor: pointer;
       }
     }
+
     .mainPhoto {
-      margin-left: 24px;
-      //   border: 1px solid red;
+      margin-left: map-get($space, sm);
       width: 703px;
       height: 937px;
-      border-radius: 10px;
-      box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+      border-radius: map-get($border-radius, md);
+      box-shadow: $box-shadow-lg;
 
       img {
         width: 100%;
         height: 100%;
       }
     }
-    .details {
-      margin-left: 168px;
-      //   border: 1px solid red;
-      width: 704px;
-      height: 907px;
-      display: flex;
-      flex-direction: column;
-      gap: 56px;
-      .namePrice {
-        width: 583px;
-        height: 117px;
-        display: flex;
-        flex-direction: column;
-        gap: 21px;
-        .name {
-          width: 583px;
-          height: 48px;
-          font-family: Poppins;
-          font-weight: 600;
-          font-style: SemiBold;
-          font-size: 32px;
-          line-height: 100%;
-          letter-spacing: 0%;
-        }
-        .price {
-          width: 583px;
-          height: 48px;
-          font-family: Poppins;
-          font-weight: 600;
-          font-style: SemiBold;
-          font-size: 32px;
-          line-height: 100%;
-          letter-spacing: 0%;
-        }
-      }
-      .colorSizeQuantity {
-        // border: 1px solid black;
-        width: 382px;
-        height: 348px;
-        display: flex;
-        flex-direction: column;
-        gap: 48px;
-        .color {
-          width: 150px;
-          height: 88px;
-          display: flex;
-          flex-direction: column;
-          gap: 16px;
-          .colorName {
-            width: 150px;
-            height: 24px;
-            span {
-              font-family: Poppins;
-              font-weight: 400;
-              font-style: Regular;
-              font-size: 16px;
-              line-height: 100%;
-              letter-spacing: 0%;
-            }
-          }
-          .colorCircles {
-            display: flex;
-            align-items: center;
-            gap: 13px;
-            min-width: 150px;
-            width: fit-content;
-            height: 48px;
-            // border: 1px solid black;
-
-            .visibleColorDiv {
-              display: flex;
-              align-items: center;
-              gap: 13px;
-              min-width: 150px;
-              width: fit-content;
-              height: fit-content;
-            }
-
-            .selectedColor {
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              width: 48px;
-              height: 48px;
-              border-radius: 50%;
-              .circle {
-                width: 38px;
-                height: 38px;
-                border-radius: 50%;
-                cursor: pointer;
-                // border: 1px solid black;
-              }
-            }
-            .selectedColorBorder {
-              border: 1px solid #e1dfe1;
-            }
-          }
-        }
-        .sizes {
-          width: 382px;
-          height: 82px;
-          display: flex;
-          flex-direction: column;
-          gap: 16px;
-          .text {
-            width: 382px;
-            height: 24px;
-            span {
-              font-family: Poppins;
-              font-weight: 400;
-              font-style: Regular;
-              font-size: 16px;
-              leading-trim: NONE;
-              line-height: 100%;
-              letter-spacing: 0%;
-            }
-          }
-          .sizesDiv {
-            // border: 1px solid black;
-            width: 382px;
-            height: 42px;
-            display: flex;
-            gap: 8px;
-            .visibleSizes {
-              width: 382px;
-              height: 42px;
-              display: flex;
-              gap: 8px;
-            }
-            .sizeInfo {
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              width: 70px;
-              height: 42px;
-              border-radius: 10px;
-              border: 1px solid #e1dfe1;
-              padding: 9px 16px;
-              cursor: pointer;
-            }
-            .selectedSizeClass {
-              border: 1px solid #10151f !important;
-            }
-          }
-        }
-        .quantity {
-          // border: 1px solid black;
-          width: 70px;
-          height: auto;
-          // min-height: 82px;
-          display: flex;
-          gap: 16px;
-          flex-direction: column;
-          .text {
-            width: 70px;
-            height: 24px;
-            font-family: Poppins;
-            font-weight: 400;
-            font-style: Regular;
-            font-size: 16px;
-            leading-trim: NONE;
-            line-height: 100%;
-            letter-spacing: 0%;
-          }
-          .quantityDrpdown {
-            position: relative;
-            z-index: 2;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-            justify-content: start;
-            width: 70px;
-            height: 42px;
-            border-radius: 10px;
-            border: 1px solid #e1dfe1;
-            padding: 9px 16px;
-            overflow: hidden;
-            background-color: white;
-
-            .opt {
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              gap: 10px;
-
-              .number {
-                span {
-                  width: 10px;
-                  height: 24px;
-                  opacity: 0.8;
-                  font-family: Poppins;
-                  font-weight: 400;
-                  font-style: Regular;
-                  font-size: 16px;
-                  line-height: 100%;
-                  letter-spacing: 0%;
-                  cursor: pointer;
-                }
-              }
-              .svgDiv {
-                width: 20px;
-                height: 20px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                .dropdown-svg {
-                  cursor: pointer;
-                }
-              }
-            }
-          }
-          .openDropdown {
-            height: fit-content !important;
-          }
-        }
-      }
-      .button {
-        cursor: pointer;
-        width: 704px;
-        height: 59px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-        padding: 16px 60px;
-        border-radius: 10px;
-        background-color: #ff4000;
-        .svgDiv {
-          width: 24px;
-          height: 24px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          .cart-svg {
-          }
-        }
-        .text {
-          width: 102px;
-          height: 27px;
-          span {
-            font-family: Poppins;
-            font-weight: 500;
-            font-style: Medium;
-            font-size: 18px;
-            leading-trim: NONE;
-            line-height: 100%;
-            letter-spacing: 0%;
-            color: white;
-          }
-        }
-      }
-      .line {
-        width: 704px;
-        height: 0px;
-        border: 1px solid #e1dfe1;
-      }
-      .moreDetails {
-        width: 704px;
-        height: 159px;
-        display: flex;
-        flex-direction: column;
-        gap: 7px;
-        .text {
-          width: 100%;
-          height: 61px;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          .detailsText {
-            width: 69px;
-            height: 30px;
-            font-family: Poppins;
-            font-weight: 500;
-            font-style: Medium;
-            font-size: 20px;
-            leading-trim: NONE;
-            line-height: 100%;
-            letter-spacing: 0%;
-          }
-          img {
-            width: 109px;
-            height: 61px;
-            // border: 1px solid black;
-          }
-        }
-        .brandAndinfo {
-          width: 704px;
-          height: 91px;
-          display: flex;
-          flex-direction: column;
-          gap: 19px;
-          .brand {
-            width: 100%;
-            height: 24px;
-            font-family: Poppins;
-            font-weight: 400;
-            font-style: Regular;
-            font-size: 16px;
-            leading-trim: NONE;
-            line-height: 100%;
-            letter-spacing: 0%;
-            color: #3e424a;
-          }
-          .info {
-            width: 100%;
-            height: 48px;
-            font-family: Poppins;
-            font-weight: 400;
-            font-style: Regular;
-            font-size: 16px;
-            leading-trim: NONE;
-            line-height: 100%;
-            letter-spacing: 0%;
-            color: #3e424a;
-          }
-        }
-      }
-    }
-  }
-}
-.noSizesAvailable {
-  min-width: 200px;
-  width: fit-content;
-  min-height: 42px;
-  height: fit-content;
-  border-radius: 10px;
-  border: 1px solid #e1dfe1;
-  padding: 9px 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-@keyframes slideInFromRight {
-  from {
-    transform: translateX(100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
   }
 }

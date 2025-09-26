@@ -1,0 +1,39 @@
+$font-poppins: "Poppins", sans-serif;
+
+$color-primary: #ff4000;
+$color-text: #10151f;
+$color-border: #e1dfe1;
+$color-muted: #3e424a;
+$color-bg: #f8f6f7;
+$white: #ffffff;
+$avatar-bg: grey;
+
+$box-shadow-lg: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+
+$border-radius-sm: 5px;
+$border-radius-md: 8px;
+$border-radius-pill: 50px;
+
+$font-weights: (
+  light: 400,
+  regular: 500,
+  semi-bold: 600,
+  bold: 700
+);
+
+$font-sizes: (
+  small: 12px,
+  mid: 14px,
+  base: 16px,
+  large: 24px,
+  xlarge: 32px
+);
+
+$line-heights: (
+  tight: 1,
+  normal: 1.2,
+  relaxed: 1.5
+);
+
+$letter-spacing-default: 0%;
+
