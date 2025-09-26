@@ -28,6 +28,8 @@ export class ProductDetailsComponent {
   selectedQuantity: number = 1;
   selectedSize: string = '';
 
+  subtotalPrice: number = 0;
+
   quantDropdownActive: boolean = false;
   shoppingCartActive: boolean = true;
 
@@ -50,6 +52,12 @@ export class ProductDetailsComponent {
     this.apiService.getCart().subscribe((cartData) => {
       this.cartData = cartData;
       console.log('cart:', this.cartData);
+      console.log(this.cartData[0].price);
+
+      for (let i = 0; i < this.cartData.length; i++) {
+        this.subtotalPrice = this.subtotalPrice + this.cartData[i].total_price;
+      }
+      console.log(this.subtotalPrice);
     });
   }
 
@@ -97,5 +105,45 @@ export class ProductDetailsComponent {
       .subscribe((params) => {
         console.log(params);
       });
+  }
+
+  updateProductInCart(obj: any, id: number) {
+    return this.apiService.updateProductInCart(obj, id);
+  }
+
+  changeQuantity(operation: number, productId: number, index: number) {
+    let currentQuantity = this.cartData[index].quantity;
+    let newQuantity = currentQuantity;
+
+    if (operation === 0 && currentQuantity > 1) {
+      newQuantity = currentQuantity - 1;
+      this.subtotalPrice =
+            this.subtotalPrice - this.cartData[index].total_price;
+    } else if (operation === 1) {
+      newQuantity = currentQuantity + 1;
+      this.subtotalPrice =
+            this.subtotalPrice + this.cartData[index].total_price;
+    }
+
+    const updateGoingToCart = {
+      quantity: newQuantity,
+      color: this.cartData[index].color,
+      size: this.cartData[index].size,
+    };
+
+    this.updateProductInCart(updateGoingToCart, productId).subscribe(
+      (response) => {
+        this.cartData[index].quantity = newQuantity;
+        // for (let i = index; i < this.cartData.length; i++) {
+        //   this.subtotalPrice =
+        //     this.subtotalPrice + this.cartData[i].total_price;
+        // }
+      }
+    );
+  }
+  deleteProductFromCart(id:number){
+    this.apiService.deleteProductFromCart(id).subscribe((res) => {
+      console.log('new cart: '+ res)
+    })
   }
 }

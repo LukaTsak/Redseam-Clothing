@@ -35,6 +35,11 @@ export class ApiService {
   }
   getCart(){
     return this.http.get(`${BASE_URL}/cart`, {headers});
-
+  }
+  updateProductInCart(obj: any, id:number){
+    return this.http.patch(`${BASE_URL}/cart/products/${id}`, obj, {headers});
+  }
+  deleteProductFromCart(id:number){
+    return this.http.delete(`${BASE_URL}/cart/products/${id}`, {headers});
   }
 }
