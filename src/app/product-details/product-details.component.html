@@ -94,7 +94,8 @@
             </span>
           </div>
           <div class="colorCircles">
-            <div class="visibleColorDiv"
+            <div
+              class="visibleColorDiv"
               *ngIf="ProdutsData?.available_colors?.length > 0; else noColors"
             >
               <div
@@ -127,11 +128,14 @@
             </span>
           </div>
           <ng-template #noSizesText>
-            <span>Size: None</span>
+            <span>Size:</span>
           </ng-template>
 
           <div class="sizesDiv">
-            <div class="visibleSizes" *ngIf="ProdutsData?.available_sizes?.length > 0; else noSizes">
+            <div
+              class="visibleSizes"
+              *ngIf="ProdutsData?.available_sizes?.length > 0; else noSizes"
+            >
               <div
                 *ngFor="let el of ProdutsData.available_sizes; let i = index"
                 class="sizeInfo"
@@ -148,6 +152,7 @@
         <div class="quantity">
           <div class="text">Quantity</div>
           <div
+            *ngIf="ProdutsData.quantity >= 1; else noQuantity"
             [ngClass]="{ openDropdown: quantDropdownActive }"
             class="quantityDrpdown"
           >
@@ -194,6 +199,10 @@
               </div>
             </div>
           </div>
+
+          <ng-template #noQuantity>
+            <div class="noSizesAvailable">Out of stock</div>
+          </ng-template>
         </div>
       </div>
 
