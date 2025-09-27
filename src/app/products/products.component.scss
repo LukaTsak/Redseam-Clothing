@@ -1,21 +1,18 @@
-@import "variables";
-@import "commonstyles";
-@import "mixins";
+@use "../../app/variables.scss" as *;
+@use "../mixins.scss" as *;
+@use "../commonStyles.scss" as *;
 
 main {
   .headder {
     .cartAndProfile {
-      @include flex(center, center);
+      @include flex(row, center, center, 20px);
       width: 108px;
       height: 40px;
-      gap: $gap-large;
-
       .cart {
         position: relative;
         width: 24px;
         height: 24px;
         cursor: pointer;
-
         .cart-svg {
           position: absolute;
           top: 2.25px;
@@ -24,27 +21,22 @@ main {
           height: 19.5px;
         }
       }
-
       .profile {
-        @include flex(center, flex-start);
-        gap: $gap-small;
+        @include flex(row, center, center, 4px);
         width: 64px;
         height: 40px;
-
         .photo {
           width: 40px;
           height: 40px;
           border-radius: 50%;
-          background-color: $color-grey;
+          background-color: $avatar-bg;
           object-fit: cover;
           cursor: pointer;
         }
-
         .dropdown {
           position: relative;
           width: 20px;
           height: 20px;
-
           .dropdown-svg {
             width: 10px;
             height: 5.75px;
@@ -59,119 +51,350 @@ main {
   }
 
   .main {
-    @include flex(column, center);
-    gap: $gap-xlarge;
-
+    @include flex(column, space-around, center, 32px);
     .sortDiv {
-      margin-top: $margin-top-large;
+      margin-top: 72px;
       width: 1720px;
       height: 63px;
-      @include flex(space-between, center);
+      @include flex(row, space-between, center);
 
       .prodSpan {
-        font: $font-heading;
-        color: $color-dark;
+        @include font-style(42px, 600, normal, 100%);
+        color: $color-text;
       }
 
       .sortOptions {
-        @include flex(row, center);
-        gap: $gap-xlarge;
+        @include flex(row, null, center, 32px);
         min-width: 412px;
+        max-width: fit-content;
         height: 24px;
 
         .showing {
           .showingSpan {
             min-width: 158px;
-            font: $font-small;
+            max-width: fit-content;
+            height: 18px;
+            @include font-style(12px, 400, normal, 100%);
             color: $color-muted;
           }
         }
 
         .line {
           width: 14px;
-          border: 1px solid $color-light-grey;
-          transform: rotate(-90deg);
+          height: 0px;
+          border: 1px solid $color-border;
+          rotate: -90deg;
         }
 
         .filter {
-          @include flex(center, center);
-          gap: 8px;
-          cursor: pointer;
+          @include flex(row, null, center, 8px);
+          width: 70px;
+          height: 24px;
 
           .svgHome {
             position: relative;
+            @include flex(row, null, null);
             width: 24px;
             height: 24px;
 
             .filter-svg {
-              @include absolute(4.5px, null, null, 3.75px);
+              cursor: pointer;
+              position: absolute;
+              top: 4.5px;
+              left: 3.75px;
               width: 16.5px;
               height: 15px;
             }
           }
 
           .filterSpan {
-            font: $font-medium;
-            color: $color-dark;
+            @include font-style(16px, 400, normal, 100%);
+
+            color: $color-text;
+            cursor: pointer;
           }
 
           .filterOptions {
             position: absolute;
+            @include flex(column, center, center, 20px);
             top: 205px;
             right: 186px;
-            display: flex;
-            flex-direction: column;
-            gap: $gap-large;
             width: 392px;
             height: 169px;
-            border-radius: $radius-medium;
-            border: 1px solid $color-light-grey;
-            background: $color-white;
+            border-radius: 8px;
+            border: 1px solid $color-border;
+            background-color: $white;
 
             .selectPrice {
-              font: $font-medium;
+              width: 360px;
+              @include flex(row, null, start);
+              @include font-style(16px, 600, SemiBold, 100%);
             }
 
             .fromToApply {
-              display: flex;
-              flex-direction: column;
+              @include flex(column, null, null);
+              width: 360px;
+              height: 93px;
               gap: 10px;
 
               .fromTo {
-                display: flex;
-                gap: 10px;
+                width: 360px;
+                height: 43px;
+                @include flex(row, null, null, 10px);
 
                 .from,
                 .to {
-                  display: flex;
-                  gap: 8px;
-                  padding: 0 12px;
+                  @include flex(row, null, null, 4px);
+                  padding-right: 12px;
+                  padding-left: 12px;
                   width: 175px;
                   height: 42px;
-                  border: 1px solid $color-light-grey;
-                  border-radius: $radius-small;
-                  font: $font-small;
+                  opacity: 1;
+                  border-radius: 8px;
+                  @include font-style(14px, 400, Regular, 100%);
+
                   outline: none;
+                  border: 1px solid $color-border;
                 }
               }
             }
 
             .button {
-              display: flex;
-              justify-content: flex-end;
+              width: 360px;
+              @include flex(row, end, center);
 
               button {
                 width: 124px;
                 height: 41px;
-                border-radius: $radius-small;
-                background: $color-primary;
-                color: $color-white;
-                font: $font-medium;
-                cursor: pointer;
+                border-radius: 10px;
+                padding: 10px 20px;
+                @include flex(row, center, center, 10px);
+                color: $white;
+                border: none;
+                background-color: $color-primary;
               }
             }
           }
         }
+
+        .sortBy {
+          @include flex(row, null, center);
+
+          .detailedSort {
+            width: 223px;
+            height: 184px;
+            position: absolute;
+            top: 205px;
+            right: 92px;
+            border-radius: 8px;
+            padding-top: 16px;
+            padding-bottom: 16px;
+            background-color: $white;
+            border: 1px solid $color-border;
+            @include flex(column, null, null, 8px);
+
+            .top {
+              @include flex(row, null, null, 10px);
+              width: 100%;
+              height: 24px;
+              padding-left: 16px;
+              padding-right: 16px;
+              span {
+                width: 57px;
+                height: 24px;
+                @include font-style(16px, 600, SemiBold, 100%);
+                color: $color-text;
+              }
+            }
+
+            .bottom {
+              width: 100%;
+              height: 120px;
+              @include flex(column, null, null);
+
+              .frame {
+                width: 223px;
+                height: 40px;
+                @include flex(row, start, center, 10px);
+                padding: 8px 16px;
+              }
+
+              span {
+                @include font-style(16px, 400, Regular, 100%);
+                color: $color-text;
+                cursor: pointer;
+              }
+
+              .f1 {
+                width: 145px;
+                height: 24px;
+              }
+              .f2 {
+                width: 134px;
+                height: 24px;
+              }
+              .f3 {
+                width: 134px;
+                height: 24px;
+              }
+            }
+          }
+
+          .sortSpan {
+            @include flex(row, null, center);
+            width: 56px;
+            height: 24px;
+            @include font-style(16px, 400, normal, 100%);
+            color: $color-text;
+            cursor: pointer;
+          }
+
+          .svgHome {
+            @include flex(row, null, null);
+            position: relative;
+            width: 20px;
+            height: 20px;
+
+            .sortBy-svg {
+              position: absolute;
+              top: 8px;
+              left: 5px;
+              width: 10px;
+              height: 5.75px;
+              cursor: pointer;
+            }
+          }
+        }
+      }
+    }
+
+    .filterOptDiv {
+      width: 1720px;
+      height: fit-content;
+      @include flex(row, null, start);
+
+      .filterDivFromTo {
+        min-width: 141px;
+        width: fit-content;
+        height: 37px;
+        border-radius: 50px;
+        padding: 8px 10px 8px 16px;
+        @include flex(row, space-between, center, 6px);
+        border: 1px solid $color-border;
+        @include font-style(14px, 400, Regular, 100%);
+      }
+
+      .svgDiv {
+        width: 12px;
+        height: 12px;
+
+        svg {
+          cursor: pointer;
+
+          path {
+            fill: $color-muted;
+          }
+        }
+      }
+    }
+
+    .products {
+      margin-top: 32px;
+      @include flex(row, null, null, 24px);
+      flex-wrap: wrap;
+      width: 1720px;
+      max-height: 1938px;
+      height: fit-content;
+
+      .card {
+        border-radius: 8px;
+        @include flex(column, null, null, 12px);
+        width: 412px;
+        height: 614px;
+        cursor: pointer;
+
+        .productPhoto {
+          width: 412px;
+          height: 549px;
+          border-radius: 10px;
+          box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+        }
+
+        .info {
+          @include flex(column, null, null, 2px);
+          width: 100%;
+          height: 53px;
+          .productName {
+            width: 412px;
+            height: 27px;
+            @include font-style(18px, 500, normal, 100%);
+            color: $color-text;
+          }
+
+          .productInfo {
+            width: 412px;
+            height: 24px;
+            @include font-style(16px, 500, normal, 100%);
+            color: $color-text;
+          }
+        }
+      }
+    }
+
+    .pagination {
+      margin-top: 90px;
+      padding-bottom: 216px;
+      @include flex(row, center, center, null);
+      width: 1720px;
+      height: 32px;
+
+      .pages {
+        @include flex(row, center, center, 8px);
+        width: fit-content;
+        height: 32px;
+        .first,
+        .second,
+        .others,
+        .nineth,
+        .last {
+          width: 32px;
+          height: 32px;
+          @include flex(row, center, center, null);
+          border: 1px solid $color-bg;
+          border-radius: 4px;
+          cursor: pointer;
+          @include font-style(14px, 500, normal, 20px);
+          color: $color-text;
+          @include font-style(14px, 500, Medium, 20px);
+          text-align: center;
+          opacity: 0.6;
+        }
+        .first:hover,
+        .second:hover,
+        .nineth:hover,
+        .last:hover {
+          border: 1px solid $color-primary;
+          color: $color-primary;
+        }
+        .leftSvgDiv,
+        .rightSvgDiv {
+          cursor: pointer;
+          position: relative;
+          width: 20px;
+          height: 20px;
+          svg {
+            position: absolute;
+            top: 5px;
+            left: 8px;
+            color: $color-text;
+          }
+        }
+      }
+
+      .selectedPage {
+        border: 1px solid $color-primary !important;
+        color: $color-primary !important;
+        font-weight: 600;
       }
     }
   }

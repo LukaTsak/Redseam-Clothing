@@ -1,15 +1,30 @@
-@mixin font-style($size, $weight: semi-bold, $line-height: tight) {
-  font-family: $font-poppins;
-  font-weight: map-get($font-weights, $weight);
-  font-style: normal;
-  font-size: map-get($font-sizes, $size);
-  line-height: map-get($line-heights, $line-height);
-  letter-spacing: $letter-spacing-default;
-  leading-trim: none;
+@use "../app/variables.scss" as *;
+
+@mixin font-style($size, $weight, $style, $line-height) {
+  font-family: $font-poppins; // fixed
+  font-weight: $weight; // passed
+  font-style: $style; // passed
+  font-size: $size; // passed
+  line-height: $line-height; // passed
+  letter-spacing: 0%; // fixed
 }
 
-@mixin flex-center {
+@mixin flex($direction: null, $justify: null, $align: null, $gap: null) {
   display: flex;
-  align-items: center;
-  justify-content: center;
+
+  @if $direction {
+    flex-direction: $direction;
+  }
+
+  @if $justify {
+    justify-content: $justify;
+  }
+
+  @if $align {
+    align-items: $align;
+  }
+
+  @if $gap {
+    gap: $gap;
+  }
 }

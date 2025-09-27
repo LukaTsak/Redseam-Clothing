@@ -99,6 +99,7 @@ export class ProductDetailsComponent {
 
   normalizeColor(color: string): string {
     if (!color) return '';
+    // if (color === 'Multi') return 'linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet)';
     const parts = color.trim().split(' ');
     return parts.length === 1 ? parts[0] : parts[parts.length - 1];
   }
@@ -205,7 +206,7 @@ export class ProductDetailsComponent {
     }
   }
 
-  ///////////////
+  /////////////// show message
 
   showMessage(msg: string) {
     if (this.userMessageArray.includes(msg)) return;

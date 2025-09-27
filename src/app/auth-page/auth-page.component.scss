@@ -1,17 +1,72 @@
-@import "variables";
-@import "commonstyles";
-@import "mixins";
+@use "../../app/variables.scss" as *;
+@use "../mixins.scss" as *;
+@use "../commonStyles.scss" as *;
 
 main {
+  .user-message {
+    @include flex(column, null, null, 10px);
+    height: fit-content;
+    position: fixed;
+    top: 85px;
+    right: 20px;
+    z-index: 1000;
+    transition: all 1s;
+
+    .littleMessage {
+      @include flex(row, null, null);
+      background-color: $white;
+      color: $color-primary;
+      padding: 12px 20px;
+      border-radius: 5px;
+      box-shadow: 0 2px 6px $color-primary;
+      animation: slideInFromRight 0.6s ease-out forwards;
+      transition: all 1s;
+    }
+  }
+
   .headder {
+    @include flex(row, space-between, center);
+    width: 100%;
+    height: 80px;
+    padding: 10px 100px;
+
+    .logo {
+      @include flex(row, null, center, 4px);
+      width: 180px;
+      height: 24px;
+
+      .logoSvgParrent {
+        @include flex(row, null, null);
+        position: relative;
+        width: 24px;
+        height: 24px;
+
+        .logo-svg {
+          position: absolute;
+          top: 1.5px;
+          left: 3.75px;
+          width: 16.5px;
+          height: 21px;
+          color: $color-primary;
+        }
+      }
+
+      .Name {
+        @include flex(row, center, center);
+        width: 152px;
+        height: 24px;
+        @include font-style(16px, 600, normal, 100%);
+        color: $color-text;
+      }
+    }
+
     .login-headder {
-      @include flex-center;
-      flex-direction: row;
+      @include flex(row, center, center, 8px);
       width: 64px;
       height: 20px;
-      gap: 8px;
 
       .loginSvgParrent {
+        @include flex(row, null, null);
         position: relative;
         width: 20px;
         height: 20px;
@@ -25,18 +80,18 @@ main {
       }
 
       .login-text {
-        @include flex-center;
+        @include flex(row, center, center);
         width: 36px;
         height: 18px;
+        @include font-style(12px, 500, normal, 100%);
         cursor: pointer;
         color: $color-text;
-        @include font-style(small, regular, tight);
       }
     }
   }
 
   .main {
-    display: flex;
+    @include flex(row, null, null);
     width: 100%;
     height: 831px;
     overflow: hidden;
@@ -55,51 +110,51 @@ main {
     }
 
     .rightSide {
-      @include flex-center;
+      @include flex(row, center, center);
       width: 100%;
 
       .loginForm {
         .text {
+          @include flex(column, null, null);
           width: 124px;
           height: 63px;
           margin-bottom: 50px;
 
           h1 {
-            @include font-style(xlarge, semi-bold, tight);
+            @include font-style(42px, 600, normal, 100%);
+            color: $color-text;
           }
         }
 
         .inputs {
-          display: flex;
-          flex-direction: column;
-          gap: 46px;
+          @include flex(column, null, null, 46px);
 
           .fields {
-            display: flex;
-            flex-direction: column;
+            @include flex(column, flex-start, null, 24px);
             width: 554px;
             height: 108px;
-            gap: 24px;
 
-            .emailLabel,
-            .passwordlabel,
-            .usernameLabel,
-            .confPassLabel {
+            .emailLabel {
               position: relative;
-            }
 
-            .requiredIcon {
-              position: absolute;
-              top: 15px;
+              .requiredIcon {
+                position: absolute;
+                top: 15px;
+                left: 50px;
+              }
             }
 
             .passwordlabel {
+              position: relative;
+
               .requiredIcon {
+                position: absolute;
+                top: 15px;
                 left: 78px;
               }
 
               .passVisibilityIcon {
-                @include flex-center;
+                @include flex(row, center, center);
                 position: absolute;
                 right: 10px;
                 top: 7px;
@@ -118,7 +173,7 @@ main {
             .input {
               width: 100%;
               height: 42px;
-              border-radius: $border-radius-md;
+              border-radius: 8px;
               border: 1px solid $color-border;
               padding-left: 10px;
               outline: none;
@@ -126,11 +181,9 @@ main {
               &::placeholder {
                 color: $color-muted;
               }
-
               &:focus::placeholder {
                 color: transparent;
               }
-
               &:focus ~ .requiredIcon,
               &:not(:placeholder-shown) ~ .requiredIcon {
                 display: none;
@@ -139,9 +192,7 @@ main {
           }
 
           .buttons {
-            @include flex-center;
-            flex-direction: column;
-            gap: 24px;
+            @include flex(column, center, center, 24px);
 
             .button {
               width: 100%;
@@ -152,7 +203,7 @@ main {
               color: $white;
               border: none;
               cursor: pointer;
-              font-size: map-get($font-sizes, mid);
+              @include font-style(14px, 400, normal, 100%);
             }
 
             .register {
@@ -160,6 +211,7 @@ main {
                 text-decoration: none;
                 color: $color-primary;
                 cursor: pointer;
+                @include font-style(14px, 400, normal, 100%);
               }
             }
           }
@@ -167,52 +219,60 @@ main {
       }
 
       .registerForm {
-        display: flex;
-        flex-direction: column;
+        @include flex(column, null, null, 46px);
         width: 554px;
         height: 518px;
-        gap: 46px;
 
         .text {
-          @include flex-center;
+          @include flex(row, center, center);
           width: 261px;
           height: 63px;
 
           h1 {
-            @include font-style(xlarge, semi-bold, tight);
+            @include font-style(42px, 600, normal, 100%);
+            color: $color-text;
           }
         }
 
         .avatar {
-          @include flex-center;
-          gap: 13px;
+          @include flex(row, center, center, 13px);
           width: 272px;
           height: 100px;
 
           .image {
-            @include flex-center;
+            @include flex(row, center, center);
+            overflow: hidden;
             object-fit: cover;
             width: 100px;
             height: 100px;
-            border-radius: $border-radius-pill;
+            border-radius: 50%;
             background-color: $avatar-bg;
           }
 
           .upload {
-            @include flex-center;
+            @include flex(row, center, center, 14px);
             width: 157px;
             height: 21px;
-            gap: 14px;
 
             .span {
-              @include flex-center;
-              @include font-style(mid, regular, tight);
+              @include flex(row, center, center);
+              @include font-style(14px, 400, normal, 100%);
               cursor: pointer;
             }
 
-            .uploadText,
-            .removeText {
+            .uploadText {
+              width: 84px;
               height: 21px;
+            }
+
+            .removeText {
+              width: 58px;
+              height: 21px;
+            }
+
+            input[type="file"]::file-selector-button,
+            input[type="file"]::-webkit-file-upload-button {
+              display: none;
             }
 
             input[type="file"] {
@@ -221,50 +281,117 @@ main {
               opacity: 0;
               overflow: hidden;
               position: absolute;
-
-              &::file-selector-button,
-              &::-webkit-file-upload-button {
-                display: none;
-              }
             }
           }
         }
 
         .inputs {
-          display: flex;
-          flex-direction: column;
-          gap: 46px;
+          @include flex(column, null, null, 46px);
 
           .fields {
-            display: flex;
-            flex-direction: column;
+            @include flex(column, null, null, 24px);
             width: 554px;
             height: 240px;
-            gap: 24px;
+
+            .emailLabel {
+              position: relative;
+
+              .requiredIcon {
+                position: absolute;
+                top: 15px;
+                left: 50px;
+              }
+            }
+
+            .passwordlabel {
+              position: relative;
+
+              .requiredIcon {
+                position: absolute;
+                top: 15px;
+                left: 78px;
+              }
+
+              .passVisibilityIcon {
+                @include flex(row, center, center);
+                position: absolute;
+                right: 10px;
+                top: 7px;
+                width: 20px;
+                height: 20px;
+                cursor: pointer;
+
+                .eyeIcon {
+                  position: absolute;
+                  top: 3.75px;
+                  left: 1.65px;
+                }
+              }
+            }
+
+            .usernameLabel {
+              position: relative;
+
+              .requiredIcon {
+                position: absolute;
+                top: 15px;
+                left: 83px;
+              }
+            }
+
+            .confPassLabel {
+              position: relative;
+
+              .requiredIcon {
+                position: absolute;
+                top: 15px;
+                left: 135px;
+              }
+            }
+
+            .input {
+              width: 100%;
+              height: 42px;
+              border-radius: 8px;
+              border: 1px solid $color-border;
+              padding-left: 10px;
+              outline: none;
+
+              &::placeholder {
+                color: $color-muted;
+              }
+              &:focus::placeholder {
+                color: transparent;
+              }
+              &:focus ~ .requiredIcon,
+              &:not(:placeholder-shown) ~ .requiredIcon {
+                display: none;
+              }
+            }
           }
 
           .buttons {
-            @include flex-center;
-            flex-direction: column;
-            gap: 24px;
+            @include flex(column, center, center, 24px);
 
             .button {
               width: 100%;
               height: 41px;
-              border-radius: $border-radius-md;
+              border-radius: 10px;
               padding: 10px 20px;
               background-color: $color-primary;
               color: $white;
               border: none;
               cursor: pointer;
-              font-size: map-get($font-sizes, mid);
+              @include font-style(14px, 400, normal, 100%);
             }
 
             .register {
+              // @include flex(row, center, center);
               a {
                 text-decoration: none;
                 color: $color-primary;
                 cursor: pointer;
+                @include font-style(14px, 400, normal, 100%);
               }
             }
           }

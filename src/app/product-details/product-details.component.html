@@ -568,7 +568,13 @@
                 }"
               >
                 <div
-                  [ngStyle]="{ 'background-color': normalizeColor(el) }"
+                  [ngStyle]="{
+                    'background-color': normalizeColor(el)
+                  }"
+                  [ngClass]="{
+                    notWhiteBorder: el === 'White' && selectedColor !== 'White',
+                    'multi-color-gradient': el === 'Multi'
+                  }"
                   (click)="setColor(normalizeColor(el), i)"
                   class="circle"
                 ></div>

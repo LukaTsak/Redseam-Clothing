@@ -32,6 +32,9 @@
               }
             ],
             "styles": [
+              "src/app/variables.scss",
+              "src/app/mixins.scss",
+              "src/app/commonStyles.scss",
               "src/styles.scss"
             ],
             "scripts": []
@@ -91,6 +94,9 @@
               }
             ],
             "styles": [
+              "src/app/variables.scss",
+              "src/app/mixins.scss",
+              "src/app/commonStyles.scss",
               "src/styles.scss"
             ],
             "scripts": []

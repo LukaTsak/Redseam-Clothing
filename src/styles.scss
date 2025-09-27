@@ -1,3 +1,7 @@
+// @use '../src/app/variables.scss' as *;
+// @use '../src/app/mixins.scss' as *;
+// @use '../src/app/commonStyles.scss' as *;
+
 * {
   margin: 0;
   padding: 0;
@@ -5,8 +9,3 @@
   font-family: "Poppins", sans-serif;
 }
 
-// @font-face {
-//     font-family: mainFont;
-//     src: url("/assets/fonts/Inter-Regular.ttf") format("truetype"),
-//     ;
-// }
