@@ -129,7 +129,7 @@ register() {
   userLogo: any;
   selectedLogoFileName: string = '';
   logoPreviewUrl: string | ArrayBuffer | null =
-    '../../assets/images/defaultProfilePic.jpg';
+    '';
 
   onLogoSelected(event: any): void {
     const file = event.target.files[0];
@@ -160,7 +160,7 @@ register() {
   }
 
   removeImage(): void {
-    this.logoPreviewUrl = '../../assets/images/defaultProfilePic.jpg';
+    this.logoPreviewUrl = '';
     this.selectedLogoFileName = '';
     this.userLogo = null;
   }

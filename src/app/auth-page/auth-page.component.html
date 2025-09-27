@@ -157,7 +157,21 @@
           <h1>Registration</h1>
         </div>
         <div class="avatar">
-          <img class="image" [src]="logoPreviewUrl" />
+          <img class="image" *ngIf="logoPreviewUrl" [src]="logoPreviewUrl" />
+          <div *ngIf="!logoPreviewUrl" class="imgCircle">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M11.9297 3C12.5984 3.00002 13.2228 3.33424 13.5938 3.89062L14.4062 5.10938C14.7772 5.66576 15.4016 5.99998 16.0703 6H17C18.1046 6 19 6.89543 19 8V15C19 16.1046 18.1046 17 17 17H3C1.89543 17 1 16.1046 1 15V8C1 6.89543 1.89543 6 3 6H3.92969C4.59837 5.99998 5.22283 5.66576 5.59375 5.10938L6.40625 3.89062C6.77717 3.33424 7.40163 3.00002 8.07031 3H11.9297ZM10 6.5C7.51472 6.5 5.5 8.51472 5.5 11C5.5 13.4853 7.51472 15.5 10 15.5C12.4853 15.5 14.5 13.4853 14.5 11C14.5 8.51472 12.4853 6.5 10 6.5ZM10 8C11.6569 8 13 9.34315 13 11C13 12.6569 11.6569 14 10 14C8.34315 14 7 12.6569 7 11C7 9.34315 8.34315 8 10 8Z"
+                fill="#3E424A"
+              />
+            </svg>
+          </div>
 
           <div class="upload">
             <label class="span" for="imageFile">
@@ -169,9 +183,9 @@
                 (change)="onLogoSelected($event)"
                 hidden
               />
-              Upload new
+              <span *ngIf="logoPreviewUrl">Upload new</span><span *ngIf="!logoPreviewUrl">Upload image</span>
             </label>
-            <span class="removeText span" (click)="removeImage()">Remove</span>
+            <span *ngIf="logoPreviewUrl" class="removeText span" (click)="removeImage()">Remove</span>
           </div>
         </div>
 
