@@ -3,80 +3,71 @@
 
 main {
   .user-message {
+    @include flex(column, flex-start, null, 10px);
     height: fit-content;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
     position: fixed;
     top: 85px;
     right: 20px;
     z-index: 1000;
     transition: all 1s;
-
     .littleMessage {
-      background-color: white;
-      color: #ff4000;
+      background-color: $white;
+      color: $color-primary;
       padding: 12px 20px;
       border-radius: 5px;
-      box-shadow: 0 2px 6px #ff4000;
+      box-shadow: 0 2px 6px $color-primary;
       animation: slideInFromRight 0.6s ease-out forwards;
       transition: all 1s;
     }
   }
+
   .headder {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-direction: row;
+    @include flex(row, space-between, center, null);
     width: 100%;
     height: 80px;
     padding: 10px 100px;
+
     .logo {
+      @include flex(row, center, center, 4px);
       cursor: pointer;
-      display: flex;
-      align-items: center;
-      flex-direction: row;
       width: 180px;
       height: 24px;
-      gap: 4px;
+
       .logoSvgParrent {
         position: relative;
         width: 24px;
         height: 24px;
+
         .logo-svg {
           position: absolute;
           top: 1.5px;
           left: 3.75px;
           width: 16.5px;
           height: 21px;
-          color: #ff4000;
+          color: $color-primary;
         }
       }
 
       .Name {
-        display: flex;
-        align-items: center;
+        @include flex(row, center, center, null);
         width: 152px;
         height: 24px;
-        font-weight: 600;
-        font-size: 16px;
-        line-height: 100%;
-        letter-spacing: 0%;
-        font-family: "Poppins", sans-serif;
-        font-weight: 600;
-        font-style: normal;
-        color: #10151f;
+        @include font-style(16px, 600, normal, 100%);
+        color: $color-text;
       }
     }
+
     .cartAndProfile {
       @include flex(row, center, center, 20px);
       width: 108px;
       height: 40px;
+
       .cart {
         position: relative;
         width: 24px;
         height: 24px;
         cursor: pointer;
+
         .cart-svg {
           position: absolute;
           top: 2.25px;
@@ -85,10 +76,12 @@ main {
           height: 19.5px;
         }
       }
+
       .profile {
         @include flex(row, center, center, 4px);
         width: 64px;
         height: 40px;
+
         .photo {
           width: 40px;
           height: 40px;
@@ -97,10 +90,12 @@ main {
           object-fit: cover;
           cursor: pointer;
         }
+
         .dropdown {
           position: relative;
           width: 20px;
           height: 20px;
+
           .dropdown-svg {
             width: 10px;
             height: 5.75px;
@@ -113,6 +108,7 @@ main {
       }
     }
   }
+
   .shoppingCart {
     @include flex(column, flex-start, center, null);
     position: fixed;
@@ -134,13 +130,6 @@ main {
         height: 30px;
         span {
           @include font-style(20px, 500, Medium, 100%);
-          // font-family: Poppins;
-          // font-weight: 500;
-          // font-style: Medium;
-          // font-size: 20px;
-          // leading-trim: NONE;
-          // line-height: 100%;
-          // letter-spacing: 0%;
         }
       }
 
@@ -169,13 +158,6 @@ main {
         width: 88px;
         height: 36px;
         @include font-style(24px, 600, SemiBold, 100%);
-        // font-family: Poppins;
-        // font-weight: 600;
-        // font-style: SemiBold;
-        // font-size: 24px;
-        // leading-trim: NONE;
-        // line-height: 100%;
-        // letter-spacing: 0%;
       }
 
       .youGotNothing {
@@ -183,13 +165,6 @@ main {
         width: 277px;
         height: 21px;
         @include font-style(14px, 400, Regular, 100%);
-        // font-family: Poppins;
-        // font-weight: 400;
-        // font-style: Regular;
-        // font-size: 14px;
-        // leading-trim: NONE;
-        // line-height: 100%;
-        // letter-spacing: 0%;
         text-align: center;
       }
 
@@ -204,13 +179,6 @@ main {
 
         span {
           @include font-style(14px, 400, Regular, 100%);
-          // font-family: Poppins;
-          // font-weight: 400;
-          // font-style: Regular;
-          // font-size: 14px;
-          // leading-trim: NONE;
-          // line-height: 100%;
-          // letter-spacing: 0%;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -434,4 +402,3 @@ input:-webkit-autofill {
   -webkit-box-shadow: 0 0 0px 1000px white inset !important;
   -webkit-text-fill-color: black !important; /* placeholder/text color */
 }
-

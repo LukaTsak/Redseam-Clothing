@@ -1,11 +1,10 @@
-// @use '../src/app/variables.scss' as *;
-// @use '../src/app/mixins.scss' as *;
-// @use '../src/app/commonStyles.scss' as *;
-
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+ */
+  user-select: none; /* Standard */
 }
-

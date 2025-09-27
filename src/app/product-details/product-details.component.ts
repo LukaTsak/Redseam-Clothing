@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ApiService } from '../services/api.service';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import * as CartUtils from '../cart-functions'
 
 @Component({
   selector: 'app-product-details',
@@ -60,7 +61,7 @@ export class ProductDetailsComponent {
       this.apiService.getCart().subscribe((cartData) => {
         this.cartData = cartData;
 
-        this.cartData.forEach((item:any) => {
+        this.cartData.forEach((item: any) => {
           item.imgIndex = item.available_colors.indexOf(item.color);
         });
 
@@ -107,7 +108,6 @@ export class ProductDetailsComponent {
 
   normalizeColor(color: string): string {
     if (!color) return '';
-    // if (color === 'Multi') return 'linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet)';
     const parts = color.trim().split(' ');
     return parts.length === 1 ? parts[0] : parts[parts.length - 1];
   }
@@ -117,7 +117,6 @@ export class ProductDetailsComponent {
   cartOpen() {
     this.shoppingCartActive = !this.shoppingCartActive;
     console.log('huh?: ' + this.shoppingCartActive);
-    // console.log('imageindex' + this.imgIndex);
   }
 
   addToCart(id: number) {
@@ -129,24 +128,32 @@ export class ProductDetailsComponent {
       ) {
         this.showMessage('Can not add this item to cart');
       } else {
-        let goingToCart = {
+        const goingToCart = {
           quantity: this.selectedQuantity,
           color: this.selectedColor,
           size: this.selectedSize,
         };
 
+        const imgIndex = this.ProdutsData.available_colors.indexOf(
+          this.selectedColor
+        );
+
+        let productWithExtras = {
+          ...this.ProdutsData,
+          quantity: this.selectedQuantity,
+          color: this.selectedColor,
+          size: this.selectedSize,
+          imgIndex: imgIndex,
+          cover_image: this.ProdutsData.images[imgIndex],
+        };
+
         this.shoppingCartActive = true;
 
         console.log(goingToCart);
-        this.apiService
-          .addToCart(goingToCart, this.prductId)
-          .subscribe((params: any) => {
-            console.log(params);
-            this.loadCart();
-            if (params && params.total_price) {
-              this.subtotalPrice += params.total_price;
-            }
-          });
+        this.cartData.push(productWithExtras);
+        this.apiService.addToCart(goingToCart, this.prductId).subscribe(() => {
+          this.loadCart();
+        });
       }
     } else {
       this.showMessage('Please register first');
@@ -157,19 +164,22 @@ export class ProductDetailsComponent {
     return this.apiService.updateProductInCart(obj, id);
   }
 
+  pendingQuantityChanges: Record<number, number> = {};
+
   changeQuantity(operation: number, productId: number, index: number) {
     let currentQuantity = this.cartData[index].quantity;
     let newQuantity = currentQuantity;
 
     if (operation === 0 && currentQuantity > 1) {
-      newQuantity = currentQuantity - 1;
-      this.subtotalPrice =
-        this.subtotalPrice - this.cartData[index].total_price;
+      newQuantity--;
+      this.subtotalPrice -= this.cartData[index].total_price;
     } else if (operation === 1) {
-      newQuantity = currentQuantity + 1;
-      this.subtotalPrice =
-        this.subtotalPrice + this.cartData[index].total_price;
+      newQuantity++;
+      this.subtotalPrice += this.cartData[index].total_price;
     }
+
+    this.cartData[index].quantity = newQuantity;
+    this.pendingQuantityChanges[productId] = newQuantity;
 
     const updateGoingToCart = {
       quantity: newQuantity,
@@ -177,11 +187,19 @@ export class ProductDetailsComponent {
       size: this.cartData[index].size,
     };
 
-    this.updateProductInCart(updateGoingToCart, productId).subscribe(
-      (response) => {
-        this.cartData[index].quantity = newQuantity;
-      }
-    );
+    this.updateProductInCart(updateGoingToCart, productId).subscribe({
+      next: () => {
+        delete this.pendingQuantityChanges[productId];
+      },
+      error: () => {
+        // Revert if failed
+        this.cartData[index].quantity = currentQuantity;
+        this.pendingQuantityChanges[productId] = currentQuantity;
+        this.subtotalPrice =
+          this.subtotalPrice -
+          (newQuantity - currentQuantity) * this.cartData[index].total_price;
+      },
+    });
   }
 
   deleteProductFromCart(
@@ -190,19 +208,31 @@ export class ProductDetailsComponent {
     color: string,
     size: string
   ) {
-    let toBeDeleted = {
-      color: color,
-      size: size,
-    };
-    this.apiService.deleteProductFromCart(id, toBeDeleted).subscribe((res) => {
-      console.log('after delete ' + res);
-      this.loadCart(index);
-      if (this.cartData.length === 1) {
-        this.subtotalPrice = 0;
-        console.log(this.subtotalPrice);
-      }
+    const toBeDeleted = { color, size };
+
+    const itemIndex = this.cartData.findIndex(
+      (item: any) =>
+        item.id === id && item.color === color && item.size === size
+    );
+
+    if (itemIndex === -1) return;
+
+    const removedItem = this.cartData.splice(itemIndex, 1)[0];
+    this.subtotalPrice -= removedItem.total_price;
+
+    this.apiService.deleteProductFromCart(id, toBeDeleted).subscribe({
+      next: (res) => {
+        console.log('Delete confirmed:', res);
+      },
+      error: (err) => {
+        console.error('Delete failed:', err);
+
+        this.cartData.splice(itemIndex, 0, removedItem);
+        this.subtotalPrice += removedItem.total_price;
+      },
     });
-    console.log(toBeDeleted);
+
+    console.log('to delete:', toBeDeleted);
   }
 
   findIndex(id: any) {
@@ -213,14 +243,23 @@ export class ProductDetailsComponent {
     return index;
   }
 
-  loadCart(i?: number) {
+  loadCart() {
     console.log('refreshed');
     this.apiService.getCart().subscribe((res: any) => {
       this.cartData = res.data || res;
+
+      this.cartData.forEach((item: any) => {
+        item.imgIndex = item.available_colors.indexOf(item.color);
+      });
+
+      this.subtotalPrice = this.cartData.reduce(
+        (total: any, item: any) => total + item.total_price,
+        0
+      );
+
+      console.log('cart:', this.cartData);
+      console.log('subtotal:', this.subtotalPrice);
     });
-    if (i) {
-      this.subtotalPrice = this.subtotalPrice - this.cartData[i].total_price;
-    }
   }
 
   /////////////// show message
