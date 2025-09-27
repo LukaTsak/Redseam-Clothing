@@ -1,66 +1,47 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { FormsModule, NgForm } from '@angular/forms';
-import { ApiService } from '../services/api.service';
+import { Component, NgModule } from '@angular/core';
+import { FormsModule, NgForm, NgModel } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { ApiService } from '../services/api.service';
 
 @Component({
-  selector: 'app-product-details',
-  imports: [FormsModule, CommonModule],
-  templateUrl: './product-details.component.html',
-  styleUrl: './product-details.component.scss',
+  selector: 'app-checkout',
+  imports: [CommonModule, RouterModule, FormsModule],
+  templateUrl: './checkout.component.html',
+  styleUrl: './checkout.component.scss',
 })
-export class ProductDetailsComponent {
+export class CheckoutComponent {
   constructor(
     private apiService: ApiService,
     private route: ActivatedRoute,
     private router: Router
   ) {}
 
-  /////////////// STATE VARIABLES
+  user = JSON.parse(localStorage.getItem('user') || '{}');
 
-  ProdutsData: any = {};
+  shoppingCartActive: boolean = false;
   cartData: any = {};
-  images = [CommonModule, RouterModule, FormsModule, NgForm];
-
-  prductId: number = 0;
+  subtotalPrice: number = 0;
+  userMessageArray: string[] = [];
+  ProdutsData: any = {};
   selectedColor: string = '';
   selectedColorId: number = 0;
   selectedQuantity: number = 1;
   selectedSize: string = '';
-  subtotalPrice: number = 0;
+  prductId: number = 0;
 
-  quantDropdownActive: boolean = false;
-  shoppingCartActive: boolean = false;
-
-  user = JSON.parse(localStorage.getItem('user') || '{}');
-  userMessage: string | null = null;
-  userMessageArray: string[] = [];
-
-  // imgIndex = this.cartData.available_colors.indexOf(this.cartData.color);
-  // imgincart = this.cartData[0].available_colors.findeIncex
-
-  /////////////// LIFECYCLE
+  Address: string = '';
+  Name: string = '';
+  Surname: string = '';
+  Email: string = this.user.user.email;
+  ZipCode: string = '';
 
   ngOnInit() {
-    this.route.queryParams.subscribe((params) => {
-      this.prductId = params['id'] ? +params['id'] : 1;
-
-      this.apiService.getItem(this.prductId).subscribe((data: any) => {
-        this.ProdutsData = data;
-        this.images = data.images;
-        this.selectedColor = data.available_colors[0];
-        this.selectedSize = data.available_sizes[0];
-        console.log('data: ', this.ProdutsData);
-        console.log('product_id: ', this.prductId);
-      });
-    });
-
     if (localStorage.getItem('token')) {
       this.apiService.getCart().subscribe((cartData) => {
         this.cartData = cartData;
 
-        this.cartData.forEach((item:any) => {
+        this.cartData.forEach((item: any) => {
           item.imgIndex = item.available_colors.indexOf(item.color);
         });
 
@@ -76,48 +57,11 @@ export class ProductDetailsComponent {
     }
   }
 
-  /////////////// GETTERS
-
-  get avatarUrl(): string {
-    return (
-      this.user?.user?.avatar || '../../assets/images/defaultProfilePic.jpg'
-    );
-  }
-
-  /////////////// PRODUCT SELECTION
-
-  setColor(color: string, index: number) {
-    this.selectedColor = color;
-    this.selectedColorId = index;
-  }
-
-  setSize(size: string) {
-    this.selectedSize = size;
-  }
-
-  quanityUpdate(quant: number) {
-    this.selectedQuantity = quant;
-    this.quantDropdownActive = false;
-  }
-
-  dropdown() {
-    this.quantDropdownActive = !this.quantDropdownActive;
-    console.log('worked ' + this.quantDropdownActive);
-  }
-
-  normalizeColor(color: string): string {
-    if (!color) return '';
-    // if (color === 'Multi') return 'linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet)';
-    const parts = color.trim().split(' ');
-    return parts.length === 1 ? parts[0] : parts[parts.length - 1];
-  }
-
   /////////////// CART ACTIONS
 
   cartOpen() {
     this.shoppingCartActive = !this.shoppingCartActive;
     console.log('huh?: ' + this.shoppingCartActive);
-    // console.log('imageindex' + this.imgIndex);
   }
 
   addToCart(id: number) {
@@ -223,6 +167,32 @@ export class ProductDetailsComponent {
     }
   }
 
+  checoutData: any = {};
+  congrats: boolean = false;
+
+  checkout() {
+    let checkoutData = {
+      name: this.Name,
+      surname: this.Surname,
+      email: this.Email,
+      address: this.Address,
+      zip_code: this.ZipCode.toString(),
+    };
+    console.log(checkoutData);
+    this.apiService.checkout(checkoutData).subscribe((res) => {
+      this.checoutData = res;
+      this.showMessage(this.checoutData.message);
+
+      if (
+        this.checoutData.message ===
+        'Checkout successful. Thank you for your purchase!'
+      ) {
+        this.congrats = true;
+      }
+      // this.router.navigate(['/products']);
+    });
+  }
+
   /////////////// show message
 
   showMessage(msg: string) {
@@ -235,7 +205,10 @@ export class ProductDetailsComponent {
     }, 3000);
   }
 
-  goToProducts(where: string) {
-    this.router.navigate([`/${where}`]);
+  /////////////// Helpers
+  get avatarUrl(): string {
+    return (
+      this.user?.user?.avatar || '../../assets/images/defaultProfilePic.jpg'
+    );
   }
 }

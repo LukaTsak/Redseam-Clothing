@@ -19,7 +19,7 @@ export class ProductsComponent {
   ) {}
 
   /////////////// User & product data
-  
+
   user = JSON.parse(localStorage.getItem('user') || '{}');
   products: any[] = [];
 
@@ -41,6 +41,17 @@ export class ProductsComponent {
   from: number | null = null;
   to: number | null = null;
 
+  shoppingCartActive: boolean = false;
+  cartData: any = {};
+  subtotalPrice: number = 0;
+  userMessageArray: string[] = [];
+  ProdutsData: any = {};
+  selectedColor: string = '';
+  selectedColorId: number = 0;
+  selectedQuantity: number = 1;
+  selectedSize: string = '';
+  prductId: number = 0;
+
   ngOnInit() {
     this.route.queryParams.subscribe((params) => {
       this.currentPage = params['page'] ? +params['page'] : 1;
@@ -59,9 +70,27 @@ export class ProductsComponent {
       this.loadProducts(this.currentPage);
     });
 
-    // mark filters as active if bounds already set
     if (this.from != null || this.to != null) {
       this.filterActive = true;
+    }
+
+    if (localStorage.getItem('token')) {
+      this.apiService.getCart().subscribe((cartData) => {
+        this.cartData = cartData;
+
+        this.cartData.forEach((item: any) => {
+          item.imgIndex = item.available_colors.indexOf(item.color);
+        });
+
+        console.log('cart:', this.cartData);
+        console.log(this.cartData[0].price);
+
+        for (let i = 0; i < this.cartData.length; i++) {
+          this.subtotalPrice =
+            this.subtotalPrice + this.cartData[i].total_price;
+        }
+        console.log(this.subtotalPrice);
+      });
     }
   }
 
@@ -164,5 +193,130 @@ export class ProductsComponent {
     return (
       this.user?.user?.avatar || '../../assets/images/defaultProfilePic.jpg'
     );
+  }
+  /////////////// CART ACTIONS
+
+  cartOpen() {
+    this.shoppingCartActive = !this.shoppingCartActive;
+    console.log('huh?: ' + this.shoppingCartActive);
+  }
+
+  addToCart(id: number) {
+    if (localStorage.getItem('token')) {
+      if (
+        !this.ProdutsData.quantity ||
+        !this.ProdutsData.available_colors ||
+        !this.ProdutsData.available_sizes
+      ) {
+        this.showMessage('Can not add this item to cart');
+      } else {
+        let goingToCart = {
+          quantity: this.selectedQuantity,
+          color: this.selectedColor,
+          size: this.selectedSize,
+        };
+
+        this.shoppingCartActive = true;
+
+        console.log(goingToCart);
+        this.apiService
+          .addToCart(goingToCart, this.prductId)
+          .subscribe((params: any) => {
+            console.log(params);
+            this.loadCart();
+            if (params && params.total_price) {
+              this.subtotalPrice += params.total_price;
+            }
+          });
+      }
+    } else {
+      this.showMessage('Please register first');
+    }
+  }
+
+  updateProductInCart(obj: any, id: number) {
+    return this.apiService.updateProductInCart(obj, id);
+  }
+
+  changeQuantity(operation: number, productId: number, index: number) {
+    let currentQuantity = this.cartData[index].quantity;
+    let newQuantity = currentQuantity;
+
+    if (operation === 0 && currentQuantity > 1) {
+      newQuantity = currentQuantity - 1;
+      this.subtotalPrice =
+        this.subtotalPrice - this.cartData[index].total_price;
+    } else if (operation === 1) {
+      newQuantity = currentQuantity + 1;
+      this.subtotalPrice =
+        this.subtotalPrice + this.cartData[index].total_price;
+    }
+
+    const updateGoingToCart = {
+      quantity: newQuantity,
+      color: this.cartData[index].color,
+      size: this.cartData[index].size,
+    };
+
+    this.updateProductInCart(updateGoingToCart, productId).subscribe(
+      (response) => {
+        this.cartData[index].quantity = newQuantity;
+      }
+    );
+  }
+
+  deleteProductFromCart(
+    index: number,
+    id: number,
+    color: string,
+    size: string
+  ) {
+    let toBeDeleted = {
+      color: color,
+      size: size,
+    };
+    this.apiService.deleteProductFromCart(id, toBeDeleted).subscribe((res) => {
+      console.log('after delete ' + res);
+      this.loadCart(index);
+      if (this.cartData.length === 1) {
+        this.subtotalPrice = 0;
+        console.log(this.subtotalPrice);
+      }
+    });
+    console.log(toBeDeleted);
+  }
+
+  findIndex(id: any) {
+    const index = this.cartData.findIndex(
+      (item: { product_id: any }) => item.product_id === id
+    );
+    console.log('index ' + index);
+    return index;
+  }
+
+  loadCart(i?: number) {
+    console.log('refreshed');
+    this.apiService.getCart().subscribe((res: any) => {
+      this.cartData = res.data || res;
+    });
+    if (i) {
+      this.subtotalPrice = this.subtotalPrice - this.cartData[i].total_price;
+    }
+  }
+
+  /////////////// show message
+
+  showMessage(msg: string) {
+    if (this.userMessageArray.includes(msg)) return;
+
+    this.userMessageArray.push(msg);
+
+    setTimeout(() => {
+      this.userMessageArray = this.userMessageArray.filter((m) => m !== msg);
+    }, 3000);
+  }
+
+  goToProducts(where: string) {
+    this.router.navigate([`/${where}`]);
   }
 }

@@ -4,50 +4,6 @@
 
 main {
   .headder {
-    .cartAndProfile {
-      @include flex(row, center, center, 20px);
-      width: 108px;
-      height: 40px;
-      .cart {
-        position: relative;
-        width: 24px;
-        height: 24px;
-        cursor: pointer;
-        .cart-svg {
-          position: absolute;
-          top: 2.25px;
-          left: 1.5px;
-          width: 20.89px;
-          height: 19.5px;
-        }
-      }
-      .profile {
-        @include flex(row, center, center, 4px);
-        width: 64px;
-        height: 40px;
-        .photo {
-          width: 40px;
-          height: 40px;
-          border-radius: 50%;
-          background-color: $avatar-bg;
-          object-fit: cover;
-          cursor: pointer;
-        }
-        .dropdown {
-          position: relative;
-          width: 20px;
-          height: 20px;
-          .dropdown-svg {
-            width: 10px;
-            height: 5.75px;
-            position: absolute;
-            top: 8px;
-            left: 5px;
-            cursor: pointer;
-          }
-        }
-      }
-    }
   }
 
   .main {
@@ -282,6 +238,9 @@ main {
         @include flex(row, space-between, center, 6px);
         border: 1px solid $color-border;
         @include font-style(14px, 400, Regular, 100%);
+        span{
+          
+        }
       }
 
       .svgDiv {

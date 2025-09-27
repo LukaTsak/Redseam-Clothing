@@ -100,7 +100,10 @@ register() {
   formData.append('email', this.email);
   formData.append('password', this.password);
   formData.append('password_confirmation', this.confirmPassword);
+  if(this.userLogo){
   formData.append('avatar', this.userLogo);
+  }
+
   
   console.log('Form Data:', formData);
   

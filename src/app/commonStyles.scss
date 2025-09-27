@@ -1,4 +1,5 @@
-
+@use "../app/variables.scss" as *;
+@use "../app/mixins.scss" as *;
 
 main {
   .user-message {
@@ -31,6 +32,7 @@ main {
     height: 80px;
     padding: 10px 100px;
     .logo {
+      cursor: pointer;
       display: flex;
       align-items: center;
       flex-direction: row;
@@ -66,6 +68,336 @@ main {
         color: #10151f;
       }
     }
+    .cartAndProfile {
+      @include flex(row, center, center, 20px);
+      width: 108px;
+      height: 40px;
+      .cart {
+        position: relative;
+        width: 24px;
+        height: 24px;
+        cursor: pointer;
+        .cart-svg {
+          position: absolute;
+          top: 2.25px;
+          left: 1.5px;
+          width: 20.89px;
+          height: 19.5px;
+        }
+      }
+      .profile {
+        @include flex(row, center, center, 4px);
+        width: 64px;
+        height: 40px;
+        .photo {
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          background-color: $avatar-bg;
+          object-fit: cover;
+          cursor: pointer;
+        }
+        .dropdown {
+          position: relative;
+          width: 20px;
+          height: 20px;
+          .dropdown-svg {
+            width: 10px;
+            height: 5.75px;
+            position: absolute;
+            top: 8px;
+            left: 5px;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+  .shoppingCart {
+    @include flex(column, flex-start, center, null);
+    position: fixed;
+    z-index: 2;
+    right: 0;
+    top: 0;
+    width: 540px;
+    height: 1080px;
+    background-color: #f8f6f7;
+    border-left: 1px solid #e1dfe1;
+    padding: 40px;
+
+    .top {
+      @include flex(row, space-between, null, null);
+      width: 100%;
+
+      .cartText {
+        width: 181px;
+        height: 30px;
+        span {
+          @include font-style(20px, 500, Medium, 100%);
+          // font-family: Poppins;
+          // font-weight: 500;
+          // font-style: Medium;
+          // font-size: 20px;
+          // leading-trim: NONE;
+          // line-height: 100%;
+          // letter-spacing: 0%;
+        }
+      }
+
+      .close {
+        @include flex(center, center, null, null);
+        cursor: pointer;
+        width: 32px;
+        height: 32px;
+        svg {
+          fill: #10151f;
+        }
+      }
+    }
+
+    .emtyCart {
+      @include flex(column, center, center, null);
+      margin-top: 150px;
+      width: 170px;
+      height: 135px;
+
+      .svgDiv {
+      }
+
+      .oops {
+        margin-top: 24px;
+        width: 88px;
+        height: 36px;
+        @include font-style(24px, 600, SemiBold, 100%);
+        // font-family: Poppins;
+        // font-weight: 600;
+        // font-style: SemiBold;
+        // font-size: 24px;
+        // leading-trim: NONE;
+        // line-height: 100%;
+        // letter-spacing: 0%;
+      }
+
+      .youGotNothing {
+        margin-top: 10px;
+        width: 277px;
+        height: 21px;
+        @include font-style(14px, 400, Regular, 100%);
+        // font-family: Poppins;
+        // font-weight: 400;
+        // font-style: Regular;
+        // font-size: 14px;
+        // leading-trim: NONE;
+        // line-height: 100%;
+        // letter-spacing: 0%;
+        text-align: center;
+      }
+
+      .button {
+        @include flex(center, center, null, null);
+        margin-top: 58px;
+        width: 214px;
+        height: 41px;
+        border-radius: 10px;
+        padding: 10px 20px;
+        background-color: #ff4000;
+
+        span {
+          @include font-style(14px, 400, Regular, 100%);
+          // font-family: Poppins;
+          // font-weight: 400;
+          // font-style: Regular;
+          // font-size: 14px;
+          // leading-trim: NONE;
+          // line-height: 100%;
+          // letter-spacing: 0%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 103px;
+          height: 21px;
+          color: white;
+        }
+      }
+    }
+
+    .prodictsInCart {
+      @include flex(column, null, null, 36px);
+      height: 365px;
+      border-bottom: 1px solid #e1dfe1;
+      margin-top: 63px;
+      overflow-y: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+
+      .cart {
+        @include flex(row, null, null, 17px);
+        width: 460px;
+        height: 134px;
+
+        img {
+          width: 100px;
+          height: 134px;
+          border-radius: 10px;
+          border: 1px solid #e1dfe1;
+        }
+
+        .infoIncart {
+          @include flex(column, null, null, 13px);
+          width: 343px;
+          height: 117px;
+
+          .topInCart {
+            @include flex(row, space-between, flex-start, null);
+            width: 343px;
+            height: 78px;
+
+            .leftintop {
+              @include flex(column, null, null, 8px);
+              width: 285px;
+              height: 78px;
+
+              .name {
+                @include font-style(14px, 500, Medium, 100%);
+                width: 252px;
+                height: 26px;
+              }
+
+              .color,
+              .size {
+                @include font-style(12px, 400, Regular, 100%);
+                width: 285px;
+                height: 18px;
+              }
+            }
+
+            .rightInTop {
+              @include flex(row, center, center, null);
+              min-width: 39px;
+              width: fit-content;
+              height: 26px;
+              span {
+                min-width: 39px;
+                height: 26px;
+                gap: 10px;
+                opacity: 1;
+              }
+            }
+          }
+
+          .bottomInCart {
+            @include flex(row, space-between, null, null);
+            width: 343px;
+            height: 26px;
+
+            .left {
+              @include flex(row, space-between, center, 2px);
+              padding: 4px 8px;
+              border-radius: 22px;
+              border: 1px solid #e1dfe1;
+              width: 70px;
+              height: 26px;
+
+              span {
+                @include font-style(12px, 400, Regular, 100%);
+                width: 18px;
+                height: 18px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+              }
+
+              .minusSvgDivv,
+              .plusSvgDiv {
+                @include flex(center, center, center, null);
+                position: relative;
+                width: 16px;
+                height: 16px;
+                cursor: pointer;
+
+                .minus-svg {
+                  width: 10px;
+                  height: 2px;
+                  top: 7.25px;
+                  left: 3px;
+                  fill: #e1dfe1;
+                }
+
+                .plus-svg {
+                  width: 10px;
+                  height: 10px;
+                  opacity: 1;
+                  top: 3px;
+                  left: 3px;
+                  fill: #e1dfe1;
+                }
+              }
+            }
+
+            .right {
+              @include flex(row, center, center, 10px);
+              width: 49px;
+              height: 26px;
+              span {
+                @include font-style(12px, 400, Regular, 100%);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                width: 100%;
+                height: 18px;
+                opacity: 0.8;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .prices {
+      @include flex(column, null, null, 10px);
+      margin-top: 100px;
+      width: 460px;
+      height: 110px;
+
+      .subtotal {
+        @include flex(row, space-between, null, null);
+        width: 460px;
+        height: 24px;
+
+        .subT,
+        .price {
+          @include font-style(16px, 400, Regular, 100%);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+      }
+
+      .total {
+        @include flex(row, space-between, null, null);
+        width: 460px;
+        height: 30px;
+
+        .text,
+        .price {
+          @include font-style(20px, 500, Medium, 100%);
+        }
+      }
+    }
+
+    .button {
+      @include flex(center, center, null, null);
+      cursor: pointer;
+      width: 460px;
+      height: 59px;
+      border-radius: 10px;
+      background-color: #ff4000;
+      padding: 16px 60px;
+      margin-bottom: 40px;
+      margin-top: 102px;
+      color: white;
+    }
   }
 }
 
@@ -96,5 +428,10 @@ input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
+}
+
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+  -webkit-text-fill-color: black !important; /* placeholder/text color */
 }
 

@@ -3,26 +3,6 @@
 @use "../commonStyles.scss" as *;
 
 main {
-  .user-message {
-    @include flex(column, null, null, 10px);
-    height: fit-content;
-    position: fixed;
-    top: 85px;
-    right: 20px;
-    z-index: 1000;
-    transition: all 1s;
-
-    .littleMessage {
-      @include flex(row, null, null);
-      background-color: $white;
-      color: $color-primary;
-      padding: 12px 20px;
-      border-radius: 5px;
-      box-shadow: 0 2px 6px $color-primary;
-      animation: slideInFromRight 0.6s ease-out forwards;
-      transition: all 1s;
-    }
-  }
 
   .headder {
     @include flex(row, space-between, center);
