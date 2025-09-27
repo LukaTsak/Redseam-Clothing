@@ -191,7 +191,7 @@ main {
                 text-decoration: none;
                 color: $color-primary;
                 cursor: pointer;
-                @include font-style(14px, 400, normal, 100%);
+                @include font-style(15px, 400, normal, 100%);
               }
             }
           }
@@ -386,7 +386,7 @@ main {
                 text-decoration: none;
                 color: $color-primary;
                 cursor: pointer;
-                @include font-style(14px, 400, normal, 100%);
+                @include font-style(15px, 400, normal, 100%);
               }
             }
           }
