@@ -118,25 +118,6 @@ main {
                   left: 1.65px;
                 }
               }
-              .incorrectLoginPass {
-                border: 1px solid #ff4000;
-              }
-              .incorrectPass {
-                font-family: Poppins;
-                font-weight: 300;
-                font-style: Light;
-                font-size: 10px;
-                leading-trim: NONE;
-                line-height: 100%;
-                letter-spacing: 0%;
-                width: 108px;
-                height: 15px;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                margin-top: 4px;
-                color: #FF4000;
-              }
             }
 
             .input {
@@ -275,7 +256,7 @@ main {
           .fields {
             @include flex(column, null, null, 24px);
             width: 554px;
-            height: 240px;
+            min-height: 240px;
 
             .emailLabel {
               position: relative;
@@ -383,4 +364,25 @@ main {
       }
     }
   }
+}
+
+.incorrectPass {
+  font-family: Poppins;
+  font-weight: 300;
+  font-style: Light;
+  font-size: 10px;
+  leading-trim: NONE;
+  line-height: 100%;
+  letter-spacing: 0%;
+  width: fit-content;
+  height: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 4px;
+  color: #ff4000;
+}
+
+.incorrectLoginPass {
+  border: 1px solid #ff4000 !important;
 }

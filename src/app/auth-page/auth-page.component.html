@@ -116,7 +116,7 @@
               </div>
 
               <input
-              (click)="resetIncorectPass()"
+                (click)="resetIncorect('password')"
                 [ngClass]="{ incorrectLoginPass: incorrectPass }"
                 [(ngModel)]="loginPassword"
                 class="loginInput input"
@@ -204,6 +204,8 @@
           <div class="fields">
             <label class="emailLabel usernameLabel" for="userRegName">
               <input
+                (click)="resetIncorect('username')"
+                [ngClass]="{ incorrectLoginPass: incorrectUsername }"
                 [(ngModel)]="Username"
                 class="loginInput input"
                 type="text"
@@ -225,9 +227,13 @@
                   fill="#FF4000"
                 />
               </svg>
+              <span *ngIf="incorrectUsername" class="incorrectPass">Username taken</span>
+              
             </label>
             <label class="emailLabel" for="userRegEmail">
               <input
+                (click)="resetIncorect('email')"
+                [ngClass]="{ incorrectLoginPass: incorrectEmail }"
                 [(ngModel)]="email"
                 class="loginInput input"
                 type="text"
@@ -249,6 +255,7 @@
                   fill="#FF4000"
                 />
               </svg>
+              <span *ngIf="incorrectEmail" class="incorrectPass">Email taken</span>
             </label>
             <label class="passwordlabel" for="RegPassword">
               <div (click)="makeVisible(1)" class="passVisibilityIcon">
@@ -329,6 +336,8 @@
               </div>
 
               <input
+                (click)="resetIncorect('passwordMatch')"
+                [ngClass]="{ incorrectLoginPass: passDontMatch }"
                 [(ngModel)]="confirmPassword"
                 class="loginInput input"
                 type="{{ passwordType2 }}"
@@ -351,6 +360,7 @@
                   fill="#FF4000"
                 />
               </svg>
+              <span *ngIf="passDontMatch" class="incorrectPass">Passwords do not match</span>
             </label>
           </div>
 
