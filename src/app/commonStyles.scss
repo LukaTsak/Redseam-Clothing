@@ -396,6 +396,9 @@ main {
       color: white;
     }
   }
+  input:focus{
+    outline:1px solid #10151F !important;
+  }
 }
 
 @keyframes slideInFromRight {
