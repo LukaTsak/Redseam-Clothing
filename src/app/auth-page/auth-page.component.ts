@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ApiService } from '../services/api.service';
 
 @Component({
@@ -11,7 +11,22 @@ import { ApiService } from '../services/api.service';
   styleUrl: './auth-page.component.scss',
 })
 export class AuthPageComponent {
-  constructor(private apiService: ApiService) {}
+  constructor(
+    private apiService: ApiService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
+
+  token: any = '';
+
+  ngOnInit() {
+    let token = localStorage.getItem('token')
+      console.log('token exists' + token)
+    if ((token)) {
+      this.router.navigate(['/products']);
+      console.log('token exists')
+    }
+  }
 
   /////////////// user data
 

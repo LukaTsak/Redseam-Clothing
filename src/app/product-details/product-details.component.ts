@@ -3,7 +3,8 @@ import { Component } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ApiService } from '../services/api.service';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import * as CartUtils from '../cart-functions'
+import * as CartUtils from '../cart-functions';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-product-details',
@@ -15,10 +16,13 @@ export class ProductDetailsComponent {
   constructor(
     private apiService: ApiService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private sanitizer: DomSanitizer
   ) {}
 
   /////////////// STATE VARIABLES
+
+  safeImageUrl!: SafeUrl;
 
   ProdutsData: any = {};
   cartData: any = {};
@@ -37,7 +41,7 @@ export class ProductDetailsComponent {
   user = JSON.parse(localStorage.getItem('user') || '{}');
   userMessage: string | null = null;
   userMessageArray: string[] = [];
-  token:any = ''
+  token: any = '';
 
   // imgIndex = this.cartData.available_colors.indexOf(this.cartData.color);
   // imgincart = this.cartData[0].available_colors.findeIncex
@@ -45,8 +49,7 @@ export class ProductDetailsComponent {
   /////////////// LIFECYCLE
 
   ngOnInit() {
-    this.token = localStorage.getItem('token')
-
+    this.token = localStorage.getItem('token');
 
     this.route.queryParams.subscribe((params) => {
       this.prductId = params['id'] ? +params['id'] : 1;
@@ -70,16 +73,20 @@ export class ProductDetailsComponent {
         });
 
         console.log('cart:', this.cartData);
-        console.log(this.cartData[0].price);
+        // console.log(this.cartData[0].price);
 
         for (let i = 0; i < this.cartData.length; i++) {
           this.subtotalPrice =
             this.subtotalPrice + this.cartData[i].total_price;
         }
-        console.log(this.subtotalPrice);
+        // console.log(this.subtotalPrice);
       });
     }
   }
+
+  getSanitizedImageUrl(url: any): any {
+  return this.sanitizer.bypassSecurityTrustUrl(url);
+}
 
   /////////////// GETTERS
 
@@ -87,6 +94,10 @@ export class ProductDetailsComponent {
     return (
       this.user?.user?.avatar || '../../assets/images/defaultProfilePic.jpg'
     );
+  }
+
+  setImage(url: string) {
+    return this.safeImageUrl = this.sanitizer.bypassSecurityTrustUrl(url);
   }
 
   /////////////// PRODUCT SELECTION
