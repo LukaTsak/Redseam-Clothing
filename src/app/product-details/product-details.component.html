@@ -617,7 +617,7 @@
         <div class="sizes">
           <div class="text">
             <span *ngIf="ProdutsData?.available_sizes?.[0]; else noSizesText">
-              Size: {{ ProdutsData.available_sizes[0] || selectedSize }}
+              Size: {{ selectedSize  ||  ProdutsData.available_sizes[0]}}
             </span>
           </div>
           <ng-template #noSizesText>
