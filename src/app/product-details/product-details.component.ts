@@ -37,6 +37,7 @@ export class ProductDetailsComponent {
   user = JSON.parse(localStorage.getItem('user') || '{}');
   userMessage: string | null = null;
   userMessageArray: string[] = [];
+  token:any = ''
 
   // imgIndex = this.cartData.available_colors.indexOf(this.cartData.color);
   // imgincart = this.cartData[0].available_colors.findeIncex
@@ -44,6 +45,9 @@ export class ProductDetailsComponent {
   /////////////// LIFECYCLE
 
   ngOnInit() {
+    this.token = localStorage.getItem('token')
+
+
     this.route.queryParams.subscribe((params) => {
       this.prductId = params['id'] ? +params['id'] : 1;
 

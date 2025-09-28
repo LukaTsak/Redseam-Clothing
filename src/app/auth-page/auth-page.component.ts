@@ -33,6 +33,8 @@ export class AuthPageComponent {
   passwordType1 = 'password';
   passwordType2 = 'password';
 
+  incorrectPass: boolean = false;
+
   makeVisible(x: number) {
     if (x === 1) {
       this.passwordType1 =
@@ -40,6 +42,12 @@ export class AuthPageComponent {
     } else if (x === 2) {
       this.passwordType2 =
         this.passwordType2 === 'password' ? 'text' : 'password';
+    }
+  }
+
+  resetIncorectPass() {
+    if (this.incorrectPass === true) {
+      this.incorrectPass = false;
     }
   }
 
@@ -68,68 +76,67 @@ export class AuthPageComponent {
       },
       (err) => {
         console.log(err);
-        this.showMessage('Login failed. Please check your credentials and try again.');
+        this.showMessage(
+          'Login failed. Please check your credentials and try again.'
+        );
+        this.incorrectPass = true;
       }
     );
   }
 
-register() {
-  if (this.Username.length < 3) {
-    this.showMessage('Username must be at least 3 characters long.');
-    return;
-  }
-
-  const emailPattern = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
-  if (!emailPattern.test(this.email)) {
-    this.showMessage('Invalid email format.');
-    return;
-  }
-
-  if (this.password.length < 3) {
-    this.showMessage('Password must be at least 3 characters long.');
-    return;
-  }
-
-  if (this.password !== this.confirmPassword) {
-    this.showMessage('Passwords do not match.');
-    return;
-  }
-
-  const formData = new FormData();
-  formData.append('username', this.Username);
-  formData.append('email', this.email);
-  formData.append('password', this.password);
-  formData.append('password_confirmation', this.confirmPassword);
-  if(this.userLogo){
-  formData.append('avatar', this.userLogo);
-  }
-
-  
-  console.log('Form Data:', formData);
-  
-
-  this.apiService.register(formData).subscribe(
-    (res: any) => {
-      console.log(res);
-      this.showMessage('Registration successful! Please log in.');
-      this.loginTabChange();
-    },
-    (err) => {
-      console.error(err);
-      for(let el of Object.values(err.error.errors)){
-        this.showMessage(el as string);
-      }
+  register() {
+    if (this.Username.length < 3) {
+      this.showMessage('Username must be at least 3 characters long.');
+      return;
     }
-  );
-}
 
+    const emailPattern = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+    if (!emailPattern.test(this.email)) {
+      this.showMessage('Invalid email format.');
+      return;
+    }
+
+    if (this.password.length < 3) {
+      this.showMessage('Password must be at least 3 characters long.');
+      return;
+    }
+
+    if (this.password !== this.confirmPassword) {
+      this.showMessage('Passwords do not match.');
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('username', this.Username);
+    formData.append('email', this.email);
+    formData.append('password', this.password);
+    formData.append('password_confirmation', this.confirmPassword);
+    if (this.userLogo) {
+      formData.append('avatar', this.userLogo);
+    }
+
+    console.log('Form Data:', formData);
+
+    this.apiService.register(formData).subscribe(
+      (res: any) => {
+        console.log(res);
+        this.showMessage('Registration successful! Please log in.');
+        this.loginTabChange();
+      },
+      (err) => {
+        console.error(err);
+        for (let el of Object.values(err.error.errors)) {
+          this.showMessage(el as string);
+        }
+      }
+    );
+  }
 
   /////////////// profile picture functions
 
   userLogo: any;
   selectedLogoFileName: string = '';
-  logoPreviewUrl: string | ArrayBuffer | null =
-    '';
+  logoPreviewUrl: string | ArrayBuffer | null = '';
 
   onLogoSelected(event: any): void {
     const file = event.target.files[0];

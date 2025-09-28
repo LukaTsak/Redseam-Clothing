@@ -107,6 +107,35 @@ main {
         }
       }
     }
+
+    .login-headder {
+      @include flex(row, center, center, 8px);
+      width: 64px;
+      height: 20px;
+
+      .loginSvgParrent {
+        @include flex(row, null, null);
+        position: relative;
+        width: 20px;
+        height: 20px;
+
+        .login-svg {
+          width: 13.23px;
+          height: 16px;
+          top: 2px;
+          left: 3.39px;
+        }
+      }
+
+      .login-text {
+        @include flex(row, center, center);
+        width: 36px;
+        height: 18px;
+        @include font-style(12px, 500, normal, 100%);
+        cursor: pointer;
+        color: $color-text;
+      }
+    }
   }
 
   .shoppingCart {

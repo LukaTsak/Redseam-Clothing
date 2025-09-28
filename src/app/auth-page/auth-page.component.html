@@ -88,7 +88,7 @@
                 />
               </svg>
             </label>
-            <label class="passwordlabel" for="Password">
+            <label class="passwordlabel" for="PasswordLogin">
               <div (click)="makeVisible(1)" class="passVisibilityIcon">
                 <svg
                   class="eyeIcon"
@@ -116,12 +116,14 @@
               </div>
 
               <input
+              (click)="resetIncorectPass()"
+                [ngClass]="{ incorrectLoginPass: incorrectPass }"
                 [(ngModel)]="loginPassword"
                 class="loginInput input"
                 type="{{ passwordType1 }}"
                 (keydown.enter)="login()"
-                name="Password"
-                id="Password"
+                name="PasswordLogin"
+                id="PasswordLogin"
                 placeholder="Password"
                 required
               />
@@ -138,6 +140,9 @@
                   fill="#FF4000"
                 />
               </svg>
+              <span *ngIf="incorrectPass" class="incorrectPass"
+                >Incorrect password</span
+              >
             </label>
           </div>
 
@@ -183,9 +188,15 @@
                 (change)="onLogoSelected($event)"
                 hidden
               />
-              <span *ngIf="logoPreviewUrl">Upload new</span><span *ngIf="!logoPreviewUrl">Upload image</span>
+              <span *ngIf="logoPreviewUrl">Upload new</span
+              ><span *ngIf="!logoPreviewUrl">Upload image</span>
             </label>
-            <span *ngIf="logoPreviewUrl" class="removeText span" (click)="removeImage()">Remove</span>
+            <span
+              *ngIf="logoPreviewUrl"
+              class="removeText span"
+              (click)="removeImage()"
+              >Remove</span
+            >
           </div>
         </div>
 

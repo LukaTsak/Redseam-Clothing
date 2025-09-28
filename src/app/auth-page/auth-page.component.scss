@@ -3,7 +3,6 @@
 @use "../commonStyles.scss" as *;
 
 main {
-
   .headder {
     @include flex(row, space-between, center);
     width: 100%;
@@ -36,35 +35,6 @@ main {
         width: 152px;
         height: 24px;
         @include font-style(16px, 600, normal, 100%);
-        color: $color-text;
-      }
-    }
-
-    .login-headder {
-      @include flex(row, center, center, 8px);
-      width: 64px;
-      height: 20px;
-
-      .loginSvgParrent {
-        @include flex(row, null, null);
-        position: relative;
-        width: 20px;
-        height: 20px;
-
-        .login-svg {
-          width: 13.23px;
-          height: 16px;
-          top: 2px;
-          left: 3.39px;
-        }
-      }
-
-      .login-text {
-        @include flex(row, center, center);
-        width: 36px;
-        height: 18px;
-        @include font-style(12px, 500, normal, 100%);
-        cursor: pointer;
         color: $color-text;
       }
     }
@@ -148,6 +118,25 @@ main {
                   left: 1.65px;
                 }
               }
+              .incorrectLoginPass {
+                border: 1px solid #ff4000;
+              }
+              .incorrectPass {
+                font-family: Poppins;
+                font-weight: 300;
+                font-style: Light;
+                font-size: 10px;
+                leading-trim: NONE;
+                line-height: 100%;
+                letter-spacing: 0%;
+                width: 108px;
+                height: 15px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-top: 4px;
+                color: #FF4000;
+              }
             }
 
             .input {
@@ -220,14 +209,14 @@ main {
           width: 272px;
           height: 100px;
 
-          .imgCircle{
-          @include flex(row, center, center, null);
+          .imgCircle {
+            @include flex(row, center, center, null);
             width: 100px;
             height: 100px;
             border-radius: 50%;
             padding: 10px;
             // background-color: #F8F6F7;
-            border: 1px solid #E1DFE1;
+            border: 1px solid #e1dfe1;
           }
 
           .image {
@@ -249,9 +238,9 @@ main {
               @include flex(row, center, center);
               @include font-style(14px, 400, normal, 100%);
               cursor: pointer;
-              span{
-              @include font-style(14px, 400, normal, 100%);
-              width: fit-content;
+              span {
+                @include font-style(14px, 400, normal, 100%);
+                width: fit-content;
               }
             }
 

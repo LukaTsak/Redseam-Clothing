@@ -51,8 +51,10 @@ export class ProductsComponent {
   selectedQuantity: number = 1;
   selectedSize: string = '';
   prductId: number = 0;
+  token:any = ''
 
   ngOnInit() {
+    this.token = localStorage.getItem('token')
     this.route.queryParams.subscribe((params) => {
       this.currentPage = params['page'] ? +params['page'] : 1;
 
