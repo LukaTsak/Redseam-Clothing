@@ -58,7 +58,6 @@ export class ProductsComponent {
     this.route.queryParams.subscribe((params) => {
       this.currentPage = params['page'] ? +params['page'] : 1;
 
-      // update UI helper number
       this.dinamicPageNumber =
         this.currentPage === 1
           ? 2
@@ -68,7 +67,6 @@ export class ProductsComponent {
 
       console.log('Current page:', this.currentPage);
 
-      // initial load (either filtered or normal)
       this.loadProducts(this.currentPage);
     });
 
@@ -85,7 +83,6 @@ export class ProductsComponent {
         });
 
         console.log('cart:', this.cartData);
-        // console.log(this.cartData[0].price);
 
         for (let i = 0; i < this.cartData.length; i++) {
           this.subtotalPrice =
@@ -101,7 +98,6 @@ export class ProductsComponent {
   loadProducts(page: number = 1) {
     this.currentPage = page;
 
-    // build params
     let params = new HttpParams().set('page', this.currentPage);
 
     if (this.from != null) {
@@ -119,7 +115,6 @@ export class ProductsComponent {
 
     console.log('Final query:', queryString);
 
-    // API call
     this.apiService.filter(queryString).subscribe((res) => {
       console.log('API response:', res);
       this.products = (res as any).data;
@@ -276,7 +271,6 @@ export class ProductsComponent {
         delete this.pendingQuantityChanges[productId];
       },
       error: () => {
-        // Revert if failed
         this.cartData[index].quantity = currentQuantity;
         this.pendingQuantityChanges[productId] = currentQuantity;
         this.subtotalPrice =
