@@ -109,7 +109,7 @@ main {
             height: 48px;
 
             .visibleColorDiv {
-              @include flex(row, center, null, 13px);
+              @include flex(row, start, null, 13px);
               min-width: 150px;
               width: fit-content;
               height: fit-content;
