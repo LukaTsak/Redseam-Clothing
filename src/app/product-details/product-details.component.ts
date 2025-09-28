@@ -43,9 +43,6 @@ export class ProductDetailsComponent {
   userMessageArray: string[] = [];
   token: any = '';
 
-  // imgIndex = this.cartData.available_colors.indexOf(this.cartData.color);
-  // imgincart = this.cartData[0].available_colors.findeIncex
-
   /////////////// LIFECYCLE
 
   ngOnInit() {
@@ -73,13 +70,11 @@ export class ProductDetailsComponent {
         });
 
         console.log('cart:', this.cartData);
-        // console.log(this.cartData[0].price);
 
         for (let i = 0; i < this.cartData.length; i++) {
           this.subtotalPrice =
             this.subtotalPrice + this.cartData[i].total_price;
         }
-        // console.log(this.subtotalPrice);
       });
     }
   }
@@ -207,7 +202,6 @@ export class ProductDetailsComponent {
         delete this.pendingQuantityChanges[productId];
       },
       error: () => {
-        // Revert if failed
         this.cartData[index].quantity = currentQuantity;
         this.pendingQuantityChanges[productId] = currentQuantity;
         this.subtotalPrice =

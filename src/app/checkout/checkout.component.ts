@@ -137,7 +137,6 @@ export class CheckoutComponent {
         delete this.pendingQuantityChanges[productId];
       },
       error: () => {
-        // Revert if failed
         this.cartData[index].quantity = currentQuantity;
         this.pendingQuantityChanges[productId] = currentQuantity;
         this.subtotalPrice =
@@ -207,7 +206,7 @@ export class CheckoutComponent {
     });
   }
 
-  ///////
+  /////////////// checkout
 
   checoutData: any = {};
   congrats: boolean = false;
