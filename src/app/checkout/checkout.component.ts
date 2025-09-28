@@ -110,40 +110,47 @@ export class CheckoutComponent {
   }
 
   pendingQuantityChanges: Record<number, number> = {};
+  quantityChangeTimers: Record<number, any> = {};
 
   changeQuantity(operation: number, productId: number, index: number) {
-    let currentQuantity = this.cartData[index].quantity;
-    let newQuantity = currentQuantity;
+    const cartItem = this.cartData[index];
+    cartItem.quantity = Math.max(
+      1,
+      cartItem.quantity + (operation === 1 ? 1 : -1)
+    );
+    this.pendingQuantityChanges[productId] = cartItem.quantity;
+    this.recalculateSubtotal();
 
-    if (operation === 0 && currentQuantity > 1) {
-      newQuantity--;
-      this.subtotalPrice -= this.cartData[index].total_price;
-    } else if (operation === 1) {
-      newQuantity++;
-      this.subtotalPrice += this.cartData[index].total_price;
+    if (this.quantityChangeTimers[productId]) {
+      clearTimeout(this.quantityChangeTimers[productId]);
     }
 
-    this.cartData[index].quantity = newQuantity;
-    this.pendingQuantityChanges[productId] = newQuantity;
+    this.quantityChangeTimers[productId] = setTimeout(() => {
+      const updatePayload = {
+        quantity: this.pendingQuantityChanges[productId],
+        color: cartItem.color,
+        size: cartItem.size,
+      };
 
-    const updateGoingToCart = {
-      quantity: newQuantity,
-      color: this.cartData[index].color,
-      size: this.cartData[index].size,
-    };
+      this.updateProductInCart(updatePayload, productId).subscribe({
+        next: () => {
+          this.loadCart();
+          delete this.pendingQuantityChanges[productId];
+        },
+        error: () => {
+          this.loadCart();
+          delete this.pendingQuantityChanges[productId];
+        },
+      });
+    }, 500);
+  }
 
-    this.updateProductInCart(updateGoingToCart, productId).subscribe({
-      next: () => {
-        delete this.pendingQuantityChanges[productId];
-      },
-      error: () => {
-        this.cartData[index].quantity = currentQuantity;
-        this.pendingQuantityChanges[productId] = currentQuantity;
-        this.subtotalPrice =
-          this.subtotalPrice -
-          (newQuantity - currentQuantity) * this.cartData[index].total_price;
-      },
-    });
+  recalculateSubtotal() {
+    this.subtotalPrice = this.cartData.reduce(
+      (sum: any, item: any) =>
+        sum + (item.quantity * item.total_price) / item.quantity,
+      0
+    );
   }
 
   deleteProductFromCart(
