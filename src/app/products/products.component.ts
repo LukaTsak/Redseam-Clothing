@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { ApiService } from '../services/api.service';
-import { CommonModule, NgForOf } from '@angular/common';
+import { CommonModule, NgForOf, NgOptimizedImage } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'app-products',
-  imports: [NgForOf, CommonModule, RouterModule, FormsModule],
+  imports: [NgForOf, CommonModule, RouterModule, FormsModule,  NgOptimizedImage],
   templateUrl: './products.component.html',
   styleUrl: './products.component.scss',
 })
@@ -85,7 +85,7 @@ export class ProductsComponent {
         });
 
         console.log('cart:', this.cartData);
-        console.log(this.cartData[0].price);
+        // console.log(this.cartData[0].price);
 
         for (let i = 0; i < this.cartData.length; i++) {
           this.subtotalPrice =

@@ -1014,7 +1014,7 @@
               </div>
             </div>
           </div>
-          <div *ngIf="cartData.length >= 1" class="prices">
+          <div *ngIf="cartData?.length >= 1" class="prices">
             <div class="subtotal">
               <span class="subT">Items subtotal</span>
               <span class="Price">$ {{ subtotalPrice }}</span>
@@ -1037,7 +1037,7 @@
   </div>
   <div *ngIf="congrats" class="congratsmessage">
     <div class="message">
-      <div class="close">
+      <div (click)="congratsOpenClose()" class="close">
         <svg
           width="20"
           height="20"

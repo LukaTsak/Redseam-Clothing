@@ -21,10 +21,10 @@ export class AuthPageComponent {
 
   ngOnInit() {
     let token = localStorage.getItem('token')
-      console.log('token exists' + token)
+      // console.log('token exists' + token)
     if ((token)) {
       this.router.navigate(['/products']);
-      console.log('token exists')
+      // console.log('token exists')
     }
   }
 

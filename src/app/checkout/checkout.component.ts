@@ -20,7 +20,7 @@ export class CheckoutComponent {
   user = JSON.parse(localStorage.getItem('user') || '{}');
 
   shoppingCartActive: boolean = false;
-  cartData: any = {};
+  cartData: any = [];
   subtotalPrice: number = 0;
   userMessageArray: string[] = [];
   ProdutsData: any = {};
@@ -233,6 +233,11 @@ export class CheckoutComponent {
       }
       // this.router.navigate(['/products']);
     });
+  }
+
+  congratsOpenClose() {
+    this.congrats = false;
+    this.loadCart();
   }
 
   /////////////// show message
